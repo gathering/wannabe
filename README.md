@@ -36,7 +36,7 @@ The the the github repo for Wannabe version 4.
 
 ## Installation
 
-[Installation instruction](https://github.com/gathering/wannabe/blob/dev/INSTALL.md)  
-[Work flow instructions](https://github.com/gathering/wannabe/blob/dev/WORKFLOW.md)
+[Installation instruction](https://github.com/gathering/wannabe/blob/master/INSTALL.md)  
+[Work flow instructions](https://github.com/gathering/wannabe/blob/master/WORKFLOW.md)
 
 All PHP libraries are included, including CakePHP.
