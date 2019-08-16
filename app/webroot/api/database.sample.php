@@ -73,10 +73,10 @@ class DATABASE_CONFIG
 
 	var $ezmlm = array('driver' => 'mysql',
 		'connect' => 'mysql_connect',
-		'host' => '195.159.31.10',
+		'host' => 'localhost',
 		'login' => 'wannabe',
-		'password' => 'ezmlmtg07',
-		'database' => 'ezmlmtg07',
+		'password' => 'wannabe',
+		'database' => 'wannabe',
 		'persistant' => false,
 		'prefix' => '');
 }
