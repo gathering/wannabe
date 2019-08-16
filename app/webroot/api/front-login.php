@@ -13,4 +13,4 @@ $db = new Database();
 // No idea what this file was but we wiped it
 // check history if you need something?
 
-die('{"error":"what"}');
+die('{"error":"hello"}');
