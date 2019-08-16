@@ -5,7 +5,6 @@
  */
 class GeocodeCacheComponent extends Component {
 
-    var $apikey = 'AIzaSyAl0C6hB_SxHgBhTGaXdRNysxWSyPvdND8';
     var $userAddress = '';
     var $cache = array();
     var $userNeedGeocodeUpdate = false;
