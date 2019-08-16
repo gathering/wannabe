@@ -1,7 +1,8 @@
 <?php
 require_once('/srv/vhosts/wannabe.gathering.org/wannabe/app/webroot/api/db.lib.php');
 $db = new Database();
-if($_GET['apikey'] != 'NJueg7BHBgay6GadIhBgdJ8'):
+die("nothing to see here")
+/*if($_GET['apikey'] != 'NJueg7BHBgay6GadIhBgdJ8'):
 	echo "<error>Not authorized</error>";
 elseif(!isset($_GET['channel'])):
 	echo "<error>No channel</error>";
@@ -12,6 +13,6 @@ else:
 	else:
 		echo "<key>".$key['value']."</key>";
 	endif;
-endif;
+endif;*/
 
 ?>

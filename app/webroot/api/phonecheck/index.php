@@ -19,8 +19,8 @@
 
 require("../db.lib.php");
 $db = new Database();
-
-$number = mysql_escape_string($_GET['number']);
+die("Nothing to see here");
+/*$number = mysql_escape_string($_GET['number']);
 
 
 if(strlen($number) > 0) {
@@ -33,4 +33,4 @@ if(is_numeric($res) == false) {
 	die("false");
 } else {
 	die("true");
-}
+}*/
