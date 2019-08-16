@@ -2,10 +2,10 @@
 This page explains how your general work flow should be in git and how to apply your changes to production.
 
 ## New feature
-Make sure you are on the dev branch before branching out.
+Make sure you are on the master branch before branching out.
 
 ```bash
-$ git checkout dev
+$ git checkout master
 $ git checkout -b <BRANCH NAME>
 ```
 
@@ -15,7 +15,7 @@ Now make your changes and commit them (micro commits are cool!) before pushing t
 $ git push origin <BRANCH NAME>
 ```
 
-You can now create a pullrequest from <BRANCH NAME> into dev on github.
+You can now create a pullrequest from <BRANCH NAME> into master on github.
 
 ## Making schema migrations
 Migrations are handled by a python module named `simple-db-migrate`. It also requires the `python-mysqldb` package.
@@ -55,17 +55,17 @@ $ ./migrate.sh 20130320120000 # This will fetch the migration which matches the 
 ```
 
 ## Bug fixing
-General small bug fixes can be done directly on the dev branch. 
+General small bug fixes can be done directly on the master branch. 
 (If severe, consider rolling back to an earlier tag)
 
 ## Apply changes to production
-On your local machine, merge in dev and tag
+On your local machine, merge in master and tag
 
 ```bash
-$ git checkout dev
-$ git pull origin dev
+$ git checkout master
+$ git pull origin master
 $ git checkout prod
-$ git merge dev
+$ git merge master
 $ git push origin prod
 $ git tag -a YYYY-MM-DDvXX # Example 2017-10-26v01
 $ git push --tags
