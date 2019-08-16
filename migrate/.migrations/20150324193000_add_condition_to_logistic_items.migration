@@ -1,0 +1,12 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+
+ALTER TABLE wb4_logistic_items ADD COLUMN `condition` ENUM('ok','damaged','destroyed','lost') NOT NULL DEFAULT 'ok';
+
+"""
+
+SQL_DOWN = u"""
+
+ALTER TABLE wb4_logistic_items DROP COLUMN `condition`;
+
+"""

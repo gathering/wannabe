@@ -1,0 +1,42 @@
+.rowspace {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.dataTable {
+    padding-top: 20px;
+}
+
+.dataTables_length > label {
+    float: none;
+}
+
+.dataTables_filter > label {
+    float: none;
+}
+
+.span-one-third {
+    text-align: center;
+}
+
+.lostandfoundindex > .span8 {
+    text-align: center;
+}
+
+a {
+    cursor: pointer;
+}
+
+.text-danger {
+    color: #a94442;
+    font-weight: bold;
+}
+
+.text-success {
+    color: #3c763d;
+    font-weight: bold;
+}
+
+span.help-block {
+    margin-top: 5px;
+}

@@ -1,0 +1,60 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+
+DROP PROCEDURE IF EXISTS mailinglistmemberships;
+
+CREATE DEFINER=`wannabe`@`localhost` PROCEDURE `mailinglistmemberships`(IN user_id INT, IN event_id INT)
+BEGIN
+SELECT
+	ml.id as mailinglist_id,
+	ml.address as mailinglist,
+    ml.optional,
+    ml.crew_id as manage_crew
+FROM (
+	SELECT DISTINCT sub.user_id, sub.id, sub.optional, sub.address, sub.crew_id
+	FROM (
+		SELECT cu.user_id, ml.id, ml.optional, ml.address, ml.crew_id
+		FROM wb4_mailinglistrules mlr
+		LEFT JOIN wb4_crews_users cu
+		ON mlr.crew_id = cu.crew_id
+		LEFT JOIN wb4_mailinglists ml
+		ON mlr.mailinglist_id = ml.id
+		WHERE cu.user_id = user_id
+		AND cu.leader >= mlr.leader
+        AND ml.event_id = event_id
+		UNION
+		SELECT cu.user_id, ml.id, ml.optional, ml.address, ml.crew_id
+		FROM wb4_mailinglistrule_teams mlrt
+		LEFT JOIN wb4_teams t
+		ON mlrt.team_id = t.id
+		LEFT JOIN wb4_crews_users cu
+		ON t.id = cu.team_id
+		LEFT JOIN wb4_mailinglists ml
+		ON mlrt.mailinglist_id = ml.id
+		WHERE cu.user_id = user_id
+        AND ml.event_id = event_id
+		UNION
+		SELECT mlru.user_id, ml.id, ml.optional, ml.address, ml.crew_id
+		FROM wb4_mailinglistrule_users mlru
+		LEFT JOIN wb4_mailinglists ml
+		ON mlru.mailinglist_id = ml.id
+		WHERE mlru.user_id = user_id
+        AND ml.event_id = event_id
+	) sub
+) ml
+LEFT JOIN wb4_user_mailprefs ump
+ON ump.user_id = ml.user_id
+AND ump.mailinglist_id = ml.id
+WHERE ump.subscribe IS NULL
+OR ump.subscribe <> 0
+ORDER BY ml.address ASC;
+END;
+/
+
+"""
+
+SQL_DOWN = u"""
+
+DROP PROCEDURE IF EXISTS mailinglistmemberships;
+
+"""

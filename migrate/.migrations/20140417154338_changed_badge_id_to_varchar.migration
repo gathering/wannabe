@@ -1,0 +1,8 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE wb4_accreditations MODIFY COLUMN badge_id varchar(128) DEFAULT NULL;
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_accreditations MODIFY COLUMN badge_id int(11) DEFAULT NULL;
+"""

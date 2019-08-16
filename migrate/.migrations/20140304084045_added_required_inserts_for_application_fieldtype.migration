@@ -1,0 +1,15 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+LOCK TABLES `wb4_application_field_types` WRITE;
+DELETE FROM `wb4_application_field_types`;
+/*!40000 ALTER TABLE `wb4_application_field_types` DISABLE KEYS */;
+INSERT INTO `wb4_application_field_types` VALUES (6,'textarea'),(7,'text'),(8,'crewchoice'),(9,'checkbox'),(10,'crewwhy');                                                    
+/*!40000 ALTER TABLE `wb4_application_field_types` ENABLE KEYS */;
+UNLOCK TABLES;
+"""
+
+SQL_DOWN = u"""
+LOCK TABLES `wb4_application_field_types` WRITE;
+DELETE FROM `wb4_application_field_types`;
+UNLOCK TABLES;
+"""

@@ -1,0 +1,8 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE wb4_slideshows_slides ADD COLUMN type varchar(255) NULL;
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_slideshows_slides DROP COLUMN type;
+"""

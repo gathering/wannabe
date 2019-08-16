@@ -1,0 +1,13 @@
+[config]
+project = wannabe
+
+[master_files]
+Locale/default.po = 492408e37bfd05ca8d9a687a6ec1047f
+
+[locale_map]
+Locale/default.po/no = Locale/nob/LC_MESSAGES/default.po
+Locale/default.po/en = Locale/eng/LC_MESSAGES/default.po
+
+[status]
+data = [{"progress": 100.0, "iana_code": "no", "format": "GNU Gettext (.PO)", "master_file": "Locale/default.po", "filename": "Locale/default_no.po"}, {"progress": 100.0, "iana_code": "en", "format": "GNU Gettext (.PO)", "master_file": "Locale/default.po", "filename": "Locale/default_en.po"}]
+

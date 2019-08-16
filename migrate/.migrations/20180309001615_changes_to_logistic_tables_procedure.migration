@@ -1,0 +1,13 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE `wb4_logistic_items` CHANGE `barcode` `AssetTag` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ;
+ALTER TABLE `wb4_logistic_items` ADD `parent` INT( 10 ) UNSIGNED NULL DEFAULT NULL AFTER `condition` ;
+ALTER TABLE `wb4_logistic_transactions` CHANGE `user_id` `user_id` INT( 10 ) UNSIGNED NULL DEFAULT NULL ;
+ALTER TABLE `wb4_logistic_transactions` ADD `crew_id` INT( 10 ) UNSIGNED NULL DEFAULT NULL AFTER `user_id` ;
+"""
+
+SQL_DOWN = u"""
+
+
+
+"""

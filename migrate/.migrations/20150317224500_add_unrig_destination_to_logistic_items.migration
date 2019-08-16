@@ -1,0 +1,12 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+
+ALTER TABLE wb4_logistic_items ADD COLUMN unrig_storage_id INTEGER(10) UNSIGNED NULL;
+
+"""
+
+SQL_DOWN = u"""
+
+ALTER TABLE wb4_logistic_items DROP COLUMN unrig_storage_id;
+
+"""

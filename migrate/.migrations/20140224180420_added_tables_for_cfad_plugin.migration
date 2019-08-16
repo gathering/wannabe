@@ -1,0 +1,111 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+CREATE TABLE IF NOT EXISTS `wb4_cfad_application_available_fields` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `event_id` int(11) DEFAULT NULL,
+    `application_fieldtype_id` int(11) DEFAULT NULL,
+    `application_page_id` int(11) DEFAULT NULL,
+    `name` varchar(50) DEFAULT NULL,
+    `description` text,
+    `created` datetime DEFAULT NULL,
+    `updated` datetime DEFAULT NULL,
+    `deleted` datetime DEFAULT NULL,
+    `crew_id` int(11) DEFAULT NULL,
+    `user_id` int(11) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `crewapplication_fieldtype_id` (`application_fieldtype_id`),
+    KEY `crewapplication_page_id` (`application_page_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `wb4_cfad_application_choices` (
+    `application_document_id` int(11) DEFAULT NULL,
+    `crew_id` int(11) DEFAULT NULL,
+    `event_id` int(11) DEFAULT NULL,
+    `priority` int(11) NOT NULL,
+    `revision` int(11) DEFAULT '0',
+    `draft` tinyint(4) DEFAULT '1',
+    `handled` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `accepted` tinyint(4) DEFAULT '0' COMMENT 'Contains 1 if the choice is accepted',
+    `denied` tinyint(4) DEFAULT '0' COMMENT 'Contains 1 if the choice is denied.',
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (`id`),
+    KEY `crewapplication_document_id` (`application_document_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `wb4_cfad_application_documents` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `event_id` int(11) DEFAULT NULL,
+    `user_id` int(11) DEFAULT NULL,
+    `created` datetime DEFAULT NULL,
+    `updated` datetime DEFAULT NULL,
+    `deleted` datetime DEFAULT NULL,
+    `draft` tinyint(4) DEFAULT '1',
+    `handled` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+    PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `wb4_cfad_application_fields` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `application_document_id` int(11) DEFAULT NULL,
+    `application_availablefield_id` int(11) DEFAULT NULL,
+    `value` blob,
+    `revision` int(11) DEFAULT '0',
+    `created` datetime DEFAULT NULL,
+    `draft` tinyint(4) DEFAULT '1',
+    `crew_id` int(11) DEFAULT '0',
+    PRIMARY KEY (`id`),
+    KEY `crewapplication_availablefield_id` (`application_availablefield_id`),
+    KEY `crewapplication_document_id` (`application_document_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `wb4_cfad_application_pages` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `event_id` int(11) DEFAULT NULL,
+    `name` varchar(128) DEFAULT NULL,
+    `description` text,
+    `position` int(11) DEFAULT '0',
+    `type` enum('custom','crewchoice','crewwhy','crewfield') DEFAULT NULL,
+    `crew_id` int(11) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `wb4_cfad_application_settings` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `choices` int(11) unsigned DEFAULT '3',
+    `can_apply` int(11) unsigned DEFAULT '0',
+    `event_id` int(10) unsigned NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `wb4_cfad_crews` (
+    `crew_id` int(10) unsigned NOT NULL,
+    `event_id` int(10) unsigned NOT NULL,
+    PRIMARY KEY (`crew_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `wb4_cfad_users` (
+    `user_id` int(10) unsigned NOT NULL,
+    `crew_id` int(10) unsigned NOT NULL,
+    `assigned` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+"""
+
+SQL_DOWN = u"""
+
+DROP TABLE IF EXISTS `wb4_cfad_application_available_fields`;
+
+DROP TABLE IF EXISTS `wb4_cfad_application_choices`;
+
+DROP TABLE IF EXISTS `wb4_cfad_application_documents`;
+
+DROP TABLE IF EXISTS `wb4_cfad_application_fields`;
+
+DROP TABLE IF EXISTS `wb4_cfad_application_pages`;
+
+DROP TABLE IF EXISTS `wb4_cfad_application_settings`;
+
+DROP TABLE IF EXISTS `wb4_cfad_crews`;
+
+DROP TABLE IF EXISTS `wb4_cfad_users`;
+
+"""

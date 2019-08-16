@@ -1,0 +1,80 @@
+.overlay {
+	position						: absolute;
+	top								: 0px;
+	left							: 0px;
+	opacity							: 0.0;
+	width							: 1280px;
+	height 							: 720px;
+	background-color				: black;
+} 
+#maincontent {
+	background: #000 url('/img/nebula_slideshows.png') no-repeat center center;
+	z-index: -10;
+	height: 720px;
+	width: 1280px;
+	border: solid 1px;
+	font-family: "ColaborateThinRegular";
+	text-align: center;
+}
+#bottomdiv{
+	background-image:url('/img/cloudystorskjerm.png');
+	height:145px;
+	/*
+	width:1920px;
+	*/
+	
+	width: 896px;
+	margin: 0 auto;
+	
+	position:absolute;
+	top:935px;
+	z-index: 11;
+}
+
+#titlecontent {
+	width: 896px;
+	margin: 0 auto;
+	font-size: 80px;
+	color: #E2EFFC;
+	font-weight: bold;
+	margin: 0 auto;
+}
+
+#slidecontent{
+	width: 1000px;
+	margin: 0 auto;
+	line-height: 100%;
+	font-size: 50px;
+	margin: 0 auto;
+	color: #E2EFFC;
+}
+#editkontroller{
+	z-index:1000;
+	font-size: 70px;
+	margin: 0 auto;
+	color: #E2EFFC;
+	position:absolute;
+	top:90%;
+	left:90%;
+}
+
+#timetitle{
+	font-weight: 800;
+}
+#author{
+	font-size: 50px;
+}
+#description{
+	font-size: 30px;
+	margin-top: 20px;
+}
+#timespan{
+	color: #ebc880;
+}
+@font-face {
+	font-family: "ColaborateThinRegular";
+	src: url("/ColabThi-webfont.eot");
+	src: local("☺"), url("C/ColabThi-webfont.woff") format("woff"), url("/ColabThi-webfont.ttf") format("truetype"), url("/ColabThi-webfont.svg#webfontSEfQG68S") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}

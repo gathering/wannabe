@@ -1,0 +1,10 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE wb4_irc_channel_key_crews DROP primary key;
+ALTER TABLE wb4_irc_channel_key_crews ADD COLUMN id int(10) unsigned auto_increment PRIMARY KEY FIRST;
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_irc_channel_key_crews DROP COLUMN id;
+ALTER TABLE wb4_irc_channel_key_crews ADD PRIMARY KEY (irc_channel_key_id, crew_id);
+"""

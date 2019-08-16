@@ -1,0 +1,15 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+LOCK TABLES `wb4_logistic_statuses` WRITE;
+DELETE FROM `wb4_logistic_statuses`;
+/*!40000 ALTER TABLE `wb4_logistic_statuses` DISABLE KEYS */;
+INSERT INTO `wb4_logistic_statuses` VALUES (1,'REGISTERED','Registered'),(2,'IN_TRANSIT','In transit'),(3,'ARRIVED','Arrived'),(4,'CHECKED_OUT','Checked out'),(5,'CHECKED_IN','Checked in'),(6,'RETURNED','Returned'),(7,'MOVED','Moved'),(8,'UNREGISTERED','Unregistered'),(9,'REREGISTERED','Re-registered');                                                    
+/*!40000 ALTER TABLE `wb4_logistic_statuses` ENABLE KEYS */;
+UNLOCK TABLES;
+"""
+
+SQL_DOWN = u"""
+LOCK TABLES `wb4_logistic_statuses` WRITE;
+DELETE FROM `wb4_logistic_statuses`;
+UNLOCK TABLES;
+"""

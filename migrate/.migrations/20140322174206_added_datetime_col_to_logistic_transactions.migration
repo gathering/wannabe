@@ -1,0 +1,8 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+alter table wb4_logistic_transactions add column deleted datetime default NULL;
+"""
+
+SQL_DOWN = u"""
+alter table wb4_logistic_transactions drop column deleted;
+"""

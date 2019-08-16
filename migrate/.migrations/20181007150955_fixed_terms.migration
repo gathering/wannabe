@@ -1,0 +1,13 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE `wb4_user_terms` DROP INDEX `user_id`;
+ALTER TABLE `wb4_user_terms` ADD COLUMN `terms_id` INT(10) NULL AFTER `event_id`;
+ALTER TABLE `wb4_user_terms` MODIFY COLUMN `accepted` timestamp DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE `wb4_user_terms` ADD CONSTRAINT `wb4_user_terms_user_id_terms_id_pk` UNIQUE (`user_id`, `terms_id`);
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE `wb4_user_terms` DROP INDEX `wb4_user_terms_user_id_terms_id_pk`;
+ALTER TABLE `wb4_user_terms` MODIFY COLUMN `accepted` datetime NULL DEFAULT '0000-00-00 00:00:00';
+ALTER TABLE `wb4_user_terms` DROP `terms_id`;
+"""

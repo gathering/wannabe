@@ -1,0 +1,10 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+UPDATE wb4_user_privacies SET phone = 1;
+UPDATE wb4_user_privacies SET address = 1;
+ALTER TABLE wb4_user_privacies ADD COLUMN allow_crew TINYINT(1) DEFAULT 0 NOT NULL;
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_user_privacies DROP COLUMN allow_crew;
+"""

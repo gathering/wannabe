@@ -1,0 +1,64 @@
+.overlay,
+#maincontent {
+    z-index: -10;
+    height: 588px;
+    width: 877px !important;
+    background-image: url('/img/TG19_Infoskjerm_940x529.png');
+    background-size: 940px 588px;
+    padding-left: 63px;
+}
+
+#bottomdiv {
+    width: 940px;
+}
+
+#titlecontent {
+    line-height: 80px;
+    font-size: 60px;
+	width: 830px;
+    margin-left: 0;
+}
+
+#slidecontent {
+    font-size: 40px;
+    width: 830px;
+    margin-left: 0;
+}
+
+#editkontroller {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+#timetitle {
+    font-size: 40px;
+}
+
+#author {
+    font-size: 40px;
+}
+
+#description {
+    font-size: 30px;
+}
+
+form .input {
+    margin-left: 0;
+}
+
+select {
+    width: 90px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+#SlideshowsSlideDuration {
+    width: 80px;
+}
+
+.row, .spacingplx {
+    margin-top: 10px;
+}

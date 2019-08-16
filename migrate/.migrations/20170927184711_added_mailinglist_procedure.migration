@@ -1,0 +1,61 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+
+CREATE DEFINER=`wannabe`@`localhost` PROCEDURE mailinglistaddresses(IN mailinglist_id INT)
+BEGIN
+SELECT
+	u.email as address,
+    u.username,
+    u.realname
+FROM (
+	SELECT DISTINCT sub.user_id, sub.id, sub.optional
+	FROM (
+		SELECT cu.user_id, ml.id, ml.optional
+		FROM wb4_mailinglistrules mlr
+		LEFT JOIN wb4_crews_users cu
+		ON mlr.crew_id = cu.crew_id
+		LEFT JOIN wb4_mailinglists ml
+		ON mlr.mailinglist_id = ml.id
+		WHERE ml.id = mailinglist_id
+		AND cu.leader >= mlr.leader
+		UNION
+		SELECT cu.user_id, ml.id, ml.optional
+		FROM wb4_mailinglistrule_teams mlrt
+		LEFT JOIN wb4_teams t
+		ON mlrt.team_id = t.id
+		LEFT JOIN wb4_crews_users cu
+		ON t.id = cu.team_id
+		LEFT JOIN wb4_mailinglists ml
+		ON mlrt.mailinglist_id = ml.id
+		WHERE ml.id = mailinglist_id
+		UNION
+		SELECT mlru.user_id, ml.id, ml.optional
+		FROM wb4_mailinglistrule_users mlru
+		LEFT JOIN wb4_mailinglists ml
+		ON mlru.mailinglist_id = ml.id
+		WHERE ml.id = mailinglist_id
+	) sub
+) ml
+INNER JOIN wb4_users u
+ON u.id = ml.user_id
+LEFT JOIN wb4_user_mailprefs ump
+ON ump.user_id = ml.user_id
+AND ump.mailinglist_id = ml.id
+WHERE ump.subscribe IS NULL
+OR ump.subscribe <> 0
+ORDER BY u.realname ASC;
+END;
+/
+
+CREATE INDEX USER_LIST
+ON wb4_user_mailprefs (mailinglist_id, user_id);
+
+"""
+
+SQL_DOWN = u"""
+
+ALTER TABLE wb4_user_mailprefs DROP INDEX USER_LIST;
+
+DROP PROCEDURE IF EXISTS mailinglistaddresses;
+
+"""

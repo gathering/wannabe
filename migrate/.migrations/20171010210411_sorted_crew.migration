@@ -1,0 +1,10 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE  `wb4_crews` ADD  `sorted_weight` INT( 6 ) NOT NULL DEFAULT  '0';
+ALTER TABLE  `wb4_application_available_fields` CHANGE  `name`  `name` VARCHAR( 128 ) NULL DEFAULT NULL;
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_crews DROP sorted_weight;
+ALTER TABLE  `wb4_application_available_fields` CHANGE  `name`  `name` VARCHAR( 50 ) NULL DEFAULT NULL;
+"""

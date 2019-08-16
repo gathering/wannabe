@@ -1,0 +1,8 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE wb4_crew_effects_orders ADD order_deactivated TINYINT( 1 ) NOT NULL DEFAULT '0';
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_crew_effects_orders DROP order_deactivated;
+"""

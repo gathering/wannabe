@@ -1,0 +1,10 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE wb4_cfad_users ADD COLUMN id int(10) unsigned not null auto_increment primary key FIRST;
+
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_cfad_users DROP COLUMN id;
+
+"""

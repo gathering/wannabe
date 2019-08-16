@@ -1,0 +1,17 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+	CREATE TABLE `wb4_badges` (
+	  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	  `user_id` int(10) unsigned DEFAULT NULL,
+	  `nfc_id` varchar(255) DEFAULT NULL,
+	  `event_id` int(10) unsigned NOT NULL,
+	  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	  `type` enum('crew','press','invited','hoa','iss') NOT NULL DEFAULT 'crew',
+	  `active` tinyint(1) DEFAULT '1',
+	  PRIMARY KEY (`id`)
+	) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+"""
+
+SQL_DOWN = u"""
+	DROP TABLE wb4_badges;
+"""

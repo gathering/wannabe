@@ -1,0 +1,88 @@
+@import url(https://fonts.googleapis.com/css?family=Neuton:400,700);
+.overlay {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	opacity: 0.0;
+	width: 1280px;
+	height: 720px;
+	background-color: #FAFEFF;
+}
+
+#maincontent {
+	z-index: -5;
+	height: 720px;
+	width: 1024px;
+	font-family: "Neuton";
+	padding-left: 128px;
+}
+
+#bottomdiv{
+	background-image:url('/img/slideshow_background_720p.png');
+	height:145px;
+	width:1280px;
+	position:absolute;
+	top:935px;
+	z-index: 11;
+}
+
+#titlecontent{
+	font-size: 70px;
+    color: #B30F16;
+    padding-left: 0;
+	font-weight: bold;
+	margin: 0 auto;
+}
+
+#slidecontent{
+	line-height: 100%;
+	font-size: 50px;
+    color: #78130B;
+    padding-left: 0;
+	margin: 0 auto;
+}
+
+#editkontroller{
+	z-index:1000;
+	font-size: 70px;
+	margin: 0 auto;
+	color: #E2EFFC;
+	position:absolute;
+	top:90%;
+	left:90%;
+}
+
+.slidecontent {
+		position: absolute;
+		top: 0;
+		left: 128px;
+		/*background: rgba(0, 0, 0, 0.03);*/
+		width: 1024px;
+		height: 720px;
+		z-index: -8;
+}
+
+#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image:url('/img/tg14_slideshow_background_720p.png');
+    background-size:1280px 720px;
+    width: 1280px;
+    height: 720px;
+    z-index: -9000;
+}
+
+#timetitle{
+	font-weight: 800;
+}
+#author{
+	font-size: 70px;
+}
+#description{
+	font-size: 60px;
+	margin-top: 40px;
+}
+#timespan{
+	color: #ebc880;
+}

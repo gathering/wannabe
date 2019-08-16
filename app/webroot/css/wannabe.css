@@ -1,0 +1,340 @@
+/**
+ *
+ * CSS for Wannabe 4 - bygget på default CSS fra Cake 2.0.0
+ */
+html, body {
+	background-color: #eee;
+	font-family: Helvetica, sans-serif;
+}
+p, blockquote, pre, a, abbr, acronym, address, cite, code, del, dfn, em, img, q, s, samp, small, strike, sub, sup, tt, var, dd, dl, dt, li, ol, ul, fieldset, form, label, button, table, caption, tbody, tfoot, thead, tr, th, td {
+	font-weight: 300;
+}
+.topbar .dropdown-menu a, .dropdown-menu a {
+	font-weight: 300;
+}
+header {
+	background-color: #767D80;
+	/* background: #000 url('/img/wbg.png') no-repeat center -30px;*/
+	min-width: 940px;
+	padding-top: 40px;
+}
+header h1 {
+	font-size: 40px;
+	line-height: 1;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+}
+header p {
+	font-weight: 300;
+	font-size: 20px;
+	line-height: 27px;
+}
+header h1, header p {
+	color: white;
+	margin-bottom: 9px;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+}
+header .inner {
+	-webkit-box-shadow: inset 0 10px 30px rgba(0, 0, 0, .3);
+	-moz-box-shadow: inset 0 10px 30px rgba(0, 0, 0, .3);
+	padding: 36px 0 27px;
+}
+section {
+	padding-top: 60px;
+}
+footer {
+	min-width: 940px;
+	padding: 30px 0;
+	margin: 0;
+	text-shadow: 0 1px 0 white;
+}
+header .well p {
+    font-size: 13px;
+    line-height: 18px;
+    color: rgb(64, 64, 64);
+    text-shadow: none;
+}
+#content {
+	background-color: #fff;
+	padding: 20px;
+	margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+	-webkit-border-radius: 0 0 6px 6px;
+		 -moz-border-radius: 0 0 6px 6px;
+					border-radius: 0 0 6px 6px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+		 -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+					box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+.container-fullscreen {
+    background-color: #fff;
+    position: absolute;
+    top: 188px;
+    bottom: 0;
+    width: 100%;
+}
+.container-fullscreen #content {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+.container-fullscreen > section {
+    padding: 0;
+}
+.container-fullscreen .alert-message {
+    margin-bottom: 0;
+}
+.wikidiff ins {
+	text-decoration:none;
+	background-color: #d7f0db;
+}
+.wikidiff del {
+	text-decoration:none;
+	background-color: #fcd2d3;
+}
+.topbar div > ul.secondary-nav, .nav.secondary-nav {
+	margin-left: 0px;
+}
+.anchor-link:before {
+	display:block; 
+	content:""; 
+	height:40px; 
+	margin:-40px 0 0; 
+}
+p.pull-right {
+	color: #666;
+}
+h3 small.pull-right {
+	line-height: 36px;
+}
+.into-header {
+	margin-top: -150px;
+}
+.into-header-well-only {
+	margin-top: -105px;
+}
+.into-header h1, .into-header h2, .into-header h3, .into-header h4, .into-header h5, .into-header h6 {
+	color: white;
+	margin-bottom: 9px;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+}
+.in-header {
+	margin-top: -103px;
+    margin-bottom: -30px;
+}
+.in-header-well-only {
+	margin-top: -58px;
+    margin-bottom: -30px;
+}
+.in-header h1, .in-header h2, .in-header h3, .in-header h4, .in-header h5, .in-header h6 {
+	color: white;
+	margin-bottom: 9px;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+}
+address {
+				white-space: pre;
+}	 
+.columns {
+	text-align: justify;
+	column-count: 2;
+	column-gap: 20px;
+	column-rule: 1px solid rgba(0, 0, 0, .15);
+	-moz-column-count: 2;
+	-moz-column-gap: 20px;
+	-moz-column-rule: 1px solid rgba(0, 0, 0, .15);
+	-webkit-column-count: 2;
+	-webkit-column-gap: 20px;
+	-webkit-column-rule: 1px solid rgba(0, 0, 0, .15);
+}
+a.small {
+	text-align: center;
+	min-width: 70px;
+}
+.home-profile {
+	padding-top: 19px;
+	border-top: 1px solid #EEE;
+}
+ul.profile {
+	margin-bottom: 0px;
+}
+div.crew-description {
+	margin-bottom: 20px;
+}
+form .input p {
+	padding-top: 6px;
+}
+div.span-left-rule {
+	margin-left: 10px !important;
+	padding-left: 9px;
+	border-left: 1px solid rgba(0, 0, 0, .15);
+}
+.justify {
+	text-align: justify;
+}
+ul.media-grid p, ul.media-grid > li > div {
+	line-height: 10px;
+	float: left;
+	padding: 4px;
+	margin: 0 0 18px 20px;
+	border: 1px solid #DDD;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+ul.media-grid > li > div > div.media-comment { 
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 7px;
+    z-index: 1;
+}
+ul.media-grid > li > div > div.media-comment > div { 
+    margin-top: 15px;
+}
+form > ul.media-grid > li > div > div.media-comment > div > label {
+    width: auto;
+    float: none;
+}
+form > ul.media-grid > li > div > div.media-comment > div > input {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+form > ul.media-grid > li {
+    margin: 0;
+}
+form > ul.media-grid > li > div {
+    position: relative;
+}
+ul.media-grid > li > div > div.thumbnail-overlay { 
+    position: absolute;
+    left: 4px;
+    top: 4px;
+}
+.white-bg {
+    background-color: white;
+}
+ul.media-grid > li > div > div.thumbnail-overlay > div { 
+    position: inherit;
+    margin-top: 30%;
+    text-align: center;
+}
+ul.media-grid > li > div > div.thumbnail-overlay > div > select,
+ul.media-grid > li > div > div.thumbnail-overlay > div > textarea, 
+ul.media-grid > li > div > div.thumbnail-overlay > div > button, 
+ul.media-grid > li > div > div.thumbnail-overlay > div > input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.media200 {
+    width: 200px;
+    height: 267px;
+}
+.profile-picture {
+	max-width: 600px;
+}
+#picture-preview {
+	width: 300px;
+	height: 427px;
+}
+.green {
+	color: #46a546 !important;
+}
+.blue {
+	color: #049cdb !important;
+}
+.red {
+	color: #9d261d !important;
+}
+.yellow {
+	color: #ffc40d !important;
+}
+.enrollanswer {
+	white-space: pre-wrap;
+	text-align: left;
+}
+.footer-logo {
+    text-align: center;
+}
+.hidden {
+    display: none;
+}
+.code {
+    white-space: pre-wrap;
+    word-break: break-all;
+    padding: 0 3px 2px;
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    font-size: 12px;
+}
+
+form > table td label {
+    width:auto;
+    margin-right:20px;
+}
+.showup-comment {
+    max-width: 150px;
+    word-wrap: break-word;
+}
+.media-comment a {
+    float: none;
+    padding: 0;
+    margin: 0;
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+/* CSS used in SmsBudget */
+.editmode a.edit, .editmode span.curlimit {
+    display: none;
+}
+.editmode a.save, .editmode input.editlimit {
+    display: inline-block; 
+}
+a.save, input.editlimit {
+    display: none;
+}
+input.shortinput {
+    width: 75px;
+}
+.createnewbudget {
+    display: none;
+}
+#budgets td.buttongroup {
+    width: 200px;
+}
+.form-table {
+    margin-bottom: 0;
+}
+.number-column {
+    text-align: right;
+}
+.divider-row {
+    border-top-width: 2px;
+}
+#express-items ul,
+#express-items-modal ul {
+    margin-bottom: 0;
+}
+#express-bulk-amounts input {
+    width: 3em;
+}
+#express-modal, #express-bulk-modal, #express-comment-modal {
+    position: absolute;
+    margin-bottom: 2em;
+}
+#express-modal form, #express-bulk-modal form, #express-comment-modal form {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+#express-comment-modal form textarea {
+    width: 94%;
+    height: 10em;
+}
+.breadcrumb {
+    margin-bottom: 2em;
+}
+
+tr.given {
+	background-color: #5BB75B;
+	color: white;
+}

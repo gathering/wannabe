@@ -1,0 +1,17 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE `wb4_application_documents` ADD COLUMN `priority` TINYINT NOT NULL DEFAULT '6';
+CREATE TABLE `wb4_application_comments` (
+	`id` INT(10) NOT NULL AUTO_INCREMENT,
+	`application_document_id` INT(10) NOT NULL,
+	`user_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`content` TEXT NOT NULL,
+	PRIMARY KEY (`id`)
+)
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE `wb4_application_documents` DROP `priority`;
+DROP TABLE IF EXISTS `wb4_application_comments`;
+"""

@@ -1,0 +1,8 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE wb4_crew_effects_items CHANGE allow_change allow_order tinyint(1);
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_crew_effects_items CHANGE allow_order allow_change tinyint(1);
+"""

@@ -1,0 +1,108 @@
+.unstyled {padding:0;list-style:none;}
+
+.media-grid { padding: 0px;list-style:none; }
+
+ul.media-grid p, ul.media-grid > li > div {
+	line-height: 10px;
+	float: left;
+	padding: 4px;
+	margin: 0 0 18px 20px;
+	border: 1px solid #DDD;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+ul.media-grid > li > div > div.media-comment {
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 7px;
+    z-index: 1;
+}
+ul.media-grid > li > div > div.media-comment > div {
+    margin-top: 15px;
+}
+form > ul.media-grid > li > div > div.media-comment > div > label {
+    width: auto;
+    float: none;
+}
+form > ul.media-grid > li > div > div.media-comment > div > input {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+form > ul.media-grid > li {
+    margin: 0;
+}
+form > ul.media-grid > li > div {
+    position: relative;
+}
+ul.media-grid > li > div > div.thumbnail-overlay {
+    position: absolute;
+    left: 4px;
+    top: 4px;
+}
+.white-bg {
+    background-color: white;
+}
+ul.media-grid > li > div > div.thumbnail-overlay > div {
+    position: inherit;
+    margin-top: 30%;
+    text-align: center;
+}
+ul.media-grid > li > div > div.thumbnail-overlay > div > select,
+ul.media-grid > li > div > div.thumbnail-overlay > div > textarea,
+ul.media-grid > li > div > div.thumbnail-overlay > div > button,
+ul.media-grid > li > div > div.thumbnail-overlay > div > input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.profile-picture {
+	max-width: 600px;
+}
+
+#profile-crop-container {
+	max-width: 600px;
+	height: 400px;
+}
+
+#profile-crop-image {
+	max-width: 100%;
+}
+
+#picture-preview {
+	width: 300px;
+	height: 427px;
+	overflow: hidden;
+}
+
+p, blockquote, pre, a, abbr, acronym, address, cite, code, del, dfn, em, img, q, s, samp, small, strike, sub, sup, tt, var, dd, dl, dt, li, ol, ul, fieldset, form, label, button, table, caption, tbody, tfoot, thead, tr, th, td {
+	font-weight: 300;
+}
+
+.container-fullscreen {
+    background-color: #fff;
+    position: absolute;
+    height: 100%;
+    bottom: 0;
+    width: 100%;
+}
+
+.tab-pane {
+	margin-top: 20px;
+}
+
+.affix {
+		top:70px;
+		z-index: 800 !important;
+}
+
+ins {
+	color: green;
+}
+
+del {
+	color: red;
+}

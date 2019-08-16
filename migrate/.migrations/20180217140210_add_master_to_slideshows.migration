@@ -1,0 +1,8 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE `wb4_slideshows` ADD COLUMN `master` INT(10) NULL DEFAULT 0 AFTER `event_id`;
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE `wb4_slideshows` DROP `master`;
+"""

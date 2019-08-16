@@ -1,0 +1,42 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+
+CREATE TABLE IF NOT EXISTS `wb4_mailinglistrule_crewnews` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `mailinglist_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `mailinglist_id` (`mailinglist_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`wannabe`@`localhost` SQL SECURITY DEFINER VIEW `wb4_mailinglistaddresses_crewnew` AS (
+SELECT DISTINCT u.realname, u.username, u.email, m.address, m.event_id
+FROM wb4_users AS u, wb4_mailinglists AS m 
+LEFT JOIN wb4_mailinglistrule_crewnews AS mrcn 
+    ON m.id = mrcn.mailinglist_id 
+WHERE mrcn.mailinglist_id IS NOT NULL 
+AND u.id IN 
+    (SELECT cu.user_id 
+    FROM wb4_crews_users as cu 
+    LEFT JOIN wb4_userhistories AS uh 
+        ON cu.user_id = uh.user_id 
+    WHERE uh.user_id IS NULL) 
+AND u.id IN 
+    (SELECT cu.user_id 
+    FROM wb4_events AS e
+    LEFT JOIN wb4_crews AS c 
+        ON e.id = c.event_id
+    LEFT JOIN wb4_crews_users AS cu 
+        ON c.id = cu.crew_id 
+    WHERE cu.user_id IS NOT NULL
+    )
+)
+
+"""
+
+SQL_DOWN = u"""
+
+DROP TABLE IF EXISTS `wb4_mailinglistrule_crewnews`;
+
+DROP VIEW IF EXISTS `wb4_mailinglistaddresses_crewnew`;
+
+"""

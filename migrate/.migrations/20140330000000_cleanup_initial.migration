@@ -1,0 +1,113 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+DROP TABLE IF EXISTS `wb4_cleanups`;
+DROP TABLE IF EXISTS `wb4_cleanup_dates`;
+DROP TABLE IF EXISTS `wb4_cleanup_positions`;
+DROP TABLE IF EXISTS `wb4_cleanup_exempt_crews`;
+
+-- Table structure
+
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wb4_cleanups` (
+  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `event_id` mediumint(5) unsigned NOT NULL,
+  `description` text,
+  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `cleanup_positions_upcoming` int(11) unsigned default 0,
+  `cleanup_positions_completed` int(11) unsigned default 0,
+  PRIMARY KEY (`id`),
+  KEY `event` (`event_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wb4_cleanup_positions` (
+  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `cleanup_id` int(8) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `completed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `comment` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY (`cleanup_id`, `user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE `wb4_cleanup_exempt_crews` (
+  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `event_id` mediumint(5) unsigned NOT NULL,
+  `crew_id` int(8) unsigned NOT NULL,
+  `exempted_by` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY (`crew_id`, `event_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- Menu items
+-- Delete old
+
+DELETE FROM wb4_menuitems WHERE name = 'Cleanup';
+DELETE FROM wb4_i18n WHERE content = 'Cleanup';
+DELETE FROM wb4_i18n WHERE content = 'Rydding';
+
+-- Create new
+
+INSERT INTO wb4_menuitems (parent_id, name, path, position) values (107, 'CleanupRegistration', '/Cleanup', 10);
+set @last_id = LAST_INSERT_ID();
+INSERT INTO wb4_i18n (locale, model, foreign_key, field, content) values ('nob', 'Menuitem', @last_id, 'name', 'Registrere rydding');
+INSERT INTO wb4_i18n (locale, model, foreign_key, field, content) values ('eng', 'Menuitem', @last_id, 'name', 'Cleanup registration');
+
+INSERT INTO wb4_menuitems (parent_id, name, path, position) values (20, 'CleanupAdmin', '/Cleanup/Admin', 17);
+set @last_id = LAST_INSERT_ID();
+INSERT INTO wb4_i18n (locale, model, foreign_key, field, content) values ('nob', 'Menuitem', @last_id, 'name', 'Rydding');
+INSERT INTO wb4_i18n (locale, model, foreign_key, field, content) values ('eng', 'Menuitem', @last_id, 'name', 'Cleanup');
+
+INSERT INTO wb4_menuitems (parent_id, name, path, position) values (106, 'CleanupTimes', '/Cleanup/Times', 20);
+set @last_id = LAST_INSERT_ID();
+INSERT INTO wb4_i18n (locale, model, foreign_key, field, content) values ('nob', 'Menuitem', @last_id, 'name', 'Ryddetider');
+INSERT INTO wb4_i18n (locale, model, foreign_key, field, content) values ('eng', 'Menuitem', @last_id, 'name', 'Cleanup times');
+"""
+
+SQL_DOWN = u"""
+DROP TABLE IF EXISTS `wb4_cleanups`;
+DROP TABLE IF EXISTS `wb4_cleanup_positions`;
+DROP TABLE IF EXISTS `wb4_cleanup_exempt_crews`;
+
+--
+-- Table structure for table `wb4_cleanup_dates`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wb4_cleanup_dates` (
+  `cid` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `event` mediumint(5) unsigned NOT NULL,
+  `name` varchar(100) CHARACTER SET latin1 NOT NULL,
+  PRIMARY KEY (`cid`),
+  KEY `event` (`event`)
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `wb4_cleanup_positions`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wb4_cleanup_positions` (
+  `pid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `cid` mediumint(8) unsigned NOT NULL,
+  `user` int(11) unsigned NOT NULL,
+  `ok` tinyint(1) unsigned NOT NULL,
+  PRIMARY KEY (`pid`),
+  KEY `cid` (`cid`,`user`)
+) ENGINE=MyISAM AUTO_INCREMENT=1163 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+DELETE FROM wb4_menuitems WHERE name = 'CleanupRegistration';
+DELETE FROM wb4_menuitems WHERE name = 'CleanupAdmin';
+DELETE FROM wb4_i18n WHERE content = 'Registrere rydding';
+DELETE FROM wb4_i18n WHERE content = 'Cleanup registration';
+
+INSERT INTO wb4_menuitems (parent_id, name, path, position) values (8, 'Cleanup', '/Crew/Cleanup', 5);
+set @last_id = LAST_INSERT_ID();
+INSERT INTO wb4_i18n (locale, model, foreign_key, field, content) values ('nob', 'Menuitem', @last_id, 'name', 'Rydding');
+INSERT INTO wb4_i18n (locale, model, foreign_key, field, content) values ('eng', 'Menuitem', @last_id, 'name', 'Cleanup');
+
+"""

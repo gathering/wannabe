@@ -1,0 +1,8 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+alter table wb4_cleanups add maximum int(10) unsigned;
+"""
+
+SQL_DOWN = u"""
+alter table wb4_cleanups drop column maximum;
+"""

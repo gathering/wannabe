@@ -1,0 +1,10 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+alter table wb4_cfad_users add column date datetime;
+
+"""
+
+SQL_DOWN = u"""
+alter table wb4_cfad_users drop column date;
+
+"""

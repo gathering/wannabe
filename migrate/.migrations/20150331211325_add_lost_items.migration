@@ -1,0 +1,30 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+CREATE TABLE IF NOT EXISTS `wb4_lost_items` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `event_id` int(10) unsigned NOT NULL,
+  `category_id` int(10) unsigned NOT NULL,
+  `storage_place_id` int(10) unsigned DEFAULT NULL,
+  `description` text NOT NULL,
+  `last_seen_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `last_seen_where` text,
+  `lost_by` text,
+  `lost_registered_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lost_registered_logged_in_user` int(10) unsigned NOT NULL,
+  `lost_registered_by` int(10) unsigned NOT NULL,
+  `found_by` text,
+  `found_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `found_logged_in_user` int(10) unsigned DEFAULT NULL,
+  `found_registered_by` int(10) unsigned DEFAULT NULL,
+  `resolved` tinyint(1) NOT NULL,
+  `resolved_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `resolved_logged_in_user` int(10) unsigned DEFAULT NULL,
+  `resolved_registered_by` int(10) unsigned DEFAULT NULL,
+  `resolved_delivered_by` int(10) unsigned DEFAULT NULL,
+  `resolved_description` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+"""
+
+SQL_DOWN = u"""
+"""

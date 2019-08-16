@@ -1,0 +1,9 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE wb4_application_choices ADD disabled tinyint(4);
+UPDATE wb4_application_choices SET disabled = 0;
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_application_choices DROP disabled;
+"""

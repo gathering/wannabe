@@ -1,0 +1,9 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE wb4_logistic_transactions ADD COLUMN hand_out_comment TEXT;
+ALTER TABLE wb4_logistic_transactions DROP COLUMN received_user_id;
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_logistic_transactions DROP COLUMN hand_out_comment;
+"""

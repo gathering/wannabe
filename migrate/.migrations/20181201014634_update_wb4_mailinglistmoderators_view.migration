@@ -1,0 +1,20 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER ALGORITHM = UNDEFINED DEFINER = `wannabe`@`localhost` SQL SECURITY DEFINER VIEW `wb4_mailinglistmoderators` AS (
+SELECT DISTINCT u.email AS email, m.address AS mailinglist, m.moderatorpassword AS moderatorpassword
+FROM wb4_mailinglists m
+JOIN wb4_users u
+JOIN wb4_crews_users uc
+JOIN wb4_mailinglistrules mrule
+WHERE uc.user_id = u.id
+AND m.id = mrule.mailinglist_id
+AND uc.crew_id = mrule.crew_id
+AND uc.leader >= mrule.leader
+AND mrule.enable_moderator =1
+)
+"""
+
+SQL_DOWN = u"""
+DROP VIEW wb4_mailinglistmoderators
+CREATE ALGORITHM=UNDEFINED DEFINER=`wannabe`@`localhost` SQL SECURITY DEFINER VIEW `wb4_mailinglistmoderators` AS (select distinct `u`.`email` AS `email`,`m`.`address` AS `mailinglist`,`m`.`moderatorpassword` AS `moderatorpassword` from ((((`wb4_mailinglists` `m` join `wb4_users` `u`) join `wb4_crews_users` `uc`) join `wb4_crews` `c`) join `wb4_mailinglistrules` `mrule`) where ((`uc`.`user_id` = `u`.`id`) and (`m`.`id` = `mrule`.`mailinglist_id`) and (`uc`.`crew_id` = `mrule`.`crew_id`) and (((`c`.`id` = `uc`.`crew_id`) and ((`c`.`id` = `m`.`crew_id`) or (`mrule`.`enable_moderator` = 1))) or (`uc`.`crew_id` = (select `c2`.`id` from `wb4_crews` `c2` where (`c2`.`id` = `c`.`crew_id`)))) and (`uc`.`leader` > 2) and ((`m`.`crew_id` > 0) or (`mrule`.`enable_moderator` = 1))))
+"""

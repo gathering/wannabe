@@ -1,0 +1,17 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+
+ALTER TABLE wb4_sms_messages 
+ADD sent_by_id int(10) NOT NULL
+DEFAULT -1;
+
+
+ALTER TABLE wb4_sms_messages 
+ADD event_id int(10) NOT NULL
+DEFAULT -1;
+
+"""
+
+SQL_DOWN = u"""
+
+"""

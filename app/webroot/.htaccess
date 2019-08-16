@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	#RewriteCond %{REMOTE_ADDR} !^195\.159\.233\.58$
+	#RewriteCond %{REMOTE_ADDR} !^195\.159\.233\.60$
+	#RewriteCond %{REMOTE_ADDR} !^127\.
+	#RewriteCond %{REMOTE_ADDR} !^212\.214\.0\.2$
+	#RewriteCond %{REMOTE_ADDR} !^::1$
+	#RewriteCond %{REMOTE_ADDR} !^2001:16d8:ee00:3e::2$
+	#RewriteCond %{REMOTE_ADDR} !^2001:840:4041:0:218:8bff:fe7d:5c90$
+	#RewriteCond %{REMOTE_ADDR} !^wen\.gathering\.org$
+	#RewriteCond %{REMOTE_ADDR} !^188.0.125.11$
+	#RewriteCond %{REMOTE_ADDR} !^2a01:798:76a:125::11$
+	#RewriteCond %{REMOTE_ADDR} !^129\.241\.151\.232$
+	#RewriteCond %{REMOTE_ADDR} !^84\.208\.201\.148$
+	#RewriteRule ^(.*)$ upgrading.html [L]
+
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>

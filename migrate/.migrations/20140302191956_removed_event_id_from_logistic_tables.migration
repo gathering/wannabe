@@ -1,0 +1,18 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+alter table wb4_logistic_bulks drop column event_id;
+alter table wb4_logistic_items drop column event_id;
+alter table wb4_logistic_storages drop column event_id;
+alter table wb4_logistic_suppliers drop column event_id;
+alter table wb4_logistic_tags drop column event_id;
+
+"""
+
+SQL_DOWN = u"""
+alter table wb4_logistic_bulks add column event_id int(10) unsigned default 0;
+alter table wb4_logistic_items add column event_id int(10) unsigned default 0;
+alter table wb4_logistic_storages add column event_id int(10) unsigned default 0;
+alter table wb4_logistic_suppliers add column event_id int(10) unsigned default 0;
+alter table wb4_logistic_tags add column event_id int(10) unsigned default 0;
+
+"""

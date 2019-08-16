@@ -1,0 +1,143 @@
+/**
+ *
+ * CSS for Wannabe 4 - bygget på default CSS fra Cake 2.0.0
+ */
+
+* {
+	margin:0;
+	padding:0;
+}
+
+/** General Style Info **/
+html {
+	background-color: #000;
+	background-image: url('/img/wbg.png');
+	background-repeat: no-repeat;
+	background-attachment:fixed;
+	background-position: top, center;
+}
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, cite, code, del, dfn, em, img, q, s, samp, small, strike, strong, sub, sup, tt, var, dd, dl, dt, li, ol, ul, fieldset, form, label, legend, button, table, caption, tbody, tfoot, thead, tr, th, td {
+	font-weight: 300;
+}
+body {
+	background-color: transparent; 
+	color: #fff;
+	font-family: Helvetica, sans-serif;
+	font-size: 0.75em;
+	font-weight: lighter;
+	margin: 0;
+	/* letter-spacing: -0.063em; */
+	line-height: 1.4;
+}
+p {
+	font-weight: lighter;
+}
+a {
+	color: #3bc541;
+	text-decoration: none;
+	font-weight: lighter;
+}
+a:hover {
+	color: green;
+	text-decoration:none;
+}
+a img {
+	border:none;
+}
+h1, h2, h3, h4 {
+	color: white;
+	margin-bottom:0.4em;
+	font-weight: lighter;
+}
+h1 {
+	font-size: 3em;
+}
+h2 {
+	line-height: 21px;
+	font-size: 1.25em;
+	font-weight: 500;
+}
+h3 {
+	font-size: 0.625em;
+}
+header {
+	margin-top: 190px;
+	margin-bottom: 25px;
+	width: 22em;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+header h1 {
+	text-transform: lowercase;
+	letter-spacing: 0.2em;
+	margin-bottom: 0;
+}
+header h3 {
+	text-transform: uppercase;
+	letter-spacing: 0.15em;
+}
+section {
+	width: 884px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 140px;
+}
+#generic_content_box {
+	margin-left: auto;
+	margin-right: auto;
+	float: none;
+	height:auto;
+}
+footer {
+	border-top: none;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	margin-bottom: 20px;
+	margin-left:200px;
+	margin-right:200px;;
+}
+#messages {
+	margin-top: 20px;
+	height: 34px;
+	width: 884px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#modal, #modal h3, #modal h4 {
+	color: #404040;
+}
+#modal h3 {
+	font-size: 18px;
+}
+#modal h3, #modal h4 {
+	margin-bottom: 0;
+}
+.help-inline, .help-block {
+	color: #acacac;
+}
+.generic-long {
+	display: block;
+	position: relative;
+	margin-top: 50px;
+	width: 980px;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	margin-bottom: 100px;
+}
+.columns {
+	text-align: justify;
+	column-count: 2;
+	column-gap: 20px;
+	column-rule: 1px solid rgba(0, 0, 0, .15);
+	-moz-column-count: 2;
+	-moz-column-gap: 20px;
+	-moz-column-rule: 1px solid rgba(0, 0, 0, .15);
+	-webkit-column-count: 2;
+	-webkit-column-gap: 20px;
+	-webkit-column-rule: 1px solid rgba(0, 0, 0, .15);
+}

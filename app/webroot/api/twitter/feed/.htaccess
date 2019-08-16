@@ -1,0 +1,3 @@
+        php_flag display_errors on
+        php_flag log_errors off
+

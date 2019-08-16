@@ -1,0 +1,8 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE wb4_needs ADD COLUMN updated_on DATETIME NULL DEFAULT NULL;
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_needs DROP COLUMN updated_on;
+"""

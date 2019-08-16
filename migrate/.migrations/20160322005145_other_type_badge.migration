@@ -1,0 +1,10 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE wb4_badges MODIFY COLUMN type enum('crew','press','invited','hoa','iss', 'other') DEFAULT 'crew' NOT NULL;
+ALTER TABLE wb4_badges ADD COLUMN specification VARCHAR(255) NULL AFTER type;
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_badges MODIFY COLUMN type enum('crew','press','invited','hoa','iss') DEFAULT 'crew' NOT NULL;
+ALTER TABLE wb4_badges DROP COLUMN specification;
+"""

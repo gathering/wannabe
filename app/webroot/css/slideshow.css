@@ -1,0 +1,93 @@
+@import url(https://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+.overlay {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	opacity: 0.0;
+	width: 1920px;
+	height: 1080px;
+	background-color: #FAFEFF;
+}
+
+#maincontent {
+	z-index: -5;
+	height: 1080px;
+	width: 1664px;
+	font-family: 'Droid Sans';
+    font-weight: bold;
+	padding-left: 128px;
+}
+#bottomdiv{
+	/*background-image:url('/img/slideshow_background_1080p.png');*/
+	height:145px;
+	width:1920px;
+	position:absolute;
+	top:935px;
+	z-index: 11;
+}
+
+#titlecontent{
+	font-size: 120px;
+	color: #FFF;
+	font-weight: bold;
+	margin: 0 auto;
+}
+
+#slidecontent{
+	line-height: 100%;
+	font-size: 80px;
+	margin: 0 auto;
+    padding-left: 0;
+	color: #FFF;
+}
+#editkontroller{
+	z-index:1000;
+	font-size: 70px;
+	margin: 0 auto;
+	color: #E2EFFC;
+	position:absolute;
+	top:90%;
+	left:90%;
+}
+
+.slidecontent {
+		position: absolute;
+		top: 0;
+		left: 100px;
+		/*background: rgba(0, 0, 0, 0.6);*/
+		width: 1700px;
+		height: 1080px;
+		z-index: -8;
+	}
+
+#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*
+    background-image:url('/img/tg14_slides1080p_komp.png');
+    background-size:1920px 1080px;
+    */
+    width: 1920px;
+    height: 1080px;
+    z-index: -9000;
+}
+
+.lofi {
+    background-image: url("/img/infoskjerm.tg19.png");
+    background-size: 1920px 1080px;
+}
+
+#timetitle{
+	font-weight: 800;
+}
+#author{
+	font-size: 70px;
+}
+#description{
+	font-size: 60px;
+	margin-top: 40px;
+}
+#timespan{
+	color: #ebc880;
+}

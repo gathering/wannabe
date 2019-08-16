@@ -1,0 +1,12 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+
+ALTER TABLE wb4_logistic_storages ADD COLUMN type ENUM ('default', 'unrig') NOT NULL DEFAULT 'default';
+
+"""
+
+SQL_DOWN = u"""
+
+ALTER TABLE wb4_logistic_storages DROP COLUMN type;
+
+"""

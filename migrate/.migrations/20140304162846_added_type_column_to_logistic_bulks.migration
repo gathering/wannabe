@@ -1,0 +1,10 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE wb4_logistic_bulks ADD COLUMN type enum('series','bulk');
+
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_logistic_bulks DROP COLUMN type;
+
+"""

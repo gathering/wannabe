@@ -1,0 +1,10 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE wb4_logistic_transactions ADD COLUMN prev_logistic_storage_id INT AFTER logistic_storage_id;
+
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE wb4_logistic_transactions DROP COLUMN prev_logistic_storage_id;
+
+"""
