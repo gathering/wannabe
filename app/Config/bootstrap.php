@@ -94,3 +94,6 @@ App::import('Lib', 'WannabeExceptionRenderer');
 
 //Load the Wannabe Class
 App::import('Lib', 'Wannabe');
+
+//Load Composer
+App::import('Vendor', ['file' => 'autoload']);
