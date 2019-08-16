@@ -30,7 +30,7 @@ function _explode($string) {
     return $array;
 }
 function _decrypt($value) {
-    $key = 'Nea*fgmh+8a78ghnMGEYgh%aamhgiusyhmr8gy7hmsry8hgirsu';
+    $key = '';
     $decrypted = '';
 
     $pos = strpos($value, 'Q2FrZQ==.');
