@@ -1,0 +1,29 @@
+## OS Stuff
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+### Composer ###
+composer.phar
+
+### CakePHP2 ###
+/app/tmp/*
+/app/Config/core.php
+/app/Config/database.php
+## @todo: Add this back after cleaning up `vendor` folder.
+## /vendors/*
+/app/Vendor/*
