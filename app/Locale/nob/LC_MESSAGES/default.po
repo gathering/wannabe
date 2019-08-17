@@ -1351,7 +1351,7 @@ msgstr "Endre arrangement"
 
 #: Controller/EventController.php:26
 msgid "Please select desired event"
-msgstr "Vennligst velg ønsket crew"
+msgstr "Vennligst velg ønsket arrangement"
 
 #: Controller/FrontNewsManagerController.php:11
 msgid "Front news"
