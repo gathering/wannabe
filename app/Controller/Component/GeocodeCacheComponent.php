@@ -10,6 +10,8 @@ class GeocodeCacheComponent extends Component {
     var $userNeedGeocodeUpdate = false;
 
 	public function initialize(&$controller) {
+        $this->apiKey = Configure::read('GoogleMaps.apiKey');
+
         if(isset($controller->Wannabe->user['User']) && $controller->Acl->hasMembershipToEvent($controller->Wannabe->user)) {
             $this->userAddress = $controller->Wannabe->user['User']['address']." ".$controller->Wannabe->user['User']['postcode']." ".$controller->Wannabe->user['User']['town'];
             $this->cache = $this->loadGeocodeCache();

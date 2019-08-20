@@ -219,7 +219,7 @@ if(!$crewmember && isset($cfadSettings['CfadApplicationSetting']['can_apply']) &
     function loadGoogleMapsAPI() {
         var s=document.createElement("script");
         s.type="text/javascript";
-        s.src="https://maps.googleapis.com/maps/api/js?key=<?=$geocode->apikey?>&sensor=false&callback=initUserGeocoder";
+        s.src="https://maps.googleapis.com/maps/api/js?key=<?=$geocode->apiKey?>&sensor=false&callback=initUserGeocoder";
         document.body.appendChild(s);
     }
     window.onload = loadGoogleMapsAPI;
