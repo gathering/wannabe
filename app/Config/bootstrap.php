@@ -102,6 +102,6 @@ App::import('Vendor', ['file' => 'autoload']);
 Configure::write(
     'GoogleMaps',
     array(
-       'apiKey' => env('GOOGLEMAPS_APIKEY') ? env('GOOGLEMAPS_APIKEY') : 'AIzaSyAl0C6hB_SxHgBhTGaXdRNysxWSyPvdND8',
+       'apiKey' => env('GOOGLEMAPS_APIKEY') ? env('GOOGLEMAPS_APIKEY') : '',
     )
 );
