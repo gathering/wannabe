@@ -1,9 +1,13 @@
 <?
+
+use SebastianBergmann\Diff\Differ;
+use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
+
 class DiffHelper extends Helper {
 	public function contents($a, $b) {
-		require_once VENDORS . 'inlinediff/inline_function.php';
-		$contents = inline_diff($b, $a, '<br/> ');
-		return($contents);
+		$differ = new Differ('', true);
+		$raw_diff = $differ->diff($b, $a);
+		return str_replace("\n", "</br>", $raw_diff);
 	}
 }
 ?>

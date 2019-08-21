@@ -1,8 +1,15 @@
 {
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require-dev": {
         "phpunit/phpunit": "4.* || 5.*"
     },
     "config": {
         "vendor-dir": "app/Vendor"
+    },
+    "require": {
+        "michelf/php-markdown": "^1.8",
+        "sebastian/diff": "1.4.3",
+        "tedivm/jshrink": "^1.3"
     }
 }

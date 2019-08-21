@@ -1,5 +1,5 @@
 <div class="page-header">
-	<h1><?=__("Compare “%s”", $pagefirst['Wikipage']['title'])?> <small><?=__("Revision %s in green and revision %s in red.", $pagefirst['Wikipage']['revision'], $pagesecond['Wikipage']['revision'])?></small></h1>
+	<h1><?=__("Compare “%s”", $pagefirst['Wikipage']['title'])?></h1>
 </div>
 <div class="row">
 	<div class="col-md-10">
