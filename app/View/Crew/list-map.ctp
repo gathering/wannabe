@@ -130,7 +130,7 @@
     function loadGoogleMapsAPI() {
         var s=document.createElement("script");
         s.type="text/javascript";
-        s.src="https://maps.googleapis.com/maps/api/js?key=<?=$geocode->apikey?>&sensor=false&callback=initGoogleMapsAPI";
+        s.src="https://maps.googleapis.com/maps/api/js?key=<?=$geocode->apiKey?>&sensor=false&callback=initGoogleMapsAPI";
         document.body.appendChild(s);
     }
     window.onload = loadGoogleMapsAPI;
