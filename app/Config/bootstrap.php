@@ -97,11 +97,3 @@ App::import('Lib', 'Wannabe');
 
 //Load Composer
 App::import('Vendor', ['file' => 'autoload']);
-
-// Google maps configuration
-Configure::write(
-    'GoogleMaps',
-    array(
-       'apiKey' => env('GOOGLEMAPS_APIKEY') ? env('GOOGLEMAPS_APIKEY') : '',
-    )
-);
