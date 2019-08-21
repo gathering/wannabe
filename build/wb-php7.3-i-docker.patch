@@ -24,19 +24,6 @@ index e641c6f..3cd097c 100644
          // Setup cookie
  		$this->Cookie->name = 'WB';
  		$this->Cookie->key = 'Nea*fgmh+8a78ghnMGEYgh%aamhgiusyhmr8gy7hmsry8hgir348';
-diff --git a/app/Controller/Component/GeocodeCacheComponent.php b/app/Controller/Component/GeocodeCacheComponent.php
-index bebe869..9a3eb95 100644
---- a/app/Controller/Component/GeocodeCacheComponent.php
-+++ b/app/Controller/Component/GeocodeCacheComponent.php
-@@ -9,7 +9,7 @@ class GeocodeCacheComponent extends Component {
-     var $cache = array();
-     var $userNeedGeocodeUpdate = false;
- 
--	public function initialize(&$controller) {
-+	public function initialize(Controller $controller) {
-         $this->apiKey = Configure::read('GoogleMaps.apiKey');
- 
-         if(isset($controller->Wannabe->user['User']) && $controller->Acl->hasMembershipToEvent($controller->Wannabe->user)) {
 diff --git a/app/Controller/Component/LanguageComponent.php b/app/Controller/Component/LanguageComponent.php
 index ae09e18..0cfb570 100644
 --- a/app/Controller/Component/LanguageComponent.php

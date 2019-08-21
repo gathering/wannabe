@@ -3,7 +3,6 @@ App::uses('WbSanitize', 'Lib');
 
 class CrewController extends AppController {
 	public $uses = array('User', 'Crew', 'Phonetype', 'Wikipage', 'Team', 'ApplicationDocument', 'EnrollSetting', 'ApplicationChoice', 'EnrollMail', 'Task', 'Term');
-    var $components = array('GeocodeCache');
     var $layout = "responsive-default";
 
 	/**
@@ -39,40 +38,22 @@ class CrewController extends AppController {
 				case 1:
 					$template = 'extended';
                     $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=0', 'title' => __("Normal"));
-                    $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=2', 'title' => __("Map"));
-					break;
-				case 2:
-					$template = 'map';
-                    $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=0', 'title' => __("Normal"));
-                    $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=1', 'title' => __("Extended"));
-                    $this->set('geocode', $this->GeocodeCache);
-                    $this->layout = 'fullscreen';
 					break;
 				default:
 					$template = 'default';
                     $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=1', 'title' => __("Extended"));
-                    $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=2', 'title' => __("Map"));
 			}
 		} else if(CakeSession::check('crewlist-type')) {
 			$template = CakeSession::read('crewlist-type');
 			switch($template) {
 				case 'extended':
                     $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=0', 'title' => __("Normal"));
-                    $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=2', 'title' => __("Map"));
-					break;
-				case 'map':
-                    $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=0', 'title' => __("Normal"));
-                    $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=1', 'title' => __("Extended"));
-                    $this->set('geocode', $this->GeocodeCache);
-                    $this->layout = 'fullscreen';
 					break;
 				default:
                     $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=1', 'title' => __("Extended"));
-                    $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=2', 'title' => __("Map"));
 			}
         } else {
             $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=1', 'title' => __("Extended"));
-            $box_into_header['Link'][] = array('class' => 'btn btn-default', 'href' => '/Crew?extended=2', 'title' => __("Map"));
         }
 		$this->set('box_into_header', $box_into_header);
 		CakeSession::write('crewlist-type');
