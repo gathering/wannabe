@@ -27,12 +27,28 @@ code.
 Contact: Use bug reports here, or use wannabe@gathering.org (Response times
 are very varying - I'm sorry, we're working on it!)
 
-The following is the original README, in its entirety.
+
+# Docker
 
 
-# Wannabe 4
+Some work has begun on making it possible to develop using docker. It is
+not complete, largely because we're also moving to a newer php version and
+ideally fixing some stupid bugs, possibly moving to at least a more recent
+CakePHP, ideally CakePHP 3.
 
-The the the github repo for Wannabe version 4.
+To test:
+
+```
+$ docker build -t LOLOLOL .
+$ docker run -ti -v /home/kly/src/wannabe-public:/var/www/html/wannabe LOLOLOL
+```
+
+Inside the container, run ``/bootstrap.sh`` which will, SHOCKINGLY,
+bootstrap things, start mariadb and apache2 on :80. Since --expose hasn't
+been used, finding the IP address is left as an exercise for the reader.
+
+Several further tweaks are needed, but this is a start.
+
 
 ## Installation
 
