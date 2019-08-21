@@ -1,0 +1,241 @@
+diff --git a/app/Controller/Component/AclComponent.php b/app/Controller/Component/AclComponent.php
+index 1770647..a8ccf54 100644
+--- a/app/Controller/Component/AclComponent.php
++++ b/app/Controller/Component/AclComponent.php
+@@ -14,7 +14,7 @@ class AclComponent extends Component {
+ 	 * Init ACL function, makes sure that we got some data in cache, or else it will put
+ 	 * ACL data there.
+ 	 */
+-	public function initialize(&$controller) {
++	public function initialize(Controller $controller) {
+ 
+ 		$this->Aclobject = ClassRegistry::init('Aclobject');
+ 		$this->controller = $controller;
+diff --git a/app/Controller/Component/AuthComponent.php b/app/Controller/Component/AuthComponent.php
+index e641c6f..3cd097c 100644
+--- a/app/Controller/Component/AuthComponent.php
++++ b/app/Controller/Component/AuthComponent.php
+@@ -9,7 +9,7 @@ class AuthComponent extends Component {
+ 	var $controller;
+ 	var $isLoggedin = false;
+ 
+-	public function initialize(&$controller) {
++	public function initialize(Controller $controller) {
+         // Setup cookie
+ 		$this->Cookie->name = 'WB';
+ 		$this->Cookie->key = 'Nea*fgmh+8a78ghnMGEYgh%aamhgiusyhmr8gy7hmsry8hgir348';
+diff --git a/app/Controller/Component/GeocodeCacheComponent.php b/app/Controller/Component/GeocodeCacheComponent.php
+index bebe869..9a3eb95 100644
+--- a/app/Controller/Component/GeocodeCacheComponent.php
++++ b/app/Controller/Component/GeocodeCacheComponent.php
+@@ -9,7 +9,7 @@ class GeocodeCacheComponent extends Component {
+     var $cache = array();
+     var $userNeedGeocodeUpdate = false;
+ 
+-	public function initialize(&$controller) {
++	public function initialize(Controller $controller) {
+         $this->apiKey = Configure::read('GoogleMaps.apiKey');
+ 
+         if(isset($controller->Wannabe->user['User']) && $controller->Acl->hasMembershipToEvent($controller->Wannabe->user)) {
+diff --git a/app/Controller/Component/LanguageComponent.php b/app/Controller/Component/LanguageComponent.php
+index ae09e18..0cfb570 100644
+--- a/app/Controller/Component/LanguageComponent.php
++++ b/app/Controller/Component/LanguageComponent.php
+@@ -15,7 +15,7 @@ class LanguageComponent extends Component {
+         'eng' => 'en'
+     );
+ 
+-	public function initialize(&$controller) {
++	public function initialize(Controller $controller) {
+         if(isset($controller->request->query['hl']) && $this->valid($controller->request->query['hl'])) {
+             $this->lang = $controller->request->query['hl'];
+         } else if(isset($controller->Wannabe->user['User'])) {
+@@ -37,7 +37,7 @@ class LanguageComponent extends Component {
+ 		CakeSession::write('Config.language', $this->lang);
+ 	 	$controller->Wannabe->lang = $this->lang;
+ 	 	$controller->Wannabe->langMap = $this->langMap;
+-        setlocale('LC_TIME', $this->localeMap[$this->lang]);
++        	//setlocale('LC_TIME', $this->localeMap[$this->lang]);
+ 	}
+ 	public function valid($lang) {
+ 		$localedir = ROOT.DS.APP_DIR.DS.'Locale';
+diff --git a/app/Controller/Component/MenuComponent.php b/app/Controller/Component/MenuComponent.php
+index d9084ae..f52568b 100644
+--- a/app/Controller/Component/MenuComponent.php
++++ b/app/Controller/Component/MenuComponent.php
+@@ -7,7 +7,7 @@ class MenuComponent extends Component {
+ 
+ 	var $controller;
+ 
+-	public function initialize(&$controller) {
++	public function initialize(Controller $controller) {
+ 		if(!isset($controller->Wannabe->user['User']['id'])) {
+ 			return;
+ 		}
+diff --git a/app/Controller/Component/TaskHandlerComponent.php b/app/Controller/Component/TaskHandlerComponent.php
+index 83e9bbd..1c8d780 100644
+--- a/app/Controller/Component/TaskHandlerComponent.php
++++ b/app/Controller/Component/TaskHandlerComponent.php
+@@ -9,7 +9,7 @@ class TaskHandlerComponent extends Component {
+     var $task = array();
+     var $task_button = false;
+ 
+-	public function initialize(&$controller) {
++	public function initialize(Controller $controller) {
+         if(!isset($controller->Wannabe->user['User']) ||
+            !$controller->Wannabe->event->reference ||
+            $controller->Wannabe->user['User']['registered'] != 'done' ||
+diff --git a/app/Controller/Component/TermHandlerComponent.php b/app/Controller/Component/TermHandlerComponent.php
+index 33d1f37..406f4da 100644
+--- a/app/Controller/Component/TermHandlerComponent.php
++++ b/app/Controller/Component/TermHandlerComponent.php
+@@ -8,7 +8,7 @@ class TermHandlerComponent extends Component {
+ 
+     var $terms = array();
+ 
+-	public function initialize(&$controller) {
++	public function initialize(Controller $controller) {
+         if(!isset($controller->Wannabe->user['User']) ||
+            !$controller->Wannabe->event->reference ||
+            !in_array($controller->Wannabe->user['User']['registered'], ['done', 'edit']) ||
+diff --git a/app/Controller/Component/WannabeComponent.php b/app/Controller/Component/WannabeComponent.php
+index 9a9e23d..925b35d 100644
+--- a/app/Controller/Component/WannabeComponent.php
++++ b/app/Controller/Component/WannabeComponent.php
+@@ -16,7 +16,7 @@ class WannabeComponent extends Component {
+ 	var $lang;
+ 	var $searchAccess = false;
+ 
+-	public function initialize(&$controller) {
++	public function initialize(Controller $controller) {
+ 		if(isset($controller->request->params['eventPrefix'])) {
+ 			if($controller->request->params['eventPrefix'] != CakeSession::read('last_event_reference')) {
+ 				$controller->changedEvent = true;
+diff --git a/app/Model/Crew.php b/app/Model/Crew.php
+index ebea7ee..3b8eeec 100755
+--- a/app/Model/Crew.php
++++ b/app/Model/Crew.php
+@@ -21,7 +21,7 @@ class Crew extends AppModel {
+ 		)
+ 	);
+ 
+-	public function beforeSave($options) {
++	public function beforeSave($options=Array()) {
+ 		/*if($this->data['Crew']['crew_id'] == NULL) {
+ 			$this->data['Crew']['crew_id'] = 0;
+         }*/
+diff --git a/app/Model/EnrollSetting.php b/app/Model/EnrollSetting.php
+index e286750..d985619 100644
+--- a/app/Model/EnrollSetting.php
++++ b/app/Model/EnrollSetting.php
+@@ -28,7 +28,7 @@ class EnrollSetting extends AppModel {
+ 		)
+ 	);
+ 
+-	public function afterSave($created) {
++	public function afterSave($created, $options=Array()) {
+         if(!$created)
+             $this->clearEnrollCache();
+ 	}
+diff --git a/app/Model/Mailinglist.php b/app/Model/Mailinglist.php
+index 90f949f..b416d0d 100644
+--- a/app/Model/Mailinglist.php
++++ b/app/Model/Mailinglist.php
+@@ -15,7 +15,7 @@ class Mailinglist extends AppModel {
+  *
+  * @var array
+  */
+-	public function beforeValidate() {
++	public function beforeValidate($options=Array()) {
+ 		$this->validate = array(
+ 			'event_id' => array(
+ 				'notempty' => array(
+diff --git a/app/Model/User.php b/app/Model/User.php
+index e116ad4..80cfdd5 100644
+--- a/app/Model/User.php
++++ b/app/Model/User.php
+@@ -33,7 +33,7 @@ class User extends AppModel {
+         )
+     );
+ 
+-	public function beforeValidate() {
++	public function beforeValidate($options = Array()) {
+ 		$this->validate = array(
+ 			'username' => array(
+ 				'username-rule-1' => array(
+@@ -88,14 +88,14 @@ class User extends AppModel {
+ 		);
+ 	}
+ 
+-	public function beforeFind() {
++	public function beforeFind($query) {
+         if(isset(WB::$event->id)) {
+             $this->hasAndBelongsToMany['Crew']['conditions'] = ' Crew.event_id='.(int)WB::$event->id;
+         }
+ 		return true;
+ 	}
+ 
+-	public function afterFind($res) {
++	public function afterFind($res,$primary=false) {
+ 		$loadExtras = $this->loadExtras;
+ 		foreach ( $res as & $result ) {
+ 			// Calculate the age for the user.
+@@ -112,7 +112,7 @@ class User extends AppModel {
+ 		}
+ 		return $res;
+ 	}
+-	public function afterSave() {
++	public function afterSave($created,$options=Array()) {
+ 
+ 	}
+ 
+@@ -327,7 +327,7 @@ class User extends AppModel {
+ 
+ 	public function calculateAge($date) {
+ 		list($year, $month, $day) = explode('-', $date);
+-
++		list($day, $lol) = explode(' ',$day);
+ 		$year_diff = date('Y') - $year;
+ 		$month_diff = date('m') - $month;
+ 		$day_diff = date('d') - $day;
+diff --git a/lib/Cake/Model/Datasource/CakeSession.php b/lib/Cake/Model/Datasource/CakeSession.php
+index 38ab50e..0687637 100755
+--- a/lib/Cake/Model/Datasource/CakeSession.php
++++ b/lib/Cake/Model/Datasource/CakeSession.php
+@@ -550,8 +550,9 @@ class CakeSession {
+ 		if (empty($_SESSION)) {
+ 			if (!empty($sessionConfig['ini']) && is_array($sessionConfig['ini'])) {
+ 				foreach ($sessionConfig['ini'] as $setting => $value) {
+-					if (ini_set($setting, $value) === false) {
+-						throw new CakeSessionException(__d('cake_dev', 'Unable to configure the session, setting %s failed.', $setting));
++					$ret = ini_set($setting, $value);
++					if ($ret != $value && $ret === false) {
++						//throw new CakeSessionException(__d('cake_dev', 'Unable to configure the session, setting %s failed val %s ret was %s.', $setting,$value,$ret));
+ 					}
+ 				}
+ 			}
+diff --git a/lib/Cake/Network/CakeResponse.php b/lib/Cake/Network/CakeResponse.php
+index 21dfd7b..e7d3c04 100755
+--- a/lib/Cake/Network/CakeResponse.php
++++ b/lib/Cake/Network/CakeResponse.php
+@@ -1162,6 +1162,8 @@ class CakeResponse {
+ 	public function checkNotModified(CakeRequest $request) {
+ 		$etags = preg_split('/\s*,\s*/', $request->header('If-None-Match'), null, PREG_SPLIT_NO_EMPTY);
+ 		$modifiedSince = $request->header('If-Modified-Since');
++		$etagMatches = false;
++		$timeMatches = false;
+ 		if ($responseTag = $this->etag()) {
+ 			$etagMatches = in_array('*', $etags) || in_array($responseTag, $etags);
+ 		}
+diff --git a/lib/Cake/Utility/ObjectCollection.php b/lib/Cake/Utility/ObjectCollection.php
+index 460ca86..80bacf2 100755
+--- a/lib/Cake/Utility/ObjectCollection.php
++++ b/lib/Cake/Utility/ObjectCollection.php
+@@ -92,6 +92,7 @@ abstract class ObjectCollection {
+  * @throws CakeException when modParams is used with an index that does not exist.
+  */
+ 	public function trigger($callback, $params = array(), $options = array()) {
++		$subject = false;
+ 		if (empty($this->_enabled)) {
+ 			return true;
+ 		}
