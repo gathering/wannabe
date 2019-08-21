@@ -1,10 +1,8 @@
 <?php
 class HomeController extends AppController {
 	var $uses = array('ApplicationDocument', 'EnrollSetting', 'IrcChannelKey', 'User', 'SmsBudget', 'Cfad.CfadApplicationSetting');
-    var $components = array('GeocodeCache');
-		var $layout = 'responsive-default';
+	var $layout = 'responsive-default';
 	public function index() {
-		$this->set('geocode', $this->GeocodeCache);
 		$this->set('crewmember', $this->Acl->hasMembershipToEvent($this->Wannabe->user));
 		$this->set('title_for_layout', __("Welcome, %s", h($this->Wannabe->user['User']['nickname'])));
 		$this->set('desc_for_layout', __("…to Wannabe for %s.", h($this->Wannabe->event->name)));

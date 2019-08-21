@@ -377,8 +377,6 @@ class WannabeSchema extends CakeSchema {
 		'nickname' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 128, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'image' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 128, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'resetpasswordcode' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 48, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
-		'longitude' => array('type' => 'string', 'null' => true, 'default' => '0', 'length' => 16, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
-		'latitude' => array('type' => 'string', 'null' => true, 'default' => '0', 'length' => 16, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'lastactive' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
 		'language' => array('type' => 'string', 'null' => true, 'length' => 8, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'registered' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),

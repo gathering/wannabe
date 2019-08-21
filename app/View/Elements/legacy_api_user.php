@@ -16,8 +16,6 @@
     }
     ?>
     </crews>
-    <longitude><?=utf8_encode($user['User']['longitude'])?></longitude>
-    <latitude><?=utf8_encode($user['User']['latitude'])?></latitude>
     <?php if(strlen($user['User']['image'])) { ?>
     <images>
         <image width="50">http://<?=$_SERVER['SERVER_NAME']?>/<?=$user['User']['image']?>_50.png</image>
