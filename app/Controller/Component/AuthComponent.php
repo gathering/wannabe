@@ -17,6 +17,7 @@ class AuthComponent extends Component {
         $this->Cookie->domain = $sessionIni['session.cookie_domain'];
         //save controller for later use
         $this->controller = &$controller;
+        $this->User = $controller->User;
 
 		//Read Cookie
 		$cookie = $this->Cookie->read('User.auth');
@@ -96,28 +97,27 @@ class AuthComponent extends Component {
         return $this->login($username, $password);
     }
 	public function login($login, $pass, $remember=0) {
-		App::import('Model', 'User');
-		$user = new User();
-		$userGoingIn = $user->findByUsername($login);
+		$userGoingIn = $this->User->findByUsername($login);
 		if(!$userGoingIn) {
-			$userGoingIn = $user->findByEmail($login);
+			$userGoingIn = $this->User->findByEmail($login);
 		}
 		if(!$userGoingIn) {
 			return false;
 		}
-		if($userGoingIn['User']['password'] != $pass) {
+		if (!$this->User->correctPassword($userGoingIn, $pass)) {
 			return false;
 		}
+		$this->User->keepPasswordHashUpToDate($userGoingIn, $pass);
 		$cookie = $this->Cookie->read('User.auth');
 		if(is_null($cookie)) {
 			$cookie = array();
 			$cookie['user'] = $userGoingIn['User']['username'];
 			$cookie['pass'] = $userGoingIn['User']['password'];
-            if($remember) {
-			    $this->Cookie->write('User.auth', $cookie, true, '+4 weeks');
-            } else {
-                $this->Cookie->write('User.auth', $cookie, true, '+1 weeks');
-            }
+			if($remember) {
+				$this->Cookie->write('User.auth', $cookie, true, '+4 weeks');
+			} else {
+				$this->Cookie->write('User.auth', $cookie, true, '+1 weeks');
+			}
 		}
 		CakeSession::write('User.login',$userGoingIn);
 		return true;

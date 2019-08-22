@@ -89,28 +89,30 @@ class UserController extends AppController {
 	public function recover($code) {
 		$user = $this->User->findByVerificationcode($code);
 		if($user) {
-            if($this->request->isPost()) {
-                if($this->data['password1'] != $this->data['password2']) {
-										$this->Flash->error(__("Passwords did not match"));
-                    $this->set('passwordMismatch', true);
-                } else {
-                    if($this->data['id'] != $user['User']['id']) {
-                        $this->set('title_for_layout', "Never Gonna…");
-                        $this->layout = 'front-generic';
-                        $this->render('roll');
-                        return;
-                    }
-                    $savedata['User']['id'] = $this->data['id'];
-                    $savedata['User']['password'] = md5($this->data['password1']);
-                    $savedata['User']['verificationcode'] = md5($user['User']['email']."-".microtime());
-                    if($this->User->save($savedata)) {
-                        $this->Flash->success(__("Password updated. You may now login."));
-                    } else {
-                        $this->Flash->error(__("Something went wrong. Try again."));
-                    }
-                    $this->redirect('/');
-                }
-            }
+			if($this->request->is('post')) {
+				if($this->data['User']['id'] != $user['User']['id']) {
+					$this->set('title_for_layout', "Never Gonna…");
+					$this->layout = 'front-generic';
+					$this->render('roll');
+					return;
+				}
+
+				$this->User->set($this->data);
+				if($this->User->validates()) {
+					$savedata['User']['id'] = $this->data['User']['id'];
+					$savedata['User']['password'] = $this->User->getPasswordHash($this->data['User']['newpassword1']);
+					$savedata['User']['verificationcode'] = md5($user['User']['email']."-".microtime());
+					if($this->User->save($savedata, false)) {
+						$this->Flash->success(__("Password updated. You may now login."));
+					} else {
+						$this->Flash->error(__("Something went wrong. Try again."));
+					}
+					$this->redirect('/');
+				} else {
+					$this->validateErrors($this->User);
+					$this->Flash->error(__("You have field errors. Please correct them and continue."));
+				}
+			}
 			$this->set('user', $user);
 			$form = array(
 				'action' => $this->here,
@@ -199,7 +201,14 @@ class UserController extends AppController {
 			$validationCode = md5($email."-".microtime());
 			$user['User']['email'] = $email;
 			$user['User']['username'] = $email;
-			$user['User']['password'] = $validationCode;
+			// Set password to random non-guessable and non-md5 value to make password login _mostly_ unusable.
+			// Just in case any api allows password lookup on unverified/pending accounts by mistake via hash or plain text.
+			$pseudoBytes = openssl_random_pseudo_bytes(100);
+			if ($pseudoBytes) {
+				$user['User']['password'] = bin2hex($pseudoBytes);
+			} else {
+				$user['User']['password'] = sha1($email."-".microtime());
+			}
 			$user['User']['verificationcode'] = $validationCode;
 			$user['User']['registered'] = 'password';
 			if($this->User->save($user, false)) {
