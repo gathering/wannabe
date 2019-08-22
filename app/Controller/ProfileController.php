@@ -476,18 +476,6 @@ class ProfileController extends AppController {
                 }
             } else {
                 $this->validateErrors($this->User);
-                if($this->Wannabe->user['User']['registered'] != 'password') {
-                    if(md5($data['User']['password']) != $this->Wannabe->user['User']['password']) {
-                        $this->User->invalidate('password', __("Password incorrect"));
-                    }
-                    if(
-                        md5($data['User']['password']) == md5($data['User']['newpassword1']) &&
-                        md5($data['User']['newpassword1']) == md5($data['User']['newpassword2']) &&
-                        md5($data['User']['newpassword2']) == $this->Wannabe->user['User']['password']
-                    ) {
-                        $this->User->invalidate('newpassword1', __("New password cannot be the same as your current password"));
-                    }
-                }
                 $this->Flash->error(__("You have field errors. Please correct them and continue."));
             }
         }
