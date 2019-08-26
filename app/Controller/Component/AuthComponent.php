@@ -8,18 +8,30 @@ class AuthComponent extends Component {
 	var $components = array('Cookie');
 	var $controller;
 	var $isLoggedin = false;
+	var $allowUserAuthCookie = false;
 
 	public function initialize(&$controller) {
-        // Setup cookie
-		$this->Cookie->name = 'WB';
-		$this->Cookie->key = 'Nea*fgmh+8a78ghnMGEYgh%aamhgiusyhmr8gy7hmsry8hgir348';
-        $sessionIni = Configure::read('Session.ini');
-        $this->Cookie->domain = $sessionIni['session.cookie_domain'];
-        //save controller for later use
-        $this->controller = &$controller;
+		//save controller for later use
+		$this->controller = &$controller;
+		$this->User = $controller->User;
 
-		//Read Cookie
-		$cookie = $this->Cookie->read('User.auth');
+		$cookie = null;
+
+		if (!empty(Configure::read('AuthCookieKey'))) {
+			$this->allowUserAuthCookie = true;
+		}
+
+		if ($this->allowUserAuthCookie) {
+			// Configure User Auth Cookie
+			$this->Cookie->name = 'WB';
+			$this->Cookie->key = Configure::read('AuthCookieKey');
+
+			$sessionIni = Configure::read('Session.ini');
+			$this->Cookie->domain = $sessionIni['session.cookie_domain'];
+
+			//Read Cookie
+			$cookie = $this->Cookie->read('User.auth');
+		}
 
         //check if user has a session active
 		if(null != CakeSession::read('User.login')) {
@@ -96,28 +108,29 @@ class AuthComponent extends Component {
         return $this->login($username, $password);
     }
 	public function login($login, $pass, $remember=0) {
-		App::import('Model', 'User');
-		$user = new User();
-		$userGoingIn = $user->findByUsername($login);
+		$userGoingIn = $this->User->findByUsername($login);
 		if(!$userGoingIn) {
-			$userGoingIn = $user->findByEmail($login);
+			$userGoingIn = $this->User->findByEmail($login);
 		}
 		if(!$userGoingIn) {
 			return false;
 		}
-		if($userGoingIn['User']['password'] != $pass) {
+		if (!$this->User->correctPassword($userGoingIn, $pass)) {
 			return false;
 		}
-		$cookie = $this->Cookie->read('User.auth');
-		if(is_null($cookie)) {
-			$cookie = array();
-			$cookie['user'] = $userGoingIn['User']['username'];
-			$cookie['pass'] = $userGoingIn['User']['password'];
-            if($remember) {
-			    $this->Cookie->write('User.auth', $cookie, true, '+4 weeks');
-            } else {
-                $this->Cookie->write('User.auth', $cookie, true, '+1 weeks');
-            }
+		$this->User->keepPasswordHashUpToDate($userGoingIn, $pass);
+		if ($this->allowUserAuthCookie) {
+			$cookie = $this->Cookie->read('User.auth');
+			if(is_null($cookie)) {
+				$cookie = array();
+				$cookie['user'] = $userGoingIn['User']['username'];
+				$cookie['pass'] = $userGoingIn['User']['password'];
+				if($remember) {
+					$this->Cookie->write('User.auth', $cookie, true, '+4 weeks');
+				} else {
+					$this->Cookie->write('User.auth', $cookie, true, '+1 weeks');
+				}
+			}
 		}
 		CakeSession::write('User.login',$userGoingIn);
 		return true;

@@ -631,13 +631,58 @@ class User extends AppModel {
         return false;
     }
 
-	public function getMembersWithApprovedPicture($crew_id){
-		$members = $this->getMembers($crew_id);
+    public function getMembersWithApprovedPicture($crew_id){
+        $members = $this->getMembers($crew_id);
         $return = array();
-		foreach ($members as &$member) {
-			if($member['PictureApproval']['approved'])
-				$return[] = $member;
+        foreach ($members as &$member) {
+            if($member['PictureApproval']['approved'])
+                $return[] = $member;
         }
-		return $return;
-	}
+        return $return;
+    }
+
+    public function correctPassword($user, $passwordGuess) {
+        $existingPasswordHash = $user['User']['password'];
+
+        if (
+            // Modern password verification failed
+            !password_verify($passwordGuess, $existingPasswordHash) and
+            // Legacy md5 password verification failed
+            $existingPasswordHash != md5($passwordGuess)
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function keepPasswordHashUpToDate($user, $passwordGuess) {
+        if (!$this->correctPassword($user, $passwordGuess)) {
+            return false;
+        }
+
+        // This works for both password_hash and legacy hashes, since
+        // unrecognized hashes/variants returns true, triggering re-hash
+        if (password_needs_rehash($user['User']['password'], PASSWORD_DEFAULT)) {
+            return $this->setPassword($user, $passwordGuess);
+        }
+
+        return true;
+    }
+
+    public function setPassword($user, $newPassword) {
+        $newPasswordHash = $this->getPasswordHash($newPassword);
+
+        if ($newPasswordHash) {
+            $this->id = $user['User']['id'];
+            $this->saveField('password', $newPasswordHash);
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getPasswordHash($password) {
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
 }

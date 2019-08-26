@@ -15,7 +15,7 @@ class LoginController extends AppController {
 			$login= $this->request->data('login');
 			$remember = $this->request->data('remember');
 			if(strlen($pass) > 0 && strlen($login) > 0 ) {
-				if(!$this->Auth->login($login, md5($pass), $remember)) {
+				if(!$this->Auth->login($login, $pass, $remember)) {
 					//Show error
 					$this->Flash->error(__('It appears that you typed in the wrong username/e-mail or password mate, please try again'));
 				} else {
