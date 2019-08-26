@@ -1,4 +1,6 @@
 <?php
+
+use JShrink\Minifier;
 /**
  * Compress and caches asset files: js, css (can be altered for other assets)
  *
@@ -62,8 +64,7 @@ function compress($path, $name, $type) {
 		$stylesheet = str_replace(array(' }', '} '), '}', $stylesheet);
 		$output = $stylesheet;
 	} else {
-		App::import('Vendor', 'jsmin');
-		$output = JSMin::minify($input);
+		$output = Minifier::minify($input);
 	}
 
 	$ratio = 100 - (round(strlen($output) / strlen($input), 3) * 100);
