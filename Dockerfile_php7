@@ -1,23 +1,25 @@
-FROM php:5-apache as Builder
+FROM debian:buster
 WORKDIR /var/www/html/wannabe
 
 # PHP and tooling
 RUN apt-get update && apt-get install -y \
-	mariadb-client \
-	python-dev \
-	python-pip \
-	python-mysqldb-dbg \
-	git \
-	vim \
-	man \
-	zip \
-	unzip
-
-RUN docker-php-ext-install pdo pdo_mysql
+    php7.3 \
+    apache2 \
+    php7.3-mysql \
+    php7.3-gd \
+    php7.3-dom \
+    python3-dev \
+    libmariadbclient-dev \
+    python3-pip \
+    python3-mysqldb \
+    vim \
+    man \
+    zip \
+    unzip
 
 # Python - migration requirements
 COPY ./migrate/requirements.txt ./migrate/
-RUN pip install -r ./migrate/requirements.txt
+RUN pip3 install -r ./migrate/requirements.txt
 
 # Apache
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
@@ -29,6 +31,8 @@ RUN a2dissite 000-default
 # Composer - CakePHP requirements
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY composer.* ./
+# Remove lock file since it's currently configured for PHP 5
+RUN rm ./composer.lock
 RUN composer install --no-interaction
 
 # App
@@ -36,9 +40,10 @@ COPY . .
 
 # Startup
 COPY build/wannabe-entrypoint.sh /usr/bin/wannabe-entrypoint
+COPY build/wannabe-entrypoint-php7.sh /usr/bin/wannabe-entrypoint-php7
 RUN chmod a+x /usr/bin/wannabe-entrypoint
-ENTRYPOINT ["wannabe-entrypoint"]
-CMD ["apache2-foreground"]
+RUN chmod a+x /usr/bin/wannabe-entrypoint-php7
+ENTRYPOINT ["wannabe-entrypoint-php7"]
 
 # TODO: Optional optimized production step
 # FROM alpine:... AS Production
