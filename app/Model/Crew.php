@@ -418,9 +418,11 @@ class Crew extends AppModel {
 				'Crew.id' => $crew_id
 			)
 		));
-		$crew_id = $crew['Crew']['crew_id']?$crew['Crew']['crew_id']:$crew_id;
-		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id);
-		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id.'hidden');
+		if ($crew) {
+			$crew_id = $crew['Crew']['crew_id']?$crew['Crew']['crew_id']:$crew_id;
+			Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id);
+			Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id.'hidden');
+		}
 		Cache::delete(WB::$event->reference.'-crew-hierarchy-listhidden');
 		Cache::delete(WB::$event->reference.'-crew-hierarchy-list');
 		Cache::delete(WB::$event->reference.'-crew-hierarchy-allhidden');
@@ -436,6 +438,9 @@ class Crew extends AppModel {
 				'Crew.id' => $crew_id
 			)
 		));
+		if (!$crew) {
+			return;
+		}
 		$crew_id = $crew['Crew']['crew_id']?$crew['Crew']['crew_id']:$crew_id;
 		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id);
 		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id.'hidden');
