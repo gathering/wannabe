@@ -33,6 +33,7 @@ RUN composer install --no-interaction
 
 # App
 COPY . .
+RUN ln -sf /var/www/html/wannabe/lib/Cake/Console/cake /bin/cake
 
 # Startup
 COPY build/wannabe-entrypoint.sh /usr/bin/wannabe-entrypoint
