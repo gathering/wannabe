@@ -15,7 +15,7 @@ class LanguageComponent extends Component {
         'eng' => 'en'
     );
 
-	public function initialize(&$controller) {
+	public function initialize(Controller $controller) {
         if(isset($controller->request->query['hl']) && $this->valid($controller->request->query['hl'])) {
             $this->lang = $controller->request->query['hl'];
         } else if(isset($controller->Wannabe->user['User'])) {
@@ -37,7 +37,7 @@ class LanguageComponent extends Component {
 		CakeSession::write('Config.language', $this->lang);
 	 	$controller->Wannabe->lang = $this->lang;
 	 	$controller->Wannabe->langMap = $this->langMap;
-        setlocale('LC_TIME', $this->localeMap[$this->lang]);
+        	setlocale(LC_TIME, $this->localeMap[$this->lang]);
 	}
 	public function valid($lang) {
 		$localedir = ROOT.DS.APP_DIR.DS.'Locale';

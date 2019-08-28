@@ -19,7 +19,7 @@ class ApplicationSetting extends AppModel {
 		return $settings;
 	}
 
-	public function afterSave($created) {
+	public function afterSave($created,$options=[]) {
         if(!$created)
             Cache::delete(WB::$event->reference.'-application_settings');
 	}

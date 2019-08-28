@@ -10,7 +10,7 @@ class AuthComponent extends Component {
 	var $isLoggedin = false;
 	var $allowUserAuthCookie = false;
 
-	public function initialize(&$controller) {
+	public function initialize(Controller $controller) {
 		//save controller for later use
 		$this->controller = &$controller;
 		$this->User = $controller->User;
@@ -77,7 +77,7 @@ class AuthComponent extends Component {
 			$controller->redirect('/');
         }
 	}
-	public function startup($controller) {
+	public function startup(Controller $controller) {
 		//We are not logged in, redirect
 		if(!$this->isLoggedIn && $controller->requireLogin) {
 			if($controller->here != '/'.$controller->Wannabe->event->reference.'/') {

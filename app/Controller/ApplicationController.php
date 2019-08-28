@@ -57,7 +57,7 @@ class ApplicationController extends AppController {
 			throw new BadRequestException(__("There has been an error, please try again."));
 		}
 		if($this->Wannabe->user['User']['language'] == 'eng') {
-			$this->Flash->info(__("Currently, the application process is only available in Norwegian. For assistance contact co@gathering.org"));
+			$this->Flash->info(__("Currently, the application process is only available in Norwegian. For assistance contact post@lovelan.no"));
 		}
 
 		$this->set('data', $data);

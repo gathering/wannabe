@@ -70,6 +70,7 @@ class AppController extends Controller {
         return $userModel->updateLatestActivity($this->Wannabe->user['User']['id']);
     }
 	public function calculateAge($date) {
+		$date = str_replace(' 00:00:00','',$date);
 		list($year, $month, $day) = explode('-', $date);
 		$yearDiff = date('Y') - $year;
 		$monthDiff = date('m') - $month;

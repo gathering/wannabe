@@ -117,13 +117,13 @@
       ?>
     			<div class="col-md-12">
     				<h2><?=__("Apply for crew")?> <small><?=__("One of the best experiences of your life!")?></small></h2>
-    				<p><?=__("A fan of The Gathering? Join us and make it happen! Contribute with your time and skills and we will guarantee that you will have one of the best experiences of your life.")?></p>
+    				<p><?=__("A fan of LoVe LAN? Join us and make it happen! Contribute with your time and skills and we will guarantee that you will have one of the best experiences of your life.")?></p>
     				<p><?=__("Check out %s to find out which crew that fits you best.", $this->Wb->eventLink(__("descriptions"), '/Crew/Description'))?></p>
     			<?php if(!empty($application)) { ?>
     				<p><?=__("Thank you for submitting your application. You will recieve feedback by email.")?></p>
-    				<p><a class="btn success" href="<?=$this->Wb->eventUrl("/Application")?>"><?=__("Edit your application")?></a></p>
+    				<p><a class="btn btn-success" href="<?=$this->Wb->eventUrl("/Application")?>"><?=__("Edit your application")?></a></p>
     			<?php } else { ?>
-    				<p><a class="btn success" href="<?=$this->Wb->eventUrl("/Application")?>"><?=__("Apply for crew now")?></a></p>
+    				<p><a class="btn btn-success" href="<?=$this->Wb->eventUrl("/Application")?>"><?=__("Apply for crew now")?></a></p>
     			<?php } ?>
     			</div>
       <?php

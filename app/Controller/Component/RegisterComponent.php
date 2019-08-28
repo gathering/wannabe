@@ -6,7 +6,7 @@
  */
 class RegisterComponent extends Component {
 
-	public function initialize($controller) {
+	public function initialize(Controller $controller) {
 		if(!isset($controller->Wannabe->user['User']) || !$controller->Wannabe->event->reference) {
 			return true;
 		}

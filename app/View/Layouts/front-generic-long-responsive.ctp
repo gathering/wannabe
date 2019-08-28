@@ -4,9 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="author" href="mailto:wannabe@gathering.org" />
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="author" href="mailto:wannabe@lovelan.no" />
+    <link rel="icon" href="/favicon.ico" type="image/png" />
 
     <title>
         <?php if(isset($title_for_layout)) { ?>
@@ -78,7 +77,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <p>Wannabe <?=__("version")?> 4.0<br /><?=__("Copyright © KANDU")?><br /><?=__("Problems")?>? <a href="mailto:wannabe@gathering.org"><?=__("Report it")?>!</a></p>
+                <p>Wannabe <?=__("version")?> 4.0<br /><?=__("Copyright © KANDU")?><br /><?=__("Problems")?>? <a href="mailto:wannabe@lovelan.no"><?=__("Report it")?>!</a></p>
             </div>
             <div class="col-md-4">
                 <div class="footer-logo" style="text-align: center;">
@@ -110,7 +109,7 @@
         $('#alerts').prepend(alertMessage);
         $(".alert-message").alert()
     };
-
+/*
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-55789-3']);
     _gaq.push(['_trackPageview']);
@@ -120,7 +119,7 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
-
+*/
 </script>
 </body>
 </html>

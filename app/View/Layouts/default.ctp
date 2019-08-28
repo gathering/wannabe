@@ -15,8 +15,8 @@ App::uses('WbSanitize', 'Lib');
 			<?php } ?>
 		</title>
 		<meta charset="utf-8" />
-		<link rel="author" href="mailto:wannabe@gathering.org" />
-		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="author" href="mailto:wannabe@lovelan.no" />
+		<link rel="icon" href="/favicon.ico" type="image/png" />
 		<?=$this->Html->css('prettify')?>
 		<?=$this->Html->css('bootstrap-old')?>
 		<?=$this->Html->css('wannabe')?>
@@ -147,7 +147,7 @@ App::uses('WbSanitize', 'Lib');
         <div class="container">
             <div class="row">
                 <div class="span-one-third">
-                    <p>Wannabe <?=__("version")?> 4.0<br /><?=__("Copyright © KANDU")?><br /><?=__("Problems")?>? <a href="mailto:wannabe@gathering.org"><?=__("Report it")?>!</a></p>
+                    <p>Wannabe <?=__("version")?> 4.0<br /><?=__("Copyright © KANDU")?><br /><?=__("Problems")?>? <a href="mailto:wannabe@lovelan.no"><?=__("Report it")?>!</a></p>
                 </div>
                 <div class="span-one-third">
                     <div class="footer-logo">
@@ -182,7 +182,7 @@ echo $this->Js->writeBuffer(); // Write cached scripts
         $('section#content').prepend(alertMessage);
         $(".alert-message").alert()
     };
-
+/*
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-55789-3']);
   _gaq.push(['_trackPageview']);
@@ -192,5 +192,5 @@ echo $this->Js->writeBuffer(); // Write cached scripts
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-
+*/
 </script>

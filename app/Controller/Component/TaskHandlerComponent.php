@@ -9,7 +9,7 @@ class TaskHandlerComponent extends Component {
     var $task = array();
     var $task_button = false;
 
-	public function initialize(&$controller) {
+	public function initialize(Controller $controller) {
         if(!isset($controller->Wannabe->user['User']) ||
            !$controller->Wannabe->event->reference ||
            $controller->Wannabe->user['User']['registered'] != 'done' ||

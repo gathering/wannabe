@@ -67,7 +67,7 @@ class ApplicationPage extends AppModel {
 		return $pages;
 	}
 
-	public function afterSave($created) {
+	public function afterSave($created, $options = []) {
         if(!$created)
             Cache::delete(WB::$event->reference.'-application_pages');
 	}

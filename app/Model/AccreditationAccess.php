@@ -16,7 +16,7 @@ class AccreditationAccess extends AppModel {
      *
      * @var array
      */
-    public function beforeValidate() {
+    public function beforeValidate($options = []) {
         $this->validate = array(
             'accreditation_id' => array(
                 'notempty' => array(

@@ -23,7 +23,7 @@
 		<li><?=__("If the last page was a form, that you've filled in the correct information")?></li>
         </ul>
 	<div class="alert-actions">
-	<a class="btn small" href="mailto:wannabe@gathering.org"><?=__("Report this")?></a>
+	<a class="btn small" href="mailto:wannabe@lovelan.no"><?=__("Report this")?></a>
 	</div>
 </div>
 <?php

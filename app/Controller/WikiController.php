@@ -15,11 +15,13 @@ class WikiController extends AppController {
 	 * This function acts as a delegator of tasks.
 	 * It gets all requests to the wikithingie.
 	 */
-	public function index() {
+	public function index($test = null) {
 		preg_match('/\/(\w+)\/(\w+)\/(.*)/', $this->here, $matches);
 		array_splice($matches, 0, 3);
-		$args = split('[/]', $matches[0]);
+		$args = preg_split('[/]', $matches[0]);
+
 		$num_args = sizeof($args);
+
 		// Make sure the title is camelized.
 		if ( $num_args > 0 && ($camelizedtitle = Inflector::camelize($args[0])) != $args[0] ) {
 			$args[0] = $camelizedtitle;
@@ -80,7 +82,7 @@ class WikiController extends AppController {
 				break;
 
 			default:
-				throw new CakeException(null);
+				throw new CakeException("Exception made in WikiController");
 		}
 	}
 

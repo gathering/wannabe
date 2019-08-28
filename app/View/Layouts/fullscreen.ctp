@@ -5,9 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <link rel="author" href="mailto:wannabe@gathering.org" />
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="author" href="mailto:wannabe@lovelan.no" />
+    <link rel="icon" href="/favicon.ico" type="image/png" />
 
     <title>
 			<?php if(isset($title_for_layout)) { ?>
@@ -154,7 +153,7 @@
             $('#alerts').prepend(alertMessage);
             $(".alert-message").alert()
         };
-
+/*
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-55789-3']);
       _gaq.push(['_trackPageview']);
@@ -164,7 +163,7 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
-
+*/
     </script>
   </body>
 </html>
