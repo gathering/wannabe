@@ -1,4 +1,7 @@
 <?php
+
+use Michelf\Markdown;
+
 /**
  * Wikipage Model
  *
@@ -61,7 +64,6 @@ class Wikipage extends AppModel {
 		$data['Wikipage']['content'] = preg_replace_callback('|(\[\[)(.*?)(\]\])|', array($this, 'formatAddLinks'), $data['Wikipage']['content']);
 		$data['Wikipage']['content'] = preg_replace_callback('|(\{\{include:)(.*?)(\}\})|', array($this, 'formatIncludes'), $data['Wikipage']['content']);
 
-        App::import('Vendor', 'Markdown/Markdown');
 		$data['Wikipage']['content'] = Markdown::defaultTransform($data['Wikipage']['content']);
 		return $data;
 	}

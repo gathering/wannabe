@@ -62,6 +62,16 @@ Configure::write('debug', 1);
 session.cookie_domain' => '.domain.com' // Leave blank if localhost
 ```
 
+### Custom configuration options
+
+#### AUTH_COOKIE_KEY
+
+Populate this environment variable with random string to activate "Remember me"
+functionality. This key is used as encryption key for the "Remember me" cookie
+containing users credentials, so be sure it's long and random.
+
+Sessions will still be held for about 1 week according to CakePHP session/cookie
+config, but will not automatically re-login user when it expires.
 
 ### Create cache and files upload folders
 These folder are required for caching and image uploads (even if cache it not in use)

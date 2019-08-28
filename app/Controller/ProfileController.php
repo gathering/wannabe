@@ -441,22 +441,25 @@ class ProfileController extends AppController {
         if($_SERVER['REQUEST_METHOD'] == 'POST' and isset($_REQUEST['save']) == true) {
             $data = $this->data;
             $this->User->set($data);
+
+            // Skip validations against existing password if in "create new user flow" (registered == 'password')
             if($this->Wannabe->user['User']['registered'] != 'password') {
-                if(md5($data['User']['password']) != $this->Wannabe->user['User']['password']) {
+                if(!$this->User->correctPassword($this->Wannabe->user, $data['User']['password'])) {
                     $this->User->invalidate('password', __("Password incorrect"));
                 }
                 if(
-                    md5($data['User']['password']) == md5($data['User']['newpassword1']) &&
-                    md5($data['User']['newpassword1']) == md5($data['User']['newpassword2']) &&
-                    md5($data['User']['newpassword2']) == $this->Wannabe->user['User']['password']
+                    $data['User']['newpassword1'] == $data['User']['newpassword2'] &&
+                    $this->User->correctPassword($this->Wannabe->user, $data['User']['password']) &&
+                    $this->User->correctPassword($this->Wannabe->user, $data['User']['newpassword1'])
                 ) {
                     $this->User->invalidate('newpassword1', __("New password cannot be the same as your current password"));
                 }
             }
+
             if($this->User->validates()) {
                 $user = array();
                 $user['User']['id'] = $this->Wannabe->user['User']['id'];
-                $user['User']['password'] = md5($data['User']['newpassword1']);
+                $user['User']['password'] = $this->User->getPasswordHash($data['User']['newpassword1']);
                 $registration = false;
                 if($this->Wannabe->user['User']['registered'] == 'password') {
                     $registration = true;
@@ -476,18 +479,6 @@ class ProfileController extends AppController {
                 }
             } else {
                 $this->validateErrors($this->User);
-                if($this->Wannabe->user['User']['registered'] != 'password') {
-                    if(md5($data['User']['password']) != $this->Wannabe->user['User']['password']) {
-                        $this->User->invalidate('password', __("Password incorrect"));
-                    }
-                    if(
-                        md5($data['User']['password']) == md5($data['User']['newpassword1']) &&
-                        md5($data['User']['newpassword1']) == md5($data['User']['newpassword2']) &&
-                        md5($data['User']['newpassword2']) == $this->Wannabe->user['User']['password']
-                    ) {
-                        $this->User->invalidate('newpassword1', __("New password cannot be the same as your current password"));
-                    }
-                }
                 $this->Flash->error(__("You have field errors. Please correct them and continue."));
             }
         }

@@ -44,6 +44,7 @@ endif;
 			<div class="modal-body">
 				<div class="messages">
 					<?=$this->Session->flash('modal')?>
+					<?=$this->Session->flash()?>
 				</div>
 				<?php echo $content_for_layout ?>
 			</div>
