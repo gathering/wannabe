@@ -30,7 +30,7 @@
 							<? if($document['ApplicationDocument']['orderedchoices']) { ?>
 								<em><? print ((int)$choice['priority'] + 1); ?>.</em>
 							<? } ?>
-                            <?php if($document['ApplicationDocument']['applyingopen']): ?>
+                            <?php if(isset($document['ApplicationDocument']['applyingopen']) && $document['ApplicationDocument']['applyingopen']): ?>
                                 Åpen søknad
                             <?php else: ?>
                                 <?=$crews[$choice['crew_id']]?></li>

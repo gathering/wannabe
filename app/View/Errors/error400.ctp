@@ -22,7 +22,7 @@ if(isset($messageError)):
 <div class="alert-message block-message error">
 	<p><strong><?php echo __('Error'); ?>: </strong> <?php printf(__('The page “%s” returned an error. Maybe you did something wrong?'),"<strong>{$url}</strong>"); ?></p>
 	<div class="alert-actions">
-	<a class="btn small" href="mailto:wannabe@gathering.org"><?=__("Report this")?></a>
+	<a class="btn small" href="mailto:wannabe@lovelan.no"><?=__("Report this")?></a>
 	</div>
 </div>
 <?php
@@ -31,7 +31,7 @@ else:
 <div class="alert-message block-message error">
         <p><strong><?php echo __('Error'); ?>: </strong> <?php printf(__('The requested address “%s” could not be found. Please check that you\'ve entered the correct address.'),"<strong>{$url}</strong>"); ?></p>
         <div class="alert-actions">
-        <a class="btn small" href="mailto:wannabe@gathering.org"><?=__("Report this")?></a>
+        <a class="btn small" href="mailto:wannabe@lovelan.no"><?=__("Report this")?></a>
         </div>
 </div>
 <?php

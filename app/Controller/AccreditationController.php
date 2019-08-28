@@ -407,12 +407,12 @@ class AccreditationController extends AppController {
                 //Mail to press
                 $accreditationConfirmationMail = new CakeEmail('default');
                 $accreditationConfirmationMail->viewVars(array('accreditation' => $this->request->data['Accreditation']));
-                $accreditationConfirmationMail->template('accreditation-confirmation-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Press: Accreditation confirmation"))->to($this->request->data['Accreditation']['email'])->from("presse@gathering.org")->send();
+                $accreditationConfirmationMail->template('accreditation-confirmation-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Press: Accreditation confirmation"))->to($this->request->data['Accreditation']['email'])->from("presse@lovelan.no")->send();
 
                 //Mail to press crew
                 $accreditationRecievedMail = new CakeEmail('default');
                 $accreditationRecievedMail->viewVars(array('accreditation' => $this->request->data['Accreditation']));
-                $accreditationRecievedMail->template('accreditation-received-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Wannabe: New press applicant"))->to("presse@gathering.org")->from('wannabe@gathering.org')->send();
+                $accreditationRecievedMail->template('accreditation-received-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Wannabe: New press applicant"))->to("presse@lovelan.no")->from('wannabe@glovelan.no')->send();
 
                 $this->Flash->success(__("You have successfully registered. An e-mail has been sent to the specified e-mail address"));
                 $this->set('registered', true);
@@ -454,11 +454,11 @@ class AccreditationController extends AppController {
         //Mail to press
         $accreditationConfirmationMail = new CakeEmail('default');
         $accreditationConfirmationMail->viewVars(array('accreditation' => $accreditation));
-        $accreditationConfirmationMail->template('accreditation-approval-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Press: Accreditation approval"))->to($accreditation['Accreditation']['email'])->from("presse@gathering.org")->send();
+        $accreditationConfirmationMail->template('accreditation-approval-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Press: Accreditation approval"))->to($accreditation['Accreditation']['email'])->from("presse@lovelan.no")->send();
         //Mail to press crew
         $accreditationRecievedMail = new CakeEmail('default');
         $accreditationRecievedMail->viewVars(array('accreditation' => $accreditation));
-        $accreditationRecievedMail->template('accreditation-approved-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Wannabe: Press accreditation approved"))->to("presse@gathering.org")->from('wannabe@gathering.org')->send();
+        $accreditationRecievedMail->template('accreditation-approved-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Wannabe: Press accreditation approved"))->to("presse@lovelan.no")->from('wannabe@lovelan.no')->send();
 
         $this->Flash->success(__("Accreditation was successfully accepted"));
         $this->redirectEvent("/Accreditation/Edit/{$id}");
@@ -488,12 +488,12 @@ class AccreditationController extends AppController {
         //Mail to press
         $accreditationConfirmationMail = new CakeEmail('default');
         $accreditationConfirmationMail->viewVars(array('accreditation' => $accreditation ));
-        $accreditationConfirmationMail->template('accreditation-declinal-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Press: Accreditation declined"))->to($accreditation['Accreditation']['email'])->from("presse@gathering.org")->send();
+        $accreditationConfirmationMail->template('accreditation-declinal-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Press: Accreditation declined"))->to($accreditation['Accreditation']['email'])->from("presse@lovelan.no")->send();
 
         //Mail to press crew
         $accreditationRecievedMail = new CakeEmail('default');
         $accreditationRecievedMail->viewVars(array('accreditation' => $accreditation));
-        $accreditationRecievedMail->template('accreditation-declined-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Wannabe: Press accreditation declined"))->to("presse@gathering.org")->from('wannabe@gathering.org')->send();
+        $accreditationRecievedMail->template('accreditation-declined-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Wannabe: Press accreditation declined"))->to("presse@lovelan.no")->from('wannabe@lovelan.no')->send();
 
         $this->Flash->success(__("Accreditation was successfully declined"));
         $this->redirectEvent("/Accreditation/Edit/{$id}");

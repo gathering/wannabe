@@ -1,7 +1,8 @@
 <?php
 	$privacy = $settings['ApplicationSetting']['privacy'];
 	$priority = $settings['ApplicationSetting']['priority'];
-	$open = $settings['ApplicationSetting']['open'];
+	$open = 0; // isset($settings['ApplicationSetting']['open']) ? $settings['ApplicationSetting']['open']; : 0;
+//	echo "<pre>";var_dump($settings);echo "</pre>";
     if($open):
         $crews[$open] = 'Åpen søknad';
         foreach($this->data['ApplicationChoice'] as $choice):

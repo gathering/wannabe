@@ -25,7 +25,7 @@
         <p>
             <strong><?=__("Attention")?>:</strong>
             <?=__("The amount left of this bulk does not equal the sum available for each storage location.")?>
-            <strong><?=__("Contact Core:Systems (wannabe@gathering.org)!")?></strong>
+            <strong><?=__("Contact Core:Systems (wannabe@lovelan.no)!")?></strong>
         </p>
     </div>
 <?php endif; ?>

@@ -5,7 +5,7 @@
 			?><div class="clearfix">
 				<label for="data[ApplicationField][<?=$index?>][value]"><?=$field['name']?></label>
 				<div class="input">
-					<?php
+					<?php	
 						print $this->Wb->hidden('ApplicationField.'.$index.'.id');
 						print $this->Wb->hidden('ApplicationField.'.$index.'.application_availablefield_id', array('value'=>$field['id']));
 						print $this->Wb->textarea('ApplicationField.'.$index.'.value', array('class' => 'form-control', 'rows' => '3', 'div' => false, 'disabled' => $readonly));

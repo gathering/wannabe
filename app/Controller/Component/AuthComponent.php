@@ -9,7 +9,7 @@ class AuthComponent extends Component {
 	var $controller;
 	var $isLoggedin = false;
 
-	public function initialize(&$controller) {
+	public function initialize(Controller $controller) {
         // Setup cookie
 		$this->Cookie->name = 'WB';
 		$this->Cookie->key = 'Nea*fgmh+8a78ghnMGEYgh%aamhgiusyhmr8gy7hmsry8hgir348';
@@ -65,7 +65,7 @@ class AuthComponent extends Component {
 			$controller->redirect('/');
         }
 	}
-	public function startup($controller) {
+	public function startup(Controller $controller) {
 		//We are not logged in, redirect
 		if(!$this->isLoggedIn && $controller->requireLogin) {
 			if($controller->here != '/'.$controller->Wannabe->event->reference.'/') {

@@ -7,8 +7,8 @@
 			<title>Wannabe 4</title>
 		<?php } ?>
 		<meta charset="utf-8" />
-		<link rel="author" href="mailto:wannabe@gathering.org" />
-		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="author" href="mailto:wannabe@lovelan.no" />
+		<link rel="icon" href="/favicon.ico" type="image/png" />
 		<?=$this->Html->css('bootstrap-old')?>
 		<?=$this->Html->css('wannabe')?>
         <?=$this->Html->css('iframe')?>
@@ -34,7 +34,7 @@
 echo $this->Js->writeBuffer(); // Write cached scripts
 ?>
 <script type="text/javascript">
-
+/*
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-55789-3']);
   _gaq.push(['_trackPageview']);
@@ -44,5 +44,5 @@ echo $this->Js->writeBuffer(); // Write cached scripts
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-
+*/
 </script>

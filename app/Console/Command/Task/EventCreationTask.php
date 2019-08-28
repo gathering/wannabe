@@ -23,7 +23,7 @@ class EventCreationTask extends Shell {
             if(isset($event['email']) && !Validation::email($event['email'])) {
                 $this->err(__d('cake_console', '%s is not a valid email.', $event['email']));
             }
-            $event['email'] = $this->in(__d('cake_console', 'Support email'), null, 'wannabe@gathering.org');
+            $event['email'] = $this->in(__d('cake_console', 'Support email'), null, 'wannabe@lovelan.no');
         } while(!Validation::email($event['email']));
 		$event['hide'] = strtoupper($this->in(__d('cake_console', 'Should I hide the event from front page?'), array('Y', 'N'), 'Y'));
 		$event['disable'] = strtoupper($this->in(__d('cake_console', 'Should the event be disabled for all users? (if yes, only superusers are allowed)'), array('Y', 'N'), 'Y'));

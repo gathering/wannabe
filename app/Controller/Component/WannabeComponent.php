@@ -16,7 +16,7 @@ class WannabeComponent extends Component {
 	var $lang;
 	var $searchAccess = false;
 
-	public function initialize(&$controller) {
+	public function initialize(Controller $controller) {
 		if(isset($controller->request->params['eventPrefix'])) {
 			if($controller->request->params['eventPrefix'] != CakeSession::read('last_event_reference')) {
 				$controller->changedEvent = true;

@@ -21,7 +21,7 @@ class Crew extends AppModel {
 		)
 	);
 
-	public function beforeSave($options) {
+	public function beforeSave($options = []) {
 		/*if($this->data['Crew']['crew_id'] == NULL) {
 			$this->data['Crew']['crew_id'] = 0;
         }*/
