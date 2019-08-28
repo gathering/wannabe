@@ -49,7 +49,7 @@ class EmailConfig {
 */
         public $default = array(
                 'transport' => 'Smtp',
-                'from' => 'wannabe@gathering.org',
+                'from' => 'wannabe@lovelan.no',
                 'host' => 'localhost',
                 'port' => 25,
                 'timout' => 30

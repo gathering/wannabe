@@ -186,7 +186,7 @@ class WannabeSchema extends CakeSchema {
 		'start' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
 		'end' => array('type' => 'datetime', 'null' => true, 'default' => NULL, 'collate' => NULL, 'comment' => ''),
 		'urlmode' => array('type' => 'string', 'null' => true, 'default' => 'path', 'length' => 25, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
-		'email' => array('type' => 'string', 'null' => false, 'default' => 'wannabe@gathering.org', 'length' => 32, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
+		'email' => array('type' => 'string', 'null' => false, 'default' => 'wannabe@lovelan.no', 'length' => 32, 'collate' => 'utf8_general_ci', 'comment' => '', 'charset' => 'utf8'),
 		'hide' => array('type' => 'boolean', 'null' => true, 'default' => '0', 'collate' => NULL, 'comment' => ''),
 		'disable' => array('type' => 'boolean', 'null' => true, 'default' => '0', 'collate' => NULL, 'comment' => ''),
 		'can_apply_for_crew' => array('type' => 'boolean', 'null' => true, 'default' => '1', 'collate' => NULL, 'comment' => ''),
