@@ -21,7 +21,7 @@ class Crew extends AppModel {
 		)
 	);
 
-	public function beforeValidate() {
+	public function beforeValidate($options = []) {
 		$this->validate = array(
 			'name' => array(
 				'special-characters' => array(

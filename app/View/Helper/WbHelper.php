@@ -61,7 +61,7 @@ class WbHelper extends HtmlHelper
 
 	private function getExtendedFormTag($fieldName)
 	{
-		return preg_split('[.]', $fieldName);
+		return preg_split('/[.]/m', $fieldName);
 	}
 
 	private function tagExtendedValue($fieldName)
@@ -78,7 +78,7 @@ class WbHelper extends HtmlHelper
 
 	public function textarea($fieldName, $htmlAttributes=array(), $return=false, $value=false)
 	{
-		$fields = preg_split('[.]', $fieldName);
+		$fields = preg_split('/[.]/m', $fieldName);
 		if (count($fields) <= 2)
 			return $this->Form->textarea($fieldName, $htmlAttributes, $return);
 
@@ -90,7 +90,7 @@ class WbHelper extends HtmlHelper
 
 	public function hidden($fieldName, $htmlAttributes=array(), $return=false, $value=false)
 	{
-                $fields = preg_split('[.]', $fieldName);
+                $fields = preg_split('/[.]/m', $fieldName);
 		if (isset($fields) && count($fields) <= 2)
 			return $this->Form($fieldName, $htmlAttributes, $return);
 
