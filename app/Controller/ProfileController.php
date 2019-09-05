@@ -295,15 +295,17 @@ class ProfileController extends AppController {
                 }
             }
 
+            $isDisabled = $this->User->isDisabled($user);
             $this->set('isMyProfile', $myProfile);
             $this->set('application', $this->ApplicationDocument->findDocumentNotDraft($id));
             $this->set('canAccessEnroll', $this->Acl->hasAccess('read', $this->Wannabe->user, '/'.WB::$event->reference.'/Enroll'));
             $this->set('user', $user);
             $this->set('improtocols', $this->Improtocol->find('list'));
             $this->set('phonetypes', $this->Phonetype->find('list'));
-            $this->set('title_for_layout', WbSanitize::clean($user['User']['realname']));
-            $this->set('desc_for_layout', __('aka')." ".WbSanitize::clean($user['User']['nickname']));
+            $this->set('title_for_layout', $isDisabled ? "ID #".$user['User']['id'] : WbSanitize::clean($user['User']['realname']));
+            $this->set('desc_for_layout', $isDisabled ? "" : __('aka')." ".WbSanitize::clean($user['User']['nickname']));
             $this->set('userAge', $this->calculateAge($user['User']['birth']));
+            $this->set('isDisabled', $this->User->isDisabled($user));
             $this->set('canViewDetailedInfo', $this->Acl->hasAccessToDetailedUserInfo($this->Wannabe->user));
             $this->set('canViewPhone',   $sharesCrewAndAllowsCrew || $this->Acl->hasAccessToViewUserDetail('phone', $user));
             $this->set('canViewAddress', $sharesCrewAndAllowsCrew || $this->Acl->hasAccessToViewUserDetail('address', $user));
