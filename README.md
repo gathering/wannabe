@@ -56,3 +56,17 @@ Several further tweaks are needed, but this is a start.
 [Work flow instructions](https://github.com/gathering/wannabe/blob/master/WORKFLOW.md)
 
 All PHP libraries are included, including CakePHP.
+
+## Enable/disable a user account
+
+With `cake` command available in path (see installation instructions).
+
+```
+cake user enable <userid>
+cake user disable <userid>
+cake user show <userid>
+```
+
+A disabled used is disallowed login and has personal information hidden from
+user profile page. User information will still appear in other locations. If
+removing user for data retention or privacy purposes delete user instead.
