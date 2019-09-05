@@ -8,12 +8,12 @@ class AuthComponent extends Component {
 	var $components = array('Cookie');
 	var $controller;
 	var $isLoggedin = false;
+	var $isDisabled = false;
 	var $allowUserAuthCookie = false;
 
 	public function initialize(&$controller) {
 		//save controller for later use
 		$this->controller = &$controller;
-		$this->User = $controller->User;
 
 		$cookie = null;
 
@@ -44,8 +44,6 @@ class AuthComponent extends Component {
                 }
                 WB::$user = $controller->Wannabe->user;
                 $this->isLoggedIn = true;
-            } else {
-                $controller->Wannabe->user = array();
             }
 		} else if(!is_null($cookie)) {
 			if($this->login($cookie['user'], $cookie['pass'])) {
@@ -58,14 +56,15 @@ class AuthComponent extends Component {
                     }
                     WB::$user = $controller->Wannabe->user;
                     $this->isLoggedIn = true;
-                } else {
-                    $controller->Wannabe->user = array();
-                    $this->Cookie->delete('User.auth');
                 }
-			} else {
-				$this->Cookie->delete('User.auth');
-			}
-		}
+            }
+        }
+
+        if (!$this->isLoggedIn) {
+            $controller->Wannabe->user = array();
+            CakeSession::write('User.login', null);
+            $this->Cookie->delete('User.auth');
+        }
 
 		//Turn off required login for Error pages to avoid redirects away from them
 		if($controller->name == 'CakeError') {
@@ -108,17 +107,23 @@ class AuthComponent extends Component {
         return $this->login($username, $password);
     }
 	public function login($login, $pass, $remember=0) {
-		$userGoingIn = $this->User->findByUsername($login);
+		App::import('Model', 'User');
+		$user = new User();
+		$userGoingIn = $user->findByUsername($login);
 		if(!$userGoingIn) {
-			$userGoingIn = $this->User->findByEmail($login);
+			$userGoingIn = $user->findByEmail($login);
 		}
 		if(!$userGoingIn) {
 			return false;
 		}
-		if (!$this->User->correctPassword($userGoingIn, $pass)) {
+		if ($user->isDisabled($userGoingIn)) {
+			$this->isDisabled = true;
 			return false;
 		}
-		$this->User->keepPasswordHashUpToDate($userGoingIn, $pass);
+		if (!$user->correctPassword($userGoingIn, $pass)) {
+			return false;
+		}
+		$user->keepPasswordHashUpToDate($userGoingIn, $pass);
 		if ($this->allowUserAuthCookie) {
 			$cookie = $this->Cookie->read('User.auth');
 			if(is_null($cookie)) {
