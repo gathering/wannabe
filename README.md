@@ -50,6 +50,7 @@ Secondly add default database configurations by copying these files:
 $ cp migrate/db-config.examples.sh migrate/db-config.sh
 $ cp migrate/.simple-db-migrate.example.conf migrate/.simple-db-migrate.conf
 $ cp app/Config/database.sample.php app/Config/database.php
+$ cp app/Config/core.sample.php app/Config/core.php
 ```
 
 You can ignore most other steps from `INSTALL.md`, for anything other than
