@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /var/www/html
+cd /var/www/html/wannabe
 mkdir -p app/tmp
 mkdir -p app/tmp/sessions
 mkdir -p app/tmp/logs
