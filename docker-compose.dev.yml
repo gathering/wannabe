@@ -11,6 +11,7 @@ services:
       - MYSQL_USERNAME=wannabe
       - MYSQL_PASSWORD=wannabe
       - AUTH_COOKIE_KEY=if-you-see-me-in-prod-run-away
+      - APP_ENV=development
     restart: "no"
 
   mysql:

@@ -44,13 +44,16 @@ Several further tweaks are needed, but this is a start.
 First select between PHP 5 and PHP 7 versions of the image by uncommenting the
 corresponding lines in `./env` file. Currently PHP 5 is the default.
 
-Secondly add default database configurations by copying these files:
+If running in dev mode configuration files should be created automatically from
+example files when starting the container the first time if they are missing.
+
+They can also be manually created in advance:
 
 ```
 $ cp migrate/db-config.examples.sh migrate/db-config.sh
 $ cp migrate/.simple-db-migrate.example.conf migrate/.simple-db-migrate.conf
 $ cp app/Config/database.sample.php app/Config/database.php
-$ cp app/Config/core.sample.php app/Config/core.php
+$ cp app/Config/core.example.php app/Config/core.php
 ```
 
 You can ignore most other steps from `INSTALL.md`, for anything other than
