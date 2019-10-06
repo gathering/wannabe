@@ -57,10 +57,6 @@ class User extends AppModel {
 				'rule' => 'notBlank',
 				'message' => __("Name cannot be empty")
 			),
-			'nickname' => array(
-				'rule' => 'notBlank',
-				'message' => __("Nick cannot be empty")
-			),
 			'town' => array(
 				'rule' => 'notBlank',
 				'message' => __("Town cannot be empty")
