@@ -76,6 +76,21 @@ class WbHelper extends HtmlHelper
 		return false;
 	}
 
+	public function useBootstrapForms() {
+		$this->Form->inputDefaults([
+			'class' => 'form-control',
+			'error' => [
+				'attributes' => [
+					'class' => 'help-block',
+				],
+			],
+			'div' => [
+				'class' => 'form-group',
+				'errorClass' => 'has-error',
+			],
+		]);
+	}
+
 	public function textarea($fieldName, $htmlAttributes=array(), $return=false, $value=false)
 	{
 		$fields = split('[.]', $fieldName);
