@@ -2040,15 +2040,13 @@ msgstr "E-postadresse"
 
 #: Controller/PrivacyController.php:37
 msgid ""
-"Allow fellow crew members to see hidden info regardless of other privacy "
-"settings"
+"Allow members of your own crew to see hidden info"
 msgstr ""
-"La andre crewmedlemmer se skjult informasjon uavhengig av andre "
-"innstillinger for personvern"
+"La medlemmer av ditt eget crew se skjult informasjon"
 
 #: Controller/PrivacyController.php:40
-msgid "Privacy settings"
-msgstr "Personverninnstillinger"
+msgid "Privacy"
+msgstr "Personvern"
 
 #: Controller/ProfileController.php:29 View/Profile/edit.ctp:8
 #: View/Profile/email.ctp:8 View/Profile/password.ctp:8
@@ -7383,9 +7381,21 @@ msgstr "Lagre regel"
 msgid "Rules"
 msgstr "Regler"
 
-#: View/Privacy/index.ctp:4
-msgid "Hide…"
-msgstr "Skjul…"
+#: View/Privacy/index.ctp:3
+msgid "Settings"
+msgstr "Innstillinger"
+
+#: View/Privacy/index.ctp:6
+msgid "Hidden info"
+msgstr "Skjult info"
+
+#: View/Privacy/index.ctp:16
+msgid "Exceptions…"
+msgstr "Unntak…"
+
+#: View/Privacy/index.ctp:24
+msgid "Administrators, Chiefs and others with special access will always be allowed to access your contact information"
+msgstr "Administratorer, Chiefs og andre med spesialtilganger vil alltid ha anledning til å se din kontaktinformasjon"
 
 #: View/Profile/edit.ctp:4
 msgid "On this page you edit your profile."
