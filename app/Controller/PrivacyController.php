@@ -5,6 +5,9 @@
  */
 class PrivacyController extends AppController {
     var $uses = array('UserPrivacy');
+
+    var $layout = 'responsive-default';
+
     public function index() {
         if($this->request->is('post')) {
             $this->request->data['UserPrivacy']['user_id'] = $this->Wannabe->user['User']['id'];
@@ -34,10 +37,10 @@ class PrivacyController extends AppController {
             'address' => __("Address"),
             'birth' => __("Birth"),
             'email' => __("Email address"),
-            'allow_crew' => __("Allow fellow crew members to see hidden info regardless of other privacy settings")
+            'allow_crew' => __("Allow members of your own crew to see hidden info")
         );
         $this->set('privacyNames', $privacyNames);
-        $this->set('title_for_layout', __("Privacy settings"));
+        $this->set('title_for_layout', __("Privacy"));
         $this->set('desc_for_layout', '');
     }
 }
