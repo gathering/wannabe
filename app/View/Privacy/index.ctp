@@ -27,3 +27,17 @@
         <?=$this->Form->submit(__("Save settings"), array('class' => 'btn btn-success','name'=>'save'))?>
     </div>
 </form>
+<?
+    if (!empty($privacyPage)) {
+?>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <?=__('Info')?>
+        </div>
+        <div class="panel-body">
+            <?=$privacyPage['Wikipage']['content']?>
+        </div>
+    </div>
+<?
+    }
+?>

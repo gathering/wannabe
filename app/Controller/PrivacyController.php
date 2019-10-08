@@ -4,7 +4,7 @@
  *
  */
 class PrivacyController extends AppController {
-    var $uses = array('UserPrivacy');
+    var $uses = array('UserPrivacy', 'Wikipage');
 
     var $layout = 'responsive-default';
 
@@ -42,5 +42,16 @@ class PrivacyController extends AppController {
         $this->set('privacyNames', $privacyNames);
         $this->set('title_for_layout', __("Privacy"));
         $this->set('desc_for_layout', '');
+
+        $privacyPage = $this->Wikipage->find('first', array(
+            'conditions' => [
+                'title' => 'Privacy',
+                'event_id' => $this->Wannabe->event->id
+            ],
+            'order' => 'Wikipage.created DESC',
+        ));
+        if (!empty($privacyPage)) {
+            $this->set('privacyPage', $this->Wikipage->format($privacyPage, $this));
+        }
     }
 }
