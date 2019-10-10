@@ -1,0 +1,6 @@
+.gitignore
+.git
+*.md
+sql/
+Dockerfile*
+app/tmp/

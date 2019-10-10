@@ -1,0 +1,15 @@
+# Example, tweak before prod usage
+version: "3.5"
+services:
+  app:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - MYSQL_URL
+      - MYSQL_USERNAME
+      - MYSQL_PASSWORD
+      - AUTH_COOKIE_KEY
+    restart: always
