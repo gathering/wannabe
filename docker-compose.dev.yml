@@ -17,6 +17,9 @@ services:
     networks:
       - wannabe_public
       - wannabe_internal
+    environment:
+      - APP_ENV=development
+      - LOG_ENGINE=console
 
   mysql:
     image: mysql:5.7
