@@ -122,6 +122,12 @@ To build production image from another branch:
 docker-compose build --build-arg GIT_BRANCH=branch-name app
 ```
 
+**PS!** The production container expects that configuration files and secrets are
+provided and available. If run in docker swarm or kubernetes this could be done
+via separate config or secret mounts specified for the service/pod. If run as
+standalone container via docker-compose, add extra volume mounts pointing to
+required configuration files (see `development-entrypoint.sh` for required
+config files)
 
 ### Migrations:
 
