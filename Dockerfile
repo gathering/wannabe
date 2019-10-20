@@ -1,4 +1,3 @@
-ARG GIT_BRANCH
 ARG PHP_VERSION
 
 ### Development
@@ -23,11 +22,11 @@ CMD ["php-fpm"]
 
 ### Builder
 FROM composer as Builder
-ENV GIT_BRANCH ${GIT_BRANCH:-prod}
-RUN echo "Building app from $GIT_BRANCH branch"
+ARG GIT_BRANCH
+RUN echo "Building app from ${GIT_BRANCH:-prod} branch"
 
 RUN apk add git
-RUN git clone --single-branch --branch "$GIT_BRANCH" https://github.com/gathering/wannabe.git ./
+RUN git clone --single-branch --branch ${GIT_BRANCH:-prod} https://github.com/gathering/wannabe.git ./
 
 # Remove lock file since it's currently configured only for PHP 5
 RUN rm -f ./composer.lock
