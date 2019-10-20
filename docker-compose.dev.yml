@@ -14,6 +14,9 @@ services:
       target: development
     volumes:
       - ./:/var/www/html/wannabe
+    networks:
+      - wannabe_public
+      - wannabe_internal
 
   mysql:
     image: mysql:5.7
