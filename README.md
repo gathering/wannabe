@@ -105,7 +105,7 @@ seed files on first startup.
 
 #### Production
 
-To use production setup make sure this line is uncommented in `.env` file:
+To use an example production setup uncommented this line in `.env` file:
 
 ```
 COMPOSE_FILE=docker-compose.yml:docker-compose.prod.yml
@@ -122,12 +122,17 @@ To build production image from another branch:
 docker-compose build --build-arg GIT_BRANCH=branch-name app
 ```
 
-**PS!** The production container expects that configuration files and secrets are
-provided and available. If run in docker swarm or kubernetes this could be done
-via separate config or secret mounts specified for the service/pod. If run as
-standalone container via docker-compose, add extra volume mounts pointing to
-required configuration files (see `development-entrypoint.sh` for required
-config files)
+When using in a custom production environment we recommend that you use a
+custom `docker-compose.prod.yml` file and reference that from `.env`, or build
+and run `app` container with your completely custom docker-compose (or swarm,
+or kubernetes) setup.
+
+**PS!** The example production container expects that configuration files and
+secrets are provided and available. If run in docker swarm or kubernetes this
+could be done via separate config or secret mounts specified for the
+service/pod. If run as standalone container via docker-compose, add extra
+volume mounts pointing to required configuration files (see
+`development-entrypoint.sh` for required config files)
 
 ### Migrations:
 
