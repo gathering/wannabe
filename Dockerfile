@@ -7,9 +7,14 @@ FROM php:${PHP_VERSION:-5}-fpm as Development
 RUN docker-php-ext-install pdo pdo_mysql
 RUN apt-get update && apt-get install -y \
 	mariadb-client \
+	python-dev \
 	python-pip \
 	python-mysqldb-dbg \
-	vim
+	git \
+	vim \
+	man \
+	zip \
+	unzip
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY ./build/development-entrypoint.sh /usr/bin/development-entrypoint
 RUN chmod a+x /usr/bin/development-entrypoint
