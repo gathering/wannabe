@@ -8,7 +8,6 @@ services:
       - MYSQL_USERNAME=wannabe
       - MYSQL_PASSWORD=wannabe
       - AUTH_COOKIE_KEY=if-you-see-me-in-prod-run-away
-      - APP_ENV=development
 
   app:
     build:
@@ -28,10 +27,7 @@ services:
       - MYSQL_ROOT_PASSWORD=wannabe
       - MYSQL_DATABASE=wannabe
     networks:
-      - internal
+      - wannabe_internal
 
 volumes:
   mysql_data:
-networks:
-  internal:
-  public:

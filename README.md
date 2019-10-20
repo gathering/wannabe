@@ -28,50 +28,102 @@ Contact: Use bug reports here, or use wannabe@gathering.org (Response times
 are very varying - I'm sorry, we're working on it!)
 
 
-# Docker
+## Docker
 
 Some work has begun on making it possible to develop using docker. It is
 not complete, largely because we're also moving to a newer php version and
 ideally fixing some stupid bugs, possibly moving to at least a more recent
 CakePHP, ideally CakePHP 3.
 
-Naturally this should currently only be used for development purposes.
-
 Several further tweaks are needed, but this is a start.
 
-## Initial configuration:
+To experiment with php7 (or another) version. Build `app` container with the
+`PHP_VERSION` build argument.
 
-First select between PHP 5 and PHP 7 versions of the image by uncommenting the
-corresponding lines in `./env` file. Currently PHP 5 is the default.
+```
+docker-compose build --build-arg PHP_VERSION=7 app
+```
+
+### Initial configuration:
+
+First select between development and production setup by uncommenting the
+corresponding lines in `./env` file. Development is the current default.
 
 If running in dev mode configuration files should be created automatically from
 example files when starting the container the first time if they are missing.
 
-They can also be manually created in advance:
+See `build/prepate.sh` (used for both prod and dev) and
+`build/development-entrypoint.sh` (used in dev only) for manual setup steps
+reference. Some of these are also referenced in `INSTALL.md`.
+
+### Running:
+
+First we have to create the docker networks used by the containers. This is not
+done automatically, to allow host to determine networking details. The commands
+below assumes we want the `wannabe_internal` network to only be accessible
+between the containers and not externally. A safe default to limit access to
+`mysql`, `app` (php-fpm) and other non-public-facing containers.
 
 ```
-$ cp migrate/db-config.examples.sh migrate/db-config.sh
-$ cp migrate/.simple-db-migrate.example.conf migrate/.simple-db-migrate.conf
-$ cp app/Config/database.sample.php app/Config/database.php
-$ cp app/Config/core.example.php app/Config/core.php
+$ docker network create wannabe_public
+$ docker network create wannabe_internal --internal
 ```
 
-You can ignore most other steps from `INSTALL.md`, for anything other than
-reference.
-
-## Running:
+Then we start the containers.
 
 ```
 $ docker-compose up
 ```
 
-This uses docker-compose and runs two containers:
-- One `app` container with PHP and Apache running main wannabe code
+This uses docker-compose and runs several containers by default, depending on
+environment:
+- One `nginx` container which contains a basic config for using as local (non-ssh) entrypoint to app \*
+- One `app` container with PHP-fpm and application code \*
 - One `mysql` container running MySQL with a some basic seed data
 
-Visit `http://localhost:4000` to visit site and get started
+\* Containers used in default production setup
 
-## Migrations:
+Visit `http://localhost:8080` to visit site and get started
+
+#### Development
+
+To use development setup make sure this line is uncommented in `.env` file:
+
+```
+COMPOSE_FILE=docker-compose.yml:docker-compose.dev.yml
+```
+
+The `app` container automatically contains a mount of your local development
+folder. And triggers composer setup, pip installs, creation of dummy folders,
+example configs, etc, each time it's started via `development-entrypoint.sh`.
+
+The container should (if visited via `docker-compose exec app /bin/bash`) have
+access to `composer` and `cake` commands out of the box.
+
+Development setup includes the `mysql` container which is populated by `./sql/`
+seed files on first startup.
+
+#### Production
+
+To use production setup make sure this line is uncommented in `.env` file:
+
+```
+COMPOSE_FILE=docker-compose.yml:docker-compose.prod.yml
+```
+
+When in development mode `app` container is using a minimal `php-fpm` docker
+image which only contains a few source code and lib folders. This is built by
+cloning the `prod` branch from git, installing composer dependencies and doing
+some basic preparation steps in `build/prepare.sh`.
+
+To build production image from another branch:
+
+```
+docker-compose build --build-arg GIT_BRANCH=branch-name app
+```
+
+
+### Migrations:
 
 The `app` container automatically contains a mount of your local development
 folder, including `./migrate` and has required python packages installed. So
@@ -84,7 +136,7 @@ $ cd migrate
 $ ./migrate.sh
 ```
 
-## Modifying database seed
+### Modifying database seed
 
 After creating new migrations it's nice to update the initial database seeds
 used for local development. Simply replace the existing `./sql/dev.sql` file
@@ -96,9 +148,10 @@ PS. Keep in mind that the migration dump file includes *all* database
 modifications, including new users, changed passwords, etc. So try to only do
 it from a "fresh" instance without too many modifications.
 
-## Installation
+## Non-docker based installation
 
-[Installation instruction](https://github.com/gathering/wannabe/blob/master/INSTALL.md)  
+[Installation instruction](https://github.com/gathering/wannabe/blob/master/INSTALL.md)
+
+## Workflow instructions
+
 [Work flow instructions](https://github.com/gathering/wannabe/blob/master/WORKFLOW.md)
-
-All PHP libraries are included, including CakePHP.
