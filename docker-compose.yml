@@ -1,15 +1,31 @@
-# Example, tweak before prod usage
 version: "3.5"
 services:
-  app:
-    build: .
+  nginx:
+    build:
+      context: ./
+      dockerfile: Dockerfile_nginx
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
-      - .:/var/www/html
+      # Let nginx access the "public" files only
+      - app-webroot:/var/www/html/wannabe/app/webroot:ro
+    networks:
+      - public
+      - internal
+
+  app:
+    build:
+      context: ./
+      target: php5
+    volumes:
+      - app-webroot:/var/www/html/wannabe/app/webroot
+    networks:
+      - internal
     environment:
-      - MYSQL_URL
-      - MYSQL_USERNAME
-      - MYSQL_PASSWORD
-      - AUTH_COOKIE_KEY
-    restart: always
+      - LOG_ENGINE=console
+
+volumes:
+  app-webroot:
+networks:
+  internal:
+  public:

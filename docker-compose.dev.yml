@@ -1,18 +1,20 @@
 version: "3.5"
 services:
-  app:
-    build: .
-    ports:
-      - "4000:80"
+  nginx:
     volumes:
-      - .:/var/www/html/wannabe
+      - ./:/var/www/html/wannabe
     environment:
       - MYSQL_URL=mysql
       - MYSQL_USERNAME=wannabe
       - MYSQL_PASSWORD=wannabe
       - AUTH_COOKIE_KEY=if-you-see-me-in-prod-run-away
       - APP_ENV=development
-    restart: "no"
+
+  app:
+    build:
+      target: development
+    volumes:
+      - ./:/var/www/html/wannabe
 
   mysql:
     image: mysql:5.7
@@ -25,6 +27,11 @@ services:
       - MYSQL_PASSWORD=wannabe
       - MYSQL_ROOT_PASSWORD=wannabe
       - MYSQL_DATABASE=wannabe
+    networks:
+      - internal
 
 volumes:
-    mysql_data:
+  mysql_data:
+networks:
+  internal:
+  public:
