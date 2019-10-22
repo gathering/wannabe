@@ -3,7 +3,6 @@ ARG PHP_VERSION
 ### Development
 ### (we asume local dev directory is mounted at /var/www/html/wannabe and do most magic in entrypoint script)
 FROM php:${PHP_VERSION:-5}-fpm as Development
-RUN docker-php-ext-install pdo pdo_mysql
 RUN apt-get update && apt-get install -y \
 	mariadb-client \
 	python-dev \
@@ -13,7 +12,14 @@ RUN apt-get update && apt-get install -y \
 	vim \
 	man \
 	zip \
+	libpng-dev \
+	libjpeg-dev \
 	unzip
+RUN docker-php-ext-configure gd \
+    --with-gd \
+    --with-jpeg-dir \
+    --with-png-dir
+RUN docker-php-ext-install pdo pdo_mysql gd exif
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY ./build/development-entrypoint.sh /usr/bin/development-entrypoint
 RUN chmod a+x /usr/bin/development-entrypoint
