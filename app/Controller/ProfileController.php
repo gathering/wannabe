@@ -302,7 +302,9 @@ class ProfileController extends AppController {
             $this->set('improtocols', $this->Improtocol->find('list'));
             $this->set('phonetypes', $this->Phonetype->find('list'));
             $this->set('title_for_layout', WbSanitize::clean($user['User']['realname']));
-            $this->set('desc_for_layout', __('aka')." ".WbSanitize::clean($user['User']['nickname']));
+            if (!empty($user['User']['nickname'])) {
+                $this->set('desc_for_layout', __('aka')." ".WbSanitize::clean($user['User']['nickname']));
+            }
             $this->set('userAge', $this->calculateAge($user['User']['birth']));
             $this->set('canViewDetailedInfo', $this->Acl->hasAccessToDetailedUserInfo($this->Wannabe->user));
             $this->set('canViewPhone',   $sharesCrewAndAllowsCrew || $this->Acl->hasAccessToViewUserDetail('phone', $user));
