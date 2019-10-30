@@ -107,7 +107,7 @@ class AuthComponent extends Component {
         CakeSession::delete('userMenu-eng');
         return $this->login($username, $passwordHash);
     }
-	public function login($login, $passwordHash, $remember=0) {
+	public function login($login, $passwordOrHash, $remember=0) {
 		$userGoingIn = $this->User->findByUsername($login);
 		if(!$userGoingIn) {
 			$userGoingIn = $this->User->findByEmail($login);
@@ -115,9 +115,17 @@ class AuthComponent extends Component {
 		if(!$userGoingIn) {
 			return false;
 		}
-		if ($userGoingIn['User']['password'] != $passwordHash) {
-			return false;
+
+		// Handle ordinary login with password
+		if ($this->User->correctPassword($userGoingIn, $passwordOrHash)) {
+			$this->User->keepPasswordHashUpToDate($userGoingIn, $passwordOrHash);
+		} else {
+			// Handle case when checking existing password hash against hash from cookie
+			if ($userGoingIn['User']['password'] != $passwordOrHash) {
+				return false;
+			}
 		}
+
 		if ($this->allowUserAuthCookie) {
 			$cookie = $this->Cookie->read('User.auth');
 			if(is_null($cookie)) {
