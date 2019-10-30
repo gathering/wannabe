@@ -48,7 +48,7 @@ class AuthComponent extends Component {
                 $controller->Wannabe->user = array();
             }
 		} else if(!is_null($cookie)) {
-			if($this->login($cookie['user'], $cookie['pass'])) {
+			if($this->login($cookie['user'], $cookie['passwordHash'])) {
 				$controller->Wannabe->user = CakeSession::read('User.login');
                 if($this->changeCheck($controller)) {
                     $controller->Wannabe->user = CakeSession::read('User.login');
@@ -101,13 +101,13 @@ class AuthComponent extends Component {
         }
         return true;
     }
-    public function reloadLogin($username, $password) {
+    public function reloadLogin($username, $passwordHash) {
         CakeSession::delete('aclCache');
         CakeSession::delete('userMenu-nob');
         CakeSession::delete('userMenu-eng');
-        return $this->login($username, $password);
+        return $this->login($username, $passwordHash);
     }
-	public function login($login, $pass, $remember=0) {
+	public function login($login, $passwordHash, $remember=0) {
 		$userGoingIn = $this->User->findByUsername($login);
 		if(!$userGoingIn) {
 			$userGoingIn = $this->User->findByEmail($login);
@@ -115,16 +115,15 @@ class AuthComponent extends Component {
 		if(!$userGoingIn) {
 			return false;
 		}
-		if (!$this->User->correctPassword($userGoingIn, $pass)) {
+		if ($userGoingIn['User']['password'] != $passwordHash) {
 			return false;
 		}
-		$this->User->keepPasswordHashUpToDate($userGoingIn, $pass);
 		if ($this->allowUserAuthCookie) {
 			$cookie = $this->Cookie->read('User.auth');
 			if(is_null($cookie)) {
 				$cookie = array();
 				$cookie['user'] = $userGoingIn['User']['username'];
-				$cookie['pass'] = $userGoingIn['User']['password'];
+				$cookie['passwordHash'] = $userGoingIn['User']['password'];
 				if($remember) {
 					$this->Cookie->write('User.auth', $cookie, true, '+4 weeks');
 				} else {
