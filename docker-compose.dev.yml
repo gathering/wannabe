@@ -13,6 +13,7 @@ services:
     build:
       target: development
     volumes:
+      # Mount entire local app folder for development usage
       - ./:/var/www/html/wannabe
     networks:
       - wannabe_public

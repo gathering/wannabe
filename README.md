@@ -91,6 +91,9 @@ To use development setup make sure this line is uncommented in `.env` file:
 
 ```
 COMPOSE_FILE=docker-compose.yml:docker-compose.dev.yml
+
+# This is the same as appending all docker-compose commands with
+# -f docker-compose.yml -f docker-compose.dev.yml
 ```
 
 The `app` container automatically contains a mount of your local development
@@ -109,6 +112,9 @@ To use an example production setup uncommented this line in `.env` file:
 
 ```
 COMPOSE_FILE=docker-compose.yml:docker-compose.prod.yml
+
+# This is the same as appending all docker-compose commands with
+# -f docker-compose.yml -f docker-compose.prod.yml
 ```
 
 When in development mode `app` container is using a minimal `php-fpm` docker
@@ -133,6 +139,28 @@ could be done via separate config or secret mounts specified for the
 service/pod. If run as standalone container via docker-compose, add extra
 volume mounts pointing to required configuration files (see
 `development-entrypoint.sh` for required config files)
+
+### Tooling container
+
+There is a tooling container configuration included in
+`docker-compose.tooling.yml` which is intended to be run alongside either
+production or development containers when manually running migrations, queries,
+or cake cli commands, or general debugging).
+
+Since the container needs access to same resources as the ordinary containers
+the simplest way run it is via docker compose:
+
+```
+docker-compose run -f <your ordinary composer file>.yml -f docker-compose.tooling.yml --rm tooling
+
+# Or with a modified .env COMPOSE_FILE entry
+docker-compose run --rm tooling
+```
+
+**PS!** In order to do anything useful with the tooling container make sure you
+mount either local folder (for development) or configuration and shared volumes
+(for production) to give it access to the "live" files. See some examples in the
+`docker-compose.tooling.yml` file.
 
 ### Migrations:
 

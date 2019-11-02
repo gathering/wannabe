@@ -13,7 +13,7 @@ cp -n app/Config/database.sample.php app/Config/database.php
 cp -n app/Config/core.example.php app/Config/core.php
 
 echo "Creating cake console symlink"
-ln -sf /var/www/html/wannabe/lib/Cake/Console/cake /bin/cake #
+ln -sf /var/www/html/wannabe/lib/Cake/Console/cake /bin/cake
 
 echo "Running composer install"
 composer install --no-interaction
