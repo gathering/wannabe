@@ -1,19 +1,18 @@
 <?php
 
+App::uses('User', 'Model');
+
 /**
  * Component that handles authentication
  */
 class AuthComponent extends Component {
 
 	var $components = array('Cookie');
-	var $controller;
 	var $isLoggedin = false;
 	var $allowUserAuthCookie = false;
 
-	public function initialize(&$controller) {
-		//save controller for later use
-		$this->controller = &$controller;
-		$this->User = $controller->User;
+	public function initialize(Controller $controller) {
+		$this->User = ClassRegistry::init('User');
 
 		$cookie = null;
 
@@ -40,7 +39,7 @@ class AuthComponent extends Component {
                 $controller->Wannabe->user = CakeSession::read('User.login');
                 //Force reload if not member of crew
                 if(!isset($controller->Wannabe->user['Crew'][0])) {
-                    $this->reloadUserLogin($controller->Wannabe->user['User']['id']);
+                    $this->reloadUserLogin($controller->Wannabe->user['User']['id'], $controller);
                 }
                 WB::$user = $controller->Wannabe->user;
                 $this->isLoggedIn = true;
@@ -54,7 +53,7 @@ class AuthComponent extends Component {
                     $controller->Wannabe->user = CakeSession::read('User.login');
                     //Force reload if not member of crew
                     if(!isset($controller->Wannabe->user['Crew'][0])) {
-                        $this->reloadUserLogin($controller->Wannabe->user['User']['id']);
+                        $this->reloadUserLogin($controller->Wannabe->user['User']['id'], $controller);
                     }
                     WB::$user = $controller->Wannabe->user;
                     $this->isLoggedIn = true;
@@ -77,7 +76,7 @@ class AuthComponent extends Component {
 			$controller->redirect('/');
         }
 	}
-	public function startup($controller) {
+	public function startup(Controller $controller) {
 		//We are not logged in, redirect
 		if(!$this->isLoggedIn && $controller->requireLogin) {
 			if($controller->here != '/'.$controller->Wannabe->event->reference.'/') {
@@ -86,16 +85,14 @@ class AuthComponent extends Component {
 			$controller->redirect("/{$controller->Wannabe->event->reference}/Login");
 		}
 	}
-    public function changeCheck(&$controller) {
-        $user = &$controller->Wannabe->user;
-        App::import('Model', 'User');
-        $userModel = new User();
-        $hash = $userModel->getUserHash($user);
+    public function changeCheck(Controller $controller) {
+        $user = $controller->Wannabe->user;
+        $hash = $this->User->getUserHash($user);
         if(isset($hash['UserProfileHash']['hash'])) {
             if($hash['UserProfileHash']['hash'] != $user['UserProfileHash']['hash'] || $controller->changedEvent) {
                 return $this->reloadLogin($user['User']['username'], $user['User']['password']);
             } else if (empty($hash)) {
-                $userModel->setUserHash($user);
+                $this->User->setUserHash($user);
                 return $this->reloadLogin($user['User']['username'], $user['User']['password']);
             }
         }
@@ -142,12 +139,11 @@ class AuthComponent extends Component {
 		CakeSession::write('User.login',$userGoingIn);
 		return true;
 	}
-	public function reloadUserLogin($userId) {
-		App::import('Model', 'User');
-		$user = new User();
-		$userGoingIn = $user->findById($userId);
+
+	public function reloadUserLogin($userId, &$controller) {
+		$userGoingIn = $this->User->findById($userId);
 		CakeSession::write('User.login',$userGoingIn);
-		$this->controller->Wannabe->user = $userGoingIn;
-		WB::$user = $this->controller->Wannabe->user;
+		$controller->Wannabe->user = $userGoingIn;
+		WB::$user = $controller->Wannabe->user;
 	}
 }
