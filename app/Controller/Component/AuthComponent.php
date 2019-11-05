@@ -46,7 +46,7 @@ class AuthComponent extends Component {
             } else {
                 $controller->Wannabe->user = array();
             }
-		} else if(!is_null($cookie)) {
+		} else if(!is_null($cookie) && isset($cookie['user']) && isset($cookie['passwordHash'])) {
 			if($this->login($cookie['user'], $cookie['passwordHash'])) {
 				$controller->Wannabe->user = CakeSession::read('User.login');
                 if($this->changeCheck($controller)) {
@@ -59,12 +59,12 @@ class AuthComponent extends Component {
                     $this->isLoggedIn = true;
                 } else {
                     $controller->Wannabe->user = array();
-                    $this->Cookie->delete('User.auth');
+                    $this->Cookie->delete('User');
                 }
-			} else {
-				$this->Cookie->delete('User.auth');
-			}
-		}
+            } else {
+                $this->Cookie->delete('User');
+            }
+        }
 
 		//Turn off required login for Error pages to avoid redirects away from them
 		if($controller->name == 'CakeError') {
@@ -82,6 +82,7 @@ class AuthComponent extends Component {
 			if($controller->here != '/'.$controller->Wannabe->event->reference.'/') {
 				$controller->Flash->info(__('The page “%s” requires login.', $controller->here));
 			}
+			$this->Cookie->delete('User');
 			$controller->redirect("/{$controller->Wannabe->event->reference}/Login");
 		}
 	}
