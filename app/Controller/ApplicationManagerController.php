@@ -45,7 +45,7 @@ class ApplicationManagerController extends AppController {
 			$change = true;
 		}
 		if($change) {
-			Cache::delete('application_pages');
+			Cache::delete(WB::$event->reference.'-application_pages');
 		}
 		$settings = $this->ApplicationSetting->getSettings();
 		if(!$settings['ApplicationSetting']['crewquestion']) {
