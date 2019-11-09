@@ -2413,6 +2413,10 @@ msgstr ""
 msgid "Terms & Conditions"
 msgstr "Betingelser for medlem"
 
+#: Controller/UserController.php:18
+msgid "Back to login"
+msgstr "Tilbake til innlogging"
+
 #: Controller/UserController.php:14;54
 msgid ""
 "I don't know about you, but where we come from that is not a valid email "
