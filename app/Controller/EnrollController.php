@@ -423,11 +423,11 @@ class EnrollController extends AppController {
 		 * This is a quick and dirty hack to automatically send a Slack invite when accepting a crew member. 
 		 */
 
-		$slack_token = Configure::read('Slack.token');
 
-		if(isset($slack_token) && $slack_token != ""){
+		if(Configure::check('Slack.token')) {
 			// Slack token is set in configuration, lets go!
 			// TODO: Implement check against event settings
+			$slack_token = Configure::read('Slack.token');
 
 			$HttpSocket = new HttpSocket();
 			try{
@@ -445,10 +445,9 @@ class EnrollController extends AppController {
 			} catch (Exception $e) {
 				// Failed to invite user..
 				// TODO: Better error handling
-				return false;
 			} 
 
-		} 
+		} else { return true; } 
 	} 
 
 	public function wait() {
