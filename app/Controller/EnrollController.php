@@ -1,4 +1,5 @@
 <?
+App::uses('HttpSocket', 'Network/Http');
 
 class EnrollController extends AppController {
 
@@ -384,6 +385,10 @@ class EnrollController extends AppController {
 				$this->Crew->setUserRole($choice['ApplicationChoice']['crew_id'], $document['User']['id'], (int)$this->request->data['leader']);
 			}
 
+			if(!$this->sendSlackInvite($document['User']['email'], $document['User']['realname'])) {
+				$this->Flash->error(__("Slack Invite failed - please contact support."));
+			} 
+
 			$this->Flash->success(__("Application has now been accepted."));
 			$this->redirectEvent(isset($this->data['return_to']) ? $this->data['return_to'] : '/enroll/application/view/'.$document['ApplicationDocument']['user_id']);
 		}
@@ -412,6 +417,39 @@ class EnrollController extends AppController {
 			$this->render('manage-confirm');
 		}
 	}
+
+	public function sendSlackInvite($email, $name = null) {
+		/**
+		 * This is a quick and dirty hack to automatically send a Slack invite when accepting a crew member. 
+		 */
+
+		$slack_token = Configure::read('Slack.token');
+
+		if(isset($slack_token) && $slack_token != ""){
+			// Slack token is set in configuration, lets go!
+			// TODO: Implement check against event settings
+
+			$HttpSocket = new HttpSocket();
+			try{
+				$results = $HttpSocket->post(
+					'https://slack.com/api/users.admin.invite',
+					'token='.$slack_token.'&email='.$email.'&real_name='.$name
+				);
+				$body = json_decode($results->body, true);	
+				if($body["ok"] != "true"){
+					// Invite did not go good
+					return false;
+				} else {
+					return true;
+				} 
+			} catch (Exception $e) {
+				// Failed to invite user..
+				// TODO: Better error handling
+				return false;
+			} 
+
+		} 
+	} 
 
 	public function wait() {
 		$settings = $this->EnrollSetting->find('first', array(
