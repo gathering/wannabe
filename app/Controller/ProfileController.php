@@ -161,7 +161,7 @@ class ProfileController extends AppController {
                         $this->PictureApproval->id = $approval_id['PictureApproval']['id'];
                         $this->PictureApproval->save($save);
 
-                        $this->Auth->reloadUserLogin($this->Wannabe->user['User']['id']);
+                        $this->Auth->reloadUserLogin($this->Wannabe->user['User']['id'], $this);
                         $crews = $this->getCrewsForUser($this->Wannabe->user, 0);
 
                         if(!empty($crews)) {
@@ -386,7 +386,7 @@ class ProfileController extends AppController {
                         $this->User->clearMemberCache($crew);
                     }
                 }
-                $this->Auth->reloadUserLogin($user_id);
+                $this->Auth->reloadUserLogin($user_id, $this);
                 if($registration) {
                     $this->redirectEvent('/');
                 }
@@ -471,7 +471,7 @@ class ProfileController extends AppController {
                     $this->Flash->success(__("Password updated"));
                 }
                 $this->User->save($user, false);
-                $this->Auth->reloadUserLogin($user['User']['id']);
+                $this->Auth->reloadUserLogin($user['User']['id'], $this);
                 $cookie = $this->Cookie->read('Auth.user');
                 if(!is_null($cookie)) {
                     $this->Cookie->delete('Auth.user');
@@ -562,7 +562,7 @@ class ProfileController extends AppController {
                 $changeEmail = new CakeEmail('default');
                 $changeEmail->viewVars(array('validation' => $validationCode, 'wannabe' => $this->Wannabe));
                 $changeEmail->template('change-email-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Wannabe: Change email"))->to($email)->send();
-                $this->Auth->reloadUserLogin($this->Wannabe->user['User']['id']);
+                $this->Auth->reloadUserLogin($this->Wannabe->user['User']['id'], $this);
                 $this->Flash->success(__('An email has been sent to “%s”. Click the link in the email to verify your new email address.', $email));
                 return true;
             } else {

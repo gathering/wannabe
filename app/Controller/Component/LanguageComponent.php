@@ -26,7 +26,7 @@ class LanguageComponent extends Component {
 				$savedata['User']['id'] = $controller->Wannabe->user['User']['id'];
 				$savedata['User']['language'] = $this->lang;
 				$users->save($savedata);
-				$controller->Auth->reloadUserLogin($controller->Wannabe->user['User']['id']);
+				$controller->Auth->reloadUserLogin($controller->Wannabe->user['User']['id'], $controller);
 			} else {
 				$this->lang = $controller->Wannabe->user['User']['language'];
 			}

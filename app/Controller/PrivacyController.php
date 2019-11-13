@@ -12,7 +12,7 @@ class PrivacyController extends AppController {
         if($this->request->is('post')) {
             $this->request->data['UserPrivacy']['user_id'] = $this->Wannabe->user['User']['id'];
             if($this->UserPrivacy->save($this->request->data)) {
-                $this->Auth->reloadUserLogin($this->Wannabe->user['User']['id']);
+                $this->Auth->reloadUserLogin($this->Wannabe->user['User']['id'], $this);
                 $this->Flash->success(__("Your privacy settings has been updated"));
             }
         }
