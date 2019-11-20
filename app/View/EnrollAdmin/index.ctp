@@ -26,6 +26,12 @@
 									<span><?=__("Enable greetings")?></span>
 								</label>
 							</li>
+							<li>
+								<label>
+									<?=$this->Form->checkbox('EnrollSetting.slackactive', array('div' => false, 'label' => false, 'checked' => $setting['EnrollSetting']['slackactive']?'checked':''))?>
+									<span><?=__("Enable automatic Slack invitations")?></span>
+								</label>
+							</li>
 						</ul>
 					</div>
 				</div>

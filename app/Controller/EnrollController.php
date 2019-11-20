@@ -385,9 +385,9 @@ class EnrollController extends AppController {
 				$this->Crew->setUserRole($choice['ApplicationChoice']['crew_id'], $document['User']['id'], (int)$this->request->data['leader']);
 			}
 
-			if(!$this->sendSlackInvite($document['User']['email'], $document['User']['realname'])) {
-				$this->Flash->error(__("Slack Invite failed - please contact support."));
-			} 
+			if(Configure::check('Slack.token')) {
+				$this->sendSlackInvite($document['User']['email'], $document['User']['realname']);
+			}
 
 			$this->Flash->success(__("Application has now been accepted."));
 			$this->redirectEvent(isset($this->data['return_to']) ? $this->data['return_to'] : '/enroll/application/view/'.$document['ApplicationDocument']['user_id']);
@@ -427,6 +427,16 @@ class EnrollController extends AppController {
 		if(Configure::check('Slack.token')) {
 			// Slack token is set in configuration, lets go!
 			// TODO: Implement check against event settings
+
+			$settings = $this->EnrollSetting->find('first', array(
+				'conditions' => array(
+					'EnrollSetting.event_id'=> $this->Wannabe->event->id
+				)
+			));
+			if(empty($settings) || !$settings['EnrollSetting']['slackactive']) {
+				return false;
+			}
+			
 			$slack_token = Configure::read('Slack.token');
 
 			$HttpSocket = new HttpSocket();
@@ -437,17 +447,18 @@ class EnrollController extends AppController {
 				);
 				$body = json_decode($results->body, true);	
 				if($body["ok"] != "true"){
-					// Invite did not go good
+					$this->Flash->warning(__("Slack invite failed to send to user. User might already be in workspace, or user needs to be manually activated. Please contact support."));
 					return false;
 				} else {
+					$this->Flash->success(__("Slack invite to sent to user."));
 					return true;
 				} 
 			} catch (Exception $e) {
 				// Failed to invite user..
-				// TODO: Better error handling
+				$this->Flash->error(__("Slack invite failed to send to user."));
+				return false;
 			} 
-
-		} else { return true; } 
+		}
 	} 
 
 	public function wait() {
