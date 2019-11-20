@@ -8748,3 +8748,17 @@ msgstr "Du er nå i ferd med å oppgi sensitive personopplysninger. I tråd med 
 #: View/Crew/edit.ctp:94
 msgid "crewuser-customtitle"
 msgstr "Definer eventuelt en tilpasset tittel eller rolle for crewmedlemmet."
+
+#: View/EnrollAdmin/index.ctp:32
+msgid "Enable automatic Slack invitations"
+msgstr "Aktiver automatiske Slack invitasjoner"
+
+#: app/Controller/EnrollController:
+msgid "Slack invite failed to send to user. User might already be in workspace, or user needs to be manually activated. Please contact support."
+msgstr "Slack invitasjon feilet, brukeren er kanskje allerede i Slack, eller brukeren må bli aktivert manuelt. Vennligst ta kontakt med support."
+
+msgid "Slack invite to sent to user."
+msgstr "Slack invitasjon sendt til brukeren!"
+
+msgid "Slack invite failed to send to user."
+msgstr "Slack invitasjon feilet."

@@ -8714,3 +8714,17 @@ msgstr "Crew you administrate"
 #: View/Crew/edit.ctp:94
 msgid "crewuser-customtitle"
 msgstr "If applicable, define a custom role or responsibility for this crew member."
+
+#: View/EnrollAdmin/index.ctp:32
+msgid "Enable automatic Slack invitations"
+msgstr "Enable automatic Slack invitations"
+
+#: app/Controller/EnrollController:
+msgid "Slack invite failed to send to user. User might already be in workspace, or user needs to be manually activated. Please contact support."
+msgstr "Slack invite failed to send to user. User might already be in workspace, or user needs to be manually activated. Please contact support."
+
+msgid "Slack invite to sent to user."
+msgstr "Slack invite to sent to user."
+
+msgid "Slack invite failed to send to user."
+msgstr "Slack invite failed to send to user."
