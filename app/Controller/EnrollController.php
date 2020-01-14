@@ -785,7 +785,7 @@ class EnrollController extends AppController {
 	private function isParentcrewMember($usercrews, $crew_id) {
 	    # This is bad and makes me sad, something should be done to prevent it from needing the run this sql for every applicant
         foreach ($usercrews as $usercrew) {
-                $crews2 = $this->Crew->query("SELECT id, crew_id FROM (SELECT id, crew_id, name FROM wb4_crews WHERE event_id = '"WB::$event->id"' order by crew_id, id) Crew, (SELECT @pv := '".$usercrew."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
+                $crews2 = $this->Crew->query("SELECT id, crew_id FROM (SELECT id, crew_id, name FROM wb4_crews order by crew_id, id) Crew, (SELECT @pv := '".$usercrew."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
                 foreach ($crews2 as $crew2){
                     if($crew2['Crew']['id'] == $crew_id){
                         return true;
