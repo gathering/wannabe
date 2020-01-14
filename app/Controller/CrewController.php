@@ -143,7 +143,7 @@ class CrewController extends AppController {
 				if (1 <= $usercrew['CrewsUser']['leader'] || $this->Acl->hasAccess('superuser', $this->Wannabe->user, '/'.$this->Wannabe->event->reference.'/Crew/Edit')){
 					$manageable_crews[$usercrew['id']] = array($usercrew);
 					$crews[$usercrew['id']] = $usercrew['name'];
-					$crews2 = $this->Crew->query("SELECT * FROM (SELECT * FROM wb4_crews) Crew, (SELECT @pv := '".$usercrew['id']."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
+					$crews2 = $this->Crew->query("SELECT * FROM (SELECT * FROM wb4_crews WHERE event_id = '"WB::$event->id"' ORDER BY crew_id, id) Crew, (SELECT @pv := '".$usercrew['id']."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
 					foreach ($crews2 as $crew2){
 						$manageable_crews[$crew2['Crew']['id']] = array($crew2['Crew']);
 						$crews[$crew2['Crew']['id']] = $crew2['Crew']['name'];

@@ -46,7 +46,7 @@ class EnrollController extends AppController {
             foreach ($this->Wannabe->user['Crew'] as $usercrew) {
                 if (2 <= $usercrew['CrewsUser']['leader']) {
                     $manageable_crews[$usercrew['id']] = true;
-                    $crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews) Crew, (SELECT @pv := '" . $usercrew['id'] . "') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
+                    $crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews order by crew_id, id) Crew, (SELECT @pv := '" . $usercrew['id'] . "') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
                     foreach ($crews2 as $crew2) {
                         $manageable_crews[$crew2['Crew']['id']] = true;
                     }
@@ -176,7 +176,7 @@ class EnrollController extends AppController {
             foreach ($this->Wannabe->user['Crew'] as $usercrew) {
                 if (2 <= $usercrew['CrewsUser']['leader']) {
                     $manageable_crews[$usercrew['id']] = true;
-                    $crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews) Crew, (SELECT @pv := '" . $usercrew['id'] . "') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
+                    $crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews order by crew_id, id) Crew, (SELECT @pv := '" . $usercrew['id'] . "') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
                     foreach ($crews2 as $crew2) {
                         $manageable_crews[$crew2['Crew']['id']] = true;
                     }
@@ -295,7 +295,7 @@ class EnrollController extends AppController {
             foreach ($this->Wannabe->user['Crew'] as $usercrew) {
                 if (2 <= $usercrew['CrewsUser']['leader']) {
                     $manageable_crews[$usercrew['id']] = true;
-                    $crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews) Crew, (SELECT @pv := '" . $usercrew['id'] . "') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
+                    $crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews ORDER BY crew_id, id) Crew, (SELECT @pv := '" . $usercrew['id'] . "') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
                     foreach ($crews2 as $crew2) {
                         $manageable_crews[$crew2['Crew']['id']] = true;
                     }
@@ -420,7 +420,7 @@ class EnrollController extends AppController {
 
 	public function sendSlackInvite($email, $name = null) {
 		/**
-		 * This is a quick and dirty hack to automatically send a Slack invite when accepting a crew member. 
+		 * This is a quick and dirty hack to automatically send a Slack invite when accepting a crew member.
 		 */
 
 
@@ -436,7 +436,7 @@ class EnrollController extends AppController {
 			if(empty($settings) || !$settings['EnrollSetting']['slackactive']) {
 				return false;
 			}
-			
+
 			$slack_token = Configure::read('Slack.token');
 
 			$HttpSocket = new HttpSocket();
@@ -445,21 +445,21 @@ class EnrollController extends AppController {
 					'https://slack.com/api/users.admin.invite',
 					'token='.$slack_token.'&email='.$email.'&real_name='.$name
 				);
-				$body = json_decode($results->body, true);	
+				$body = json_decode($results->body, true);
 				if($body["ok"] != "true"){
 					$this->Flash->warning(__("Slack invite failed to send to user. User might already be in workspace, or user needs to be manually activated. Please contact support."));
 					return false;
 				} else {
 					$this->Flash->success(__("Slack invite to sent to user."));
 					return true;
-				} 
+				}
 			} catch (Exception $e) {
 				// Failed to invite user..
 				$this->Flash->error(__("Slack invite failed to send to user."));
 				return false;
-			} 
+			}
 		}
-	} 
+	}
 
 	public function wait() {
 		$settings = $this->EnrollSetting->find('first', array(
@@ -785,7 +785,7 @@ class EnrollController extends AppController {
 	private function isParentcrewMember($usercrews, $crew_id) {
 	    # This is bad and makes me sad, something should be done to prevent it from needing the run this sql for every applicant
         foreach ($usercrews as $usercrew) {
-                $crews2 = $this->Crew->query("SELECT id, crew_id FROM (SELECT id, crew_id, name FROM wb4_crews) Crew, (SELECT @pv := '".$usercrew."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
+                $crews2 = $this->Crew->query("SELECT id, crew_id FROM (SELECT id, crew_id, name FROM wb4_crews WHERE event_id = '"WB::$event->id"' order by crew_id, id) Crew, (SELECT @pv := '".$usercrew."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
                 foreach ($crews2 as $crew2){
                     if($crew2['Crew']['id'] == $crew_id){
                         return true;
