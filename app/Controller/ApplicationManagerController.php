@@ -66,7 +66,7 @@ class ApplicationManagerController extends AppController {
                 if (0 <= $usercrew['CrewsUser']['leader']){
                     $manageable_crews[$usercrew['id']] = array($usercrew['id'], $usercrew['name']);
                     $crews[$usercrew['id']] = $usercrew['name'];
-                    $crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews) Crew, (SELECT @pv := '".$usercrew['id']."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
+                    $crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews order by crew_id, id) Crew, (SELECT @pv := '".$usercrew['id']."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
                     foreach ($crews2 as $crew2){
                         $manageable_crews[$crew2['Crew']['id']] = array($crew2['Crew']['id'],$crew2['Crew']['name']);
                         $crews[$crew2['Crew']['id']] = $crew2['Crew']['name'];
@@ -190,7 +190,7 @@ class ApplicationManagerController extends AppController {
                 if (0 <= $usercrew['CrewsUser']['leader']){
                     $manageable_crews[$usercrew['id']] = array($usercrew['id'], $usercrew['name']);
                     $crews[$usercrew['id']] = $usercrew['name'];
-                    $crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews) Crew, (SELECT @pv := '".$usercrew['id']."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
+                    $crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews WHERE event_id = '"WB::$event->id"' ORDER BY crew_id, id) Crew, (SELECT @pv := '".$usercrew['id']."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
                     foreach ($crews2 as $crew2){
                         $manageable_crews[$crew2['Crew']['id']] = array($crew2['Crew']['id'],$crew2['Crew']['name']);
                         $crews[$crew2['Crew']['id']] = $crew2['Crew']['name'];
