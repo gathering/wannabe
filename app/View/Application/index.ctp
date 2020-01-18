@@ -29,9 +29,7 @@
 				<? include dirname(__FILE__) .'/pagetype_'.$page['ApplicationPage']['type'].'.ctp'; ?>
 			</fieldset>
 			<div class="actions" style="margin-top: 10px;">
-				<?=$this->Form->submit(__("Previous"), array('class' => 'btn', 'name'=>'data[Application][previous]', 'div' => false))?>&nbsp;<?=$this->Form->submit(__("Next"), array('class' => 'btn btn-success', 'name'=>'data[Application][next]', 'div' => false))?>
 				<?php
-					$totalpages = count($pages);
 					foreach ($pages as $currentindex => $tempcurrent) {
 						if($tempcurrent['ApplicationPage']['id'] == $page['ApplicationPage']['id']) {
 							$currentpage = (int)($currentindex + 1);
@@ -39,6 +37,9 @@
 						}
 					}
 				?>
+				<?= $this->Form->submit(__("Previous"), array('class' => 'btn', 'name'=>'data[Application][previous]', 'div' => false))?>
+				&nbsp;
+				<?=$this->Form->submit(__($totalpages == $currentpage ? "Submit" : "Next"), array('class' => 'btn btn-success', 'name'=>'data[Application][next]', 'div' => false))?>
 				<div class="pull-right">
 					<?=__("Page %s of %s", $currentpage, $totalpages)?>
 				</div>

@@ -5,16 +5,22 @@ class UserController extends AppController {
 	var $requireLogin = false;
 
 	public function register() {
+		$this->layout = 'front-generic';
+		$this->set('title_for_layout', __("Create new user"));
+
 		if($this->request->is('post')) {
 			if(Validation::email($this->data['email'])) {
 				if(!$this->registerUser($this->data['email'])) {
-					$this->redirect($this->data['was']);
+					$this->set('continue_link', $this->data['was']);
+					$this->set('continue_link_text', __("Back"));
 				} else {
-					$this->redirect('/'.$this->Wannabe->event->reference.'/Login');
+					$this->set('continue_link', '/'.$this->Wannabe->event->reference.'/Login');
+					$this->set('continue_link_text', __("Back to login"));
 				}
 			} else {
-				$this->Flash->error(__("I don\'t know about you, but where we come from that is not a valid email address. Please try again."));
-				$this->redirect($this->data['was']);
+				$this->Flash->error(__("I don't know about you, but where we come from that is not a valid email address. Please try again."));
+				$this->set('continue_link', $this->data['was']);
+				$this->set('continue_link_text', __("Back"));
 			}
 		} else {
 			$form = array(
@@ -29,13 +35,11 @@ class UserController extends AppController {
 				)
 			);
 			$this->set('form', $form);
-			$this->set('title_for_layout', __("Create new user"));
 			$previousEmail = CakeSession::read('emailTried');
 			if($previousEmail) {
 				$this->set('previous', $previousEmail);
 				CakeSession::delete('emailTried');
 			}
-			$this->layout = 'front-generic';
 			$ajax = false;
 			if($this->request->is('ajax')) {
 				$ajax = true;

@@ -356,7 +356,11 @@ uc.leader = 4 order by Phone.phonetype_id ASC limit 1");
 		if(!empty($orggreet)) {
 			$result['Organizer'] = array_merge($organizer[0], $orggreet[0]);
 		} else {
-			$result['Organizer'] = $organizer[0];
+			if(count($organizer) > 0) {
+				$result['Organizer'] = $organizer[0];
+			} else {
+				$result['Organizer'] = NULL;
+			}
 		}
 		return $result;
 	}

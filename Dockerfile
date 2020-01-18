@@ -18,12 +18,12 @@ RUN chmod +x build/prepare.sh && build/prepare.sh
 
 ### Production
 FROM php:${PHP_VERSION:-5}-fpm-alpine as production
-RUN apk add --no-cache libpng libpng-dev libjpeg-turbo-dev
+RUN apk add --no-cache libpng libpng-dev libjpeg-turbo-dev libmcrypt-dev gettext gettext-dev
 RUN docker-php-ext-configure gd \
     --with-gd \
     --with-jpeg-dir \
     --with-png-dir
-RUN docker-php-ext-install pdo pdo_mysql gd exif
+RUN docker-php-ext-install pdo pdo_mysql gd exif mcrypt gettext
 COPY --from=builder /app/app /var/www/html/wannabe/app
 COPY --from=builder /app/lib /var/www/html/wannabe/lib
 COPY --from=builder /app/index.php /var/www/html/wannabe/index.php

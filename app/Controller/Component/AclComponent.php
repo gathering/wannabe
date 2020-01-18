@@ -174,7 +174,7 @@ class AclComponent extends Component {
 				return true;
             } else{
 			    $crew_class = New Crew();
-                $child_crews = $crew_class->query("SELECT id, crew_id FROM (SELECT id, crew_id FROM wb4_crews) Crew, (SELECT @pv := '".$crew['id']."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id)");
+                $child_crews = $crew_class->query("SELECT id, crew_id FROM (SELECT id, crew_id FROM wb4_crews ORDER BY crew_id, id) Crew, (SELECT @pv := '".$crew['id']."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id)");
                 foreach ($child_crews as $child_crew) {
                     if($child_crew['Crew']['id'] == $crew_id) {
                         return true;

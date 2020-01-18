@@ -3,6 +3,8 @@
 App::uses('AppHelper', 'View/Helper'); //Leave this in since it causes a crash (due to bug: http://cakephp.lighthouseapp.com/projects/42648/tickets/1973-php-fatal-error-when-loading-custom-helper)
 App::uses('CakeEmail', 'Network/Email');
 
+# Temp fix to blank pages on redirect
+ob_start();
 class AppController extends Controller {
 
 	// Load required components. Wannabe.Wannabe must be loaded first as it defines global variables
