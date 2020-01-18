@@ -37,13 +37,6 @@ CakePHP, ideally CakePHP 3.
 
 Several further tweaks are needed, but this is a start.
 
-To experiment with php7 (or another) version. Build `app` container with the
-`PHP_VERSION` build argument.
-
-```
-docker-compose build --build-arg PHP_VERSION=7 app
-```
-
 ### Initial configuration:
 
 First select between development and production setup by uncommenting the
@@ -161,6 +154,16 @@ docker-compose run --rm tooling
 mount either local folder (for development) or configuration and shared volumes
 (for production) to give it access to the "live" files. See some examples in the
 `docker-compose.tooling.yml` file.
+
+### Experimenting with php7
+
+To experiment with php7 (or another) version. Build `app` container with the
+`PHP_VERSION` build argument.
+
+```
+docker-compose build --build-arg PHP_VERSION=7 app
+```
+
 
 ### Migrations:
 
