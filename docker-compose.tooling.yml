@@ -1,0 +1,28 @@
+version: "3.5"
+services:
+
+  # Tooling is basically just app container for development but with;
+  # - Bash instead of php runtime
+  # - Entrypoint which doesn't modify any files under app context (see `tooling-entrypoint` file)
+  tooling:
+    build:
+      context: ./
+      target: development
+      args:
+        - GIT_BRANCH=master
+    entrypoint: "tooling-entrypoint"
+    command: "bash"
+    # volumes:
+      # Mount production or development app folder if you need access to change/read runtime files
+      # - app-app:/var/www/html/wannabe/app
+      # - ./:var/www/html/wannabe/app
+      # And configuration files
+      # - ./app/Config:/var/www/html/wannabe/app/Config:ro
+      # - ./migrate/db-config.sh:/var/www/html/wannabe/migrate/db-config.sh:ro
+      # - ./migrate/.simple-db-migrate.conf:/var/www/html/wannabe/migrate/.simple-db-migrate.conf:ro
+    networks:
+      - wannabe_public
+      - wannabe_internal
+    environment:
+      - APP_ENV=development
+      - LOG_ENGINE=console

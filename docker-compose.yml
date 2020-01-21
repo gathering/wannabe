@@ -17,6 +17,8 @@ services:
     build:
       context: ./
       target: production
+      args:
+        - GIT_BRANCH=master
     volumes:
       - app-webroot:/var/www/html/wannabe/app/webroot
     networks:
