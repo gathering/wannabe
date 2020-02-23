@@ -3,7 +3,7 @@
 <fieldset>
 	<legend><?=__("Personal info")?></legend>
 	<div class="clearfix <? if($this->Form->error('User.realname')) echo "error"; ?>">
-		<label for="data[User][realname]"><?=__("Full name")?></label>
+		<label for="data[User][realname]"><?=__("Full name")?> <span class="required-field-text"><?= __('Required') ?></span></label>
 		<div class="input">
 			<?=$this->Form->input('User.realname', array('div' => false, 'error' => false,'class'=>'form-control', 'label' => false, 'value' => $user['User']['realname']))?>
 			<span class="help-block"><?=$this->Form->error('User.realname')?></span>
@@ -17,14 +17,14 @@
 		</div>
 	</div>
 	<div class="clearfix <? if($this->Form->error('User.sexe')) echo "error"; ?>">
-		<label for="data[User][sexe]"><?=__("Gender")?></label>
+		<label for="data[User][sexe]"><?=__("Gender")?> <span class="required-field-text"><?= __('Required') ?></span></label>
 		<div class="input">
 			<?=$this->Form->select('User.sexe', $sexes, array('div' => false, 'error' => false,'class'=>'form-control', 'label' => false, 'empty' => __("Gender"), 'value' => $user['User']['sexe']))?>
 			<span class="help-block"><?=$this->Form->error('User.sexe')?></span>
 		</div>
 	</div>
 	<div class="clearfix <? if($this->Form->error('User.birth')) echo "error"; ?>">
-		<label for="data[User][birth]"><?=__("Birth")?></label>
+		<label for="data[User][birth]"><?=__("Birth")?> <span class="required-field-text"><?= __('Required') ?></span></label>
 		<div class="input">
 			<div class="row">
 				<div class="col-md-4">
@@ -41,28 +41,28 @@
 		</div>
 	</div>
 	<div class="clearfix <? if($this->Form->error('User.countrycode')) echo "error"; ?>">
-		<label for="data[User][countrycode]"><?=__("Country")?></label>
+		<label for="data[User][countrycode]"><?=__("Country")?> <span class="required-field-text"><?= __('Required') ?></span></label>
 		<div class="input">
 			<?=$this->Form->select('User.countrycode', $countrycodes, array('empty' => __("Country"), 'div' => false, 'class'=>'form-control', 'error' => false, 'label' => false, 'value' => $user['User']['countrycode']))?>
 			<span class="help-block"><?=$this->Form->error('User.countrycode')?></span>
 		</div>
 	</div>
 	<div class="clearfix <? if($this->Form->error('User.address')) echo "error"; ?>">
-		<label for="data[User][address]"><?=__("Address")?></label>
+		<label for="data[User][address]"><?=__("Address")?> <span class="required-field-text"><?= __('Required') ?></span></label>
 		<div class="input">
 			<?=$this->Form->text('User.address', array('div' => false, 'error' => false, 'label' => false, 'class'=>'form-control', 'value' => $user['User']['address']))?>
 			<span class="help-block"><?=$this->Form->error('User.address')?></span>
 		</div>
 	</div>
 	<div class="clearfix <? if($this->Form->error('User.postcode')) echo "error"; ?>">
-		<label for="data[User][postcode]"><?=__("Postnummer")?></label>
+		<label for="data[User][postcode]"><?=__("Postnummer")?> <span class="required-field-text"><?= __('Required') ?></span></label>
 		<div class="input">
 			<?=$this->Form->text('User.postcode', array('div' => false, 'error' => false, 'label' => false, 'class'=>'form-control', 'value' => $user['User']['postcode']))?>
 			<span class="help-block"><?=$this->Form->error('User.postcode')?></span>
 		</div>
 	</div>
 	<div class="clearfix <? if($this->Form->error('User.town')) echo "error"; ?>">
-		<label for="data[User][town]"><?=__("Town")?></label>
+		<label for="data[User][town]"><?=__("Town")?> <span class="required-field-text"><?= __('Required') ?></span></label>
 		<div class="input">
 			<?=$this->Form->text('User.town', array('div' => false, 'error' => false, 'label' => false, 'class'=>'form-control', 'value' => $user['User']['town']))?>
 			<span class="help-block"><?=$this->Form->error('User.town')?></span>
@@ -83,7 +83,7 @@ if(isset($user['Userphone']) and sizeof($user['Userphone'])) {
 		if($first) {
 			$first = false;
 ?>
-		<label for="data[Userphone][<?=$index?>][phonetype_id]"><?=__("Phone numbers")?></label>
+		<label for="data[Userphone][<?=$index?>][phonetype_id]"><?=__("Phone numbers")?> <span class="required-field-text"><?= __('Required') ?></span></label>
 <?php
 		}
 ?>
@@ -108,7 +108,7 @@ if(isset($user['Userphone']) and sizeof($user['Userphone'])) {
 <?php
 		if($lastindex == 0) {
 ?>
-		<label for="data[Userphone][<?=$lastindex?>][phonetype_id]"><?=__("Phone numbers")?></label>
+		<label for="data[Userphone][<?=$lastindex?>][phonetype_id]"><?=__("Phone numbers")?> <span class="required-field-text"><?= __('Required') ?></span></label>
 <?php
 		}
 ?>
@@ -121,7 +121,13 @@ if(isset($user['Userphone']) and sizeof($user['Userphone'])) {
 				<?=$this->Form->text('Userphone.'.$lastindex.'.number', array('div' => false, 'class'=>'form-control', 'label' => false))?>
 				</div>
 			</div>
-			<span class="help-block"><? if(isset($validateErrors['Userphone.'.$lastindex.'.number'])) { echo $validateErrors['Userphone.'.$lastindex.'.number'][0]; } else { echo __("Phone numbers should be entered with country prefix"); } ?></span>
+			<span class="help-block">
+                <? if(isset($validateErrors['Userphone.'.$lastindex.'.number'])) {
+                ?><span class="error-message"><?php echo $validateErrors['Userphone.'.$lastindex.'.number'][0]; ?></span><?php
+                } else {
+                   echo __("Phone numbers should be entered with country prefix");
+                } ?>
+            </span>
 		</div>
 	</div>
 <?php

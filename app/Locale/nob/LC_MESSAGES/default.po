@@ -7506,6 +7506,11 @@ msgstr "Telefonnumre bør fylles inn med landkode"
 msgid "IM account type must be chosen"
 msgstr "IM-kontotype må være valgt"
 
+#: View/Profile/form.ctp
+msgid "Required"
+msgstr "*Påkrevd"
+
+
 #: View/Profile/password-form.ctp:5
 msgid "Old password"
 msgstr "Gammelt passord"

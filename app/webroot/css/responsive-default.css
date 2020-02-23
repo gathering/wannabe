@@ -106,3 +106,12 @@ ins {
 del {
 	color: red;
 }
+
+.required-field-text {
+    color: #808080;
+    font-size: 0.8em;
+}
+
+.error-message {
+    color: #FF0000;
+}

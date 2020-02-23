@@ -7473,6 +7473,10 @@ msgstr "Phone numbers should be entered with country prefix"
 msgid "IM account type must be chosen"
 msgstr "IM account type must be chosen"
 
+#: View/Profile/form.ctp
+msgid "Required"
+msgstr "*Required"
+
 #: View/Profile/password-form.ctp:5
 msgid "Old password"
 msgstr "Old password"
