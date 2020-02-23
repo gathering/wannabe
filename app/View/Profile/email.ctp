@@ -1,3 +1,4 @@
+<? $this->Wb->useBootstrapForms(); ?>
 <div class="row">
 	<div class="col-md-3">
 		<h2><?=__("Edit your profile")?></h2>
@@ -11,18 +12,8 @@
 		<form method="POST">
 		<fieldset>
 			<legend><?=__("Change email")?></legend>
-			<div class="clearfix">
-				<div class="input">
-					<span><?=__("Your current email: %s", $wannabe->user['User']['email'])?></span>
-				</div>
-			</div>
-			<div class="clearfix <? if($this->Form->error('User.email')) echo "error"; ?>">
-				<label for="data[User][email]"><?=__("New email")?></label>
-				<div class="input">
-					<?=$this->Form->input('User.email', array('div' => false, 'error' => false, 'class'=>'form-control', 'label' => false, 'value' => $data['User']['email']))?>
-					<span class="help-block"><?=$this->Form->error('User.email')?></span>
-				</div>
-			</div>
+			<p><?=__("Your current email: %s", $wannabe->user['User']['email'])?></p>
+	        <?=$this->Form->input('User.email', ['value' => $data['User']['email'], 'label' => __("New email")])?>
 			<div class="actions">
 				<?=$this->Form->submit(__("Change email"), array('class' => 'btn btn-success','name'=>'change'))?>
 			</div>
