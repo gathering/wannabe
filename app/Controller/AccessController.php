@@ -1,7 +1,7 @@
 <?php
 class AccessController extends AppController
 {
-
+	var $layout = 'responsive-default';
 	public $uses = array('Access', 'Aclobject', 'AclobjectsRole', 'AclobjectsUser', 'Crew', 'User', 'AclobjectsCrew');
 
 	public function index()
