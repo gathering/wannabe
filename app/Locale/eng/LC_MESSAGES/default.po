@@ -2142,6 +2142,11 @@ msgstr "male"
 msgid "female"
 msgstr "female"
 
+#: Controller/ProfileController.php:410
+msgid "other"
+msgstr "other"
+
+
 #: Controller/ProfileController.php:415 View/Layouts/default.ctp:88
 #: View/Layouts/fullscreen.ctp:71 View/Profile/register.ctp:3
 msgid "Complete registration"
