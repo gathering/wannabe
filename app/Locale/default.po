@@ -2050,6 +2050,10 @@ msgstr ""
 msgid "other"
 msgstr ""
 
+#: Controller/ProfileController.php:353
+msgid "prefer not to say"
+msgstr ""
+
 #: Controller/ProfileController.php:358
 #: View/Layouts/default.ctp:85
 #: View/Layouts/fullscreen.ctp:71
