@@ -6041,8 +6041,8 @@ msgid "Error"
 msgstr "Error"
 
 #: View/Errors/error400.ctp:23
-msgid "The page “%s” returned an error. Maybe you did something wrong?"
-msgstr "The page “%s” returned an error. Maybe you did something wrong?"
+msgid "The page “%s” returned an error. Please try again, or contact the system administrators."
+msgstr "The page “%s” returned an error. Please try again, or contact the system administrators."
 
 #: View/Errors/error400.ctp:32
 msgid ""
