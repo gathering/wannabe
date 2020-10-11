@@ -6049,7 +6049,7 @@ msgid "Error"
 msgstr "Feil"
 
 #: View/Errors/error400.ctp:23
-msgid "The page “%s” returned an error. Please try again, or contact support."
+msgid "The page “%s” returned an error. Please try again, or contact the system administrators."
 msgstr "Siden «%s» returnerte en feilmelding. Vennligst prøv igjen, eller kontakt systemansvarlig."
 
 #: View/Errors/error400.ctp:32
