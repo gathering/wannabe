@@ -404,6 +404,7 @@ class CrewController extends AppController {
 
 					if ($this->Crew->save($this->request->data)) {
 						$this->Crew->clearCrewCache($crew_id);
+						$this->Crew->clearUserCache($crew_id);
 						$this->Crew->clearCrewCache($this->request->data['Other']['last_parent']);
 						$this->Flash->success(__("%s was saved", $this->request->data['Crew']['name']));
 					} else {
