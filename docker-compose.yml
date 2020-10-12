@@ -1,0 +1,35 @@
+version: "3.5"
+services:
+  nginx:
+    build:
+      context: ./
+      dockerfile: Dockerfile_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      # Let nginx access the "public" files only
+      - app-webroot:/var/www/html/wannabe/app/webroot:ro
+    networks:
+      - wannabe_public
+      - wannabe_internal
+
+  app:
+    build:
+      context: ./
+      target: production
+      args:
+        - GIT_BRANCH=master
+    volumes:
+      - app-webroot:/var/www/html/wannabe/app/webroot
+    networks:
+      - wannabe_internal
+    environment:
+      - LOG_ENGINE=console
+
+volumes:
+  app-webroot:
+networks:
+  wannabe_internal:
+    external: true
+  wannabe_public:
+    external: true

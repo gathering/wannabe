@@ -21,6 +21,23 @@ class Crew extends AppModel {
 		)
 	);
 
+	public function beforeValidate() {
+		$this->validate = array(
+			'name' => array(
+				'special-characters' => array(
+					'rule' => '/^[a-z0-9:\-\& ]*$/i',
+					'message' => __("Crew name can only contain letters, numbers and colons"),
+					'last' => false,
+				),
+				'min-length' => array(
+					'rule' => array('minLength', '4'),
+					'message' => __("Crew name must be 4 characters or more")
+				)
+			)
+		);
+	}
+
+
 	public function beforeSave($options) {
 		/*if($this->data['Crew']['crew_id'] == NULL) {
 			$this->data['Crew']['crew_id'] = 0;
@@ -162,7 +179,7 @@ class Crew extends AppModel {
 		return $crews;
 	}
 
-	public function getChildCrews($parent_id,$select=false, $excludeHidden=true) {
+	public function getChildCrews($parent_id, $select=false, $excludeHidden=true) {
 		$type = 'all';
 		$hiddenCachePrefix = '';
 		if(!$excludeHidden) {
@@ -183,9 +200,9 @@ class Crew extends AppModel {
 				)
 			));
 			if($excludeHidden) {
-				$crews = $this->query("SELECT * FROM (SELECT * FROM wb4_crews WHERE hidden=false) Crew, (SELECT @pv := '".$parent_id."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY sorted_weight, name");
+				$crews = $this->query("SELECT * FROM (SELECT * FROM wb4_crews WHERE hidden=false order by crew_id, id) Crew, (SELECT @pv := '".$parent_id."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY sorted_weight, name");
 			} else {
-				$crews = $this->query("SELECT * FROM (SELECT * FROM wb4_crews) Crew, (SELECT @pv := '".$parent_id."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY sorted_weight, name");
+				$crews = $this->query("SELECT * FROM (SELECT * FROM wb4_crews order by crew_id, id) Crew, (SELECT @pv := '".$parent_id."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY sorted_weight, name");
 			}
 			Cache::write(WB::$event->reference.'-crew-childs-'.$parent_id.$hiddenCachePrefix, $crews);
 		}
@@ -194,7 +211,7 @@ class Crew extends AppModel {
 	public function getCrewByName($name) {
 		$crew = $this->find('first', array(
 			'conditions' => array(
-				'Crew.name' => urldecode($name),
+				'Crew.name' => urldecode(htmlspecialchars_decode($name)),
 				'Crew.event_id' => WB::$event->id
 			)
 		));
@@ -228,7 +245,7 @@ class Crew extends AppModel {
 			if($current['id'] == $crew['Parentcrew']['id'] && $return_role < $current['CrewsUser']['leader']) {
 				$return_role = $current['CrewsUser']['leader'];
 			}
-      $child_crews = $this->query("SELECT id, crew_id FROM (SELECT id, crew_id FROM wb4_crews) Crew, (SELECT @pv := '".$current['id']."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id)");
+      $child_crews = $this->query("SELECT id, crew_id FROM (SELECT id, crew_id FROM wb4_crews ORDER BY crew_id, id) Crew, (SELECT @pv := '".$current['id']."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id)");
       foreach ($child_crews as $child_crew) {
         if($child_crew['Crew']['id'] == $crew['Crew']['id'] && $return_role < $current['CrewsUser']['leader']) {
           $return_role = $current['CrewsUser']['leader'];
@@ -401,9 +418,11 @@ class Crew extends AppModel {
 				'Crew.id' => $crew_id
 			)
 		));
-		$crew_id = $crew['Crew']['crew_id']?$crew['Crew']['crew_id']:$crew_id;
-		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id);
-		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id.'hidden');
+		if ($crew) {
+			$crew_id = $crew['Crew']['crew_id']?$crew['Crew']['crew_id']:$crew_id;
+			Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id);
+			Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id.'hidden');
+		}
 		Cache::delete(WB::$event->reference.'-crew-hierarchy-listhidden');
 		Cache::delete(WB::$event->reference.'-crew-hierarchy-list');
 		Cache::delete(WB::$event->reference.'-crew-hierarchy-allhidden');
@@ -419,6 +438,9 @@ class Crew extends AppModel {
 				'Crew.id' => $crew_id
 			)
 		));
+		if (!$crew) {
+			return;
+		}
 		$crew_id = $crew['Crew']['crew_id']?$crew['Crew']['crew_id']:$crew_id;
 		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id);
 		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id.'hidden');

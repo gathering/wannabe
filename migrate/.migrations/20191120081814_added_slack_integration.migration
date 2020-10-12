@@ -1,0 +1,8 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+alter table wb4_enroll_settings add slackactive tinyint(1) DEFAULT '0';
+"""
+
+SQL_DOWN = u"""
+alter table wb4_enroll_settings drop slackactive;
+"""

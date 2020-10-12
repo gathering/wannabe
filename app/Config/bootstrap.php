@@ -39,16 +39,27 @@ Configure::write('Dispatcher.filters', array(
 ));
 
 // Add logging configuration.
-CakeLog::config('debug', array(
-    'engine' => 'FileLog',
-    'types' => array('notice', 'info', 'debug'),
-    'file' => 'debug',
-));
-CakeLog::config('error', array(
-    'engine' => 'FileLog',
-    'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
-    'file' => 'error',
-));
+if (env('LOG_ENGINE') === 'console') {
+    CakeLog::config('debug', array(
+        'engine' => 'ConsoleLog',
+        'types' => array('notice', 'info', 'debug'),
+    ));
+    CakeLog::config('error', array(
+        'engine' => 'ConsoleLog',
+        'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
+    ));
+} else {
+    CakeLog::config('debug', array(
+        'engine' => 'FileLog',
+        'types' => array('notice', 'info', 'debug'),
+        'file' => 'debug',
+    ));
+    CakeLog::config('error', array(
+        'engine' => 'FileLog',
+        'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
+        'file' => 'error',
+    ));
+}
 
 /**
  * The settings below can be used to set additional paths to models, views and controllers.

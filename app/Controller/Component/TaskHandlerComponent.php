@@ -33,7 +33,7 @@ class TaskHandlerComponent extends Component {
                                     App::import('Model', 'UserTask');
                                     $userTaskModel = new UserTask();
                                     $userTaskModel->query('UPDATE wb4_user_tasks SET completed = 1 WHERE user_id='.$controller->Wannabe->user['User']['id'].' AND task_id='.$task['Task']['id'].' AND event_id='.$controller->Wannabe->event->id);
-                                    $controller->Auth->reloadUserLogin($controller->Wannabe->user['User']['id']);
+                                    $controller->Auth->reloadUserLogin($controller->Wannabe->user['User']['id'], $controller);
                                 } else {
                                     $this->task = $task;
                                     break 2;
@@ -113,7 +113,7 @@ class TaskHandlerComponent extends Component {
             }
         }
         if (is_array($tasks) && !empty($tasks)) {
-            $controller->Auth->reloadUserLogin($user['User']['id']);
+            $controller->Auth->reloadUserLogin($user['User']['id'], $controller);
         }
         return $return;
     }

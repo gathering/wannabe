@@ -25,7 +25,7 @@ class MailingListController extends AppController {
 				$this->UserMailpref->save($mail);
 			}
 			$this->Flash->success(__("Your preferences has been saved"));
-			$this->Auth->reloadUserLogin($this->Wannabe->user['User']['id']);
+			$this->Auth->reloadUserLogin($this->Wannabe->user['User']['id'], $this);
 		}
 
         $db = ConnectionManager::getDataSource("default");

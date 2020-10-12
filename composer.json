@@ -5,7 +5,10 @@
         "phpunit/phpunit": "4.* || 5.*"
     },
     "config": {
-        "vendor-dir": "app/Vendor"
+        "vendor-dir": "app/Vendor",
+		"platform": {
+			"php": "5.6"
+		}
     },
     "require": {
         "michelf/php-markdown": "^1.8",
