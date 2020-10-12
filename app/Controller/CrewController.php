@@ -402,10 +402,21 @@ class CrewController extends AppController {
 						$this->request->data['Crew']['crew_id'] = 0;
 					}
 
-					if($this->Crew->save($this->request->data)) {
+					if ($this->Crew->save($this->request->data)) {
 						$this->Crew->clearCrewCache($crew_id);
+						$this->Crew->clearUserCache($crew_id);
 						$this->Crew->clearCrewCache($this->request->data['Other']['last_parent']);
 						$this->Flash->success(__("%s was saved", $this->request->data['Crew']['name']));
+					} else {
+						$this->Crew->set($this->request->data);
+						$fieldErrors = $this->validateErrors($this->Crew);
+						if (!empty($fieldErrors)) {
+							array_map(function($errors) {
+								$this->Flash->error(join(', ', $errors));
+							}, $fieldErrors);
+						}
+						$this->redirectEvent('/Crew/Edit/'.$crew['Crew']['name']);
+						return;
 					}
 				}
 					break;

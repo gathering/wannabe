@@ -23,10 +23,10 @@ class CrewAdminController extends AppController {
 	public function create() {
 		if($this->request->is('post')) {
 			$this->request->data['Crew']['event_id'] = $this->Wannabe->event->id;
-            if($this->request->data['Crew']['crew_id'] == NULL) {
-                $this->request->data['Crew']['crew_id'] = 0;
-            }
-			if($this->Crew->save($this->request->data)) {
+			if($this->request->data['Crew']['crew_id'] == NULL) {
+				$this->request->data['Crew']['crew_id'] = 0;
+			}
+			if ($this->Crew->save($this->request->data)) {
 				$crew_id = $this->request->data['Crew']['crew_id'];
 				$this->Crew->clearCrewCache($crew_id);
 				$this->Flash->success(__("%s was created", $this->request->data['Crew']['name']));

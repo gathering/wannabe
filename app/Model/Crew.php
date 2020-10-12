@@ -21,6 +21,23 @@ class Crew extends AppModel {
 		)
 	);
 
+	public function beforeValidate() {
+		$this->validate = array(
+			'name' => array(
+				'special-characters' => array(
+					'rule' => '/^[a-z0-9:\-\& ]*$/i',
+					'message' => __("Crew name can only contain letters, numbers and colons"),
+					'last' => false,
+				),
+				'min-length' => array(
+					'rule' => array('minLength', '4'),
+					'message' => __("Crew name must be 4 characters or more")
+				)
+			)
+		);
+	}
+
+
 	public function beforeSave($options) {
 		/*if($this->data['Crew']['crew_id'] == NULL) {
 			$this->data['Crew']['crew_id'] = 0;
@@ -194,7 +211,7 @@ class Crew extends AppModel {
 	public function getCrewByName($name) {
 		$crew = $this->find('first', array(
 			'conditions' => array(
-				'Crew.name' => urldecode($name),
+				'Crew.name' => urldecode(htmlspecialchars_decode($name)),
 				'Crew.event_id' => WB::$event->id
 			)
 		));
@@ -401,9 +418,11 @@ class Crew extends AppModel {
 				'Crew.id' => $crew_id
 			)
 		));
-		$crew_id = $crew['Crew']['crew_id']?$crew['Crew']['crew_id']:$crew_id;
-		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id);
-		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id.'hidden');
+		if ($crew) {
+			$crew_id = $crew['Crew']['crew_id']?$crew['Crew']['crew_id']:$crew_id;
+			Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id);
+			Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id.'hidden');
+		}
 		Cache::delete(WB::$event->reference.'-crew-hierarchy-listhidden');
 		Cache::delete(WB::$event->reference.'-crew-hierarchy-list');
 		Cache::delete(WB::$event->reference.'-crew-hierarchy-allhidden');
@@ -419,6 +438,9 @@ class Crew extends AppModel {
 				'Crew.id' => $crew_id
 			)
 		));
+		if (!$crew) {
+			return;
+		}
 		$crew_id = $crew['Crew']['crew_id']?$crew['Crew']['crew_id']:$crew_id;
 		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id);
 		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id.'hidden');

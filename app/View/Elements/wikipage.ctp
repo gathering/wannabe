@@ -1,5 +1,5 @@
 <?php
-$wiki = $this->requestAction($wannabe->event->reference.'/Wiki/'.$page);
+$wiki = $this->requestAction($wannabe->event->reference.'/Wiki/'.urlencode($page));
 if(isset($wiki['Wikipage']['content'])) {
 ?>
 	<p><?=$wiki['Wikipage']['content']?></p>
