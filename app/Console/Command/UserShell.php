@@ -20,6 +20,14 @@ class UserShell extends AppShell {
 						'id' => array('help' => 'User id number', 'required' => true),
 					)
 				)
+			))
+			->addSubcommand('show', array(
+				'help' => 'Show detailed information about a user account',
+				'parser' => array(
+					'arguments' => array(
+						'id' => array('help' => 'User id number', 'required' => true),
+					)
+				)
 			));
 		return $parser;
 	}
