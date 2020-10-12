@@ -303,9 +303,8 @@ class ProfileController extends AppController {
             $this->set('improtocols', $this->Improtocol->find('list'));
             $this->set('phonetypes', $this->Phonetype->find('list'));
             $this->set('title_for_layout', $isDisabled ? "ID #".$user['User']['id'] : WbSanitize::clean($user['User']['realname']));
-            $this->set('title_for_layout', WbSanitize::clean($user['User']['realname']));
             if (!empty($user['User']['nickname'])) {
-					$this->set('desc_for_layout', $isDisabled ? "" : __('aka')." ".WbSanitize::clean($user['User']['nickname']));
+                $this->set('desc_for_layout', $isDisabled ? "" : __('aka')." ".WbSanitize::clean($user['User']['nickname']));
             }
             $this->set('userAge', $this->calculateAge($user['User']['birth']));
             $this->set('isDisabled', $this->User->isDisabled($user));
