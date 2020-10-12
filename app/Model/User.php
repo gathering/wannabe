@@ -1,4 +1,6 @@
 <?php
+App::uses('CakeTime', 'Utility');
+
 class User extends AppModel {
 
 	public $name = 'User';
@@ -640,6 +642,11 @@ class User extends AppModel {
     public function correctPassword($user, $passwordGuess) {
         $existingPasswordHash = $user['User']['password'];
 
+        // User account is enabled, don't allow login no mather what
+        if ($this->isDisabled($user)) {
+            return false;
+        }
+
         if (
             // Modern password verification failed
             !password_verify($passwordGuess, $existingPasswordHash) and
@@ -680,5 +687,13 @@ class User extends AppModel {
 
     public function getPasswordHash($password) {
         return password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    public function isDisabled($user) {
+        return CakeTime::isPast($user['User']['deleted']) and $user['User']['deleted'] !== '0000-00-00 00:00:00';
+    }
+
+    public function isEnabled($user) {
+        return !$this->isDisabled($user);
     }
 }

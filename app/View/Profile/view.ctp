@@ -11,6 +11,11 @@ if ($isMyProfile || $canViewDetailedInfo || $canViewAddress) $qrdata['address'] 
 <div class="row">
 
 	<div class="col-md-12">
+		<?php if ($isDisabled) { ?>
+		<div class="page-header">
+			<h2>ID #<?=$user['User']['id']?> <small><?=__("Disabled profile")?></small></h2>
+		</div>
+		<?php } else { ?>
 		<div class="page-header">
 			<h2>ID #<?=$user['User']['id']?> <small><?=__("User profile")?></small></h2>
 		</div>
@@ -175,5 +180,6 @@ if ($isMyProfile || $canViewDetailedInfo || $canViewAddress) $qrdata['address'] 
 
 
 
+		<?php } ?>
 	</div>
 </div>

@@ -27,7 +27,6 @@ code.
 Contact: Use bug reports here, or use wannabe@gathering.org (Response times
 are very varying - I'm sorry, we're working on it!)
 
-
 ## Docker
 
 Some work has begun on making it possible to develop using docker. It is
@@ -70,6 +69,7 @@ $ docker-compose up
 
 This uses docker-compose and runs several containers by default, depending on
 environment:
+
 - One `nginx` container which contains a basic config for using as local (non-ssh) entrypoint to app \*
 - One `app` container with PHP-fpm and application code \*
 - One `mysql` container running MySQL with a some basic seed data
@@ -164,7 +164,6 @@ To experiment with php7 (or another) version. Build `app` container with the
 docker-compose build --build-arg PHP_VERSION=7 app
 ```
 
-
 ### Migrations:
 
 The `app` container automatically contains a mount of your local development
@@ -178,6 +177,22 @@ $ cd migrate
 $ ./migrate.sh
 ```
 
+All PHP libraries are included, including CakePHP.
+
+### Enable/disable a user account
+
+With `cake` command available in path (see installation instructions).
+
+```
+cake user enable <userid>
+cake user disable <userid>
+cake user show <userid>
+```
+
+A disabled used is disallowed login and has personal information hidden from
+user profile page. User information will still appear in other locations. If
+removing user for data retention or privacy purposes delete user instead.
+
 ### Modifying database seed
 
 After creating new migrations it's nice to update the initial database seeds
@@ -186,7 +201,7 @@ with the latest dump file created in `./migrate/wannabe_xxxx.sql`, and it will
 automatically get imported when a new mysql container is created. (Actually all
 `.sql` and `.sh` files in `./sql` folder gets run in alphabetical order)
 
-PS. Keep in mind that the migration dump file includes *all* database
+PS. Keep in mind that the migration dump file includes _all_ database
 modifications, including new users, changed passwords, etc. So try to only do
 it from a "fresh" instance without too many modifications.
 

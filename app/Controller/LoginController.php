@@ -6,7 +6,7 @@ class LoginController extends AppController {
 
 	public function index() {
 		if(CakeSession::check('User.login')) {
-            $this->redirect("/");
+			$this->redirect("/");
 		}
 		$this->set('title_for_layout', __("Login"));
 		$this->layout = 'front';
@@ -16,11 +16,14 @@ class LoginController extends AppController {
 			$remember = $this->request->data('remember');
 			if(strlen($pass) > 0 && strlen($login) > 0 ) {
 				if(!$this->Auth->login($login, $pass, $remember)) {
-					//Show error
-					$this->Flash->error(__('It appears that you typed in the wrong username/e-mail or password mate, please try again'));
+					if ($this->Auth->isDisabled) {
+						$this->Flash->error(__('It appears that account has been disabled.'));
+					} else {
+						$this->Flash->error(__('It appears that you typed in the wrong username/e-mail or password mate, please try again'));
+					}
 				} else {
 					//login Ok, redirect
-                    $this->redirect("/");
+					$this->redirect("/");
 				}
 			}
 		}

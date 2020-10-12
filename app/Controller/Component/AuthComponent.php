@@ -9,6 +9,7 @@ class AuthComponent extends Component {
 
 	var $components = array('Cookie');
 	var $isLoggedin = false;
+	var $isDisabled = false;
 	var $allowUserAuthCookie = false;
 
 	public function initialize(Controller $controller) {
@@ -43,8 +44,6 @@ class AuthComponent extends Component {
                 }
                 WB::$user = $controller->Wannabe->user;
                 $this->isLoggedIn = true;
-            } else {
-                $controller->Wannabe->user = array();
             }
 		} else if(!is_null($cookie) && isset($cookie['user']) && isset($cookie['passwordHash'])) {
 			if($this->login($cookie['user'], $cookie['passwordHash'])) {
@@ -57,13 +56,14 @@ class AuthComponent extends Component {
                     }
                     WB::$user = $controller->Wannabe->user;
                     $this->isLoggedIn = true;
-                } else {
-                    $controller->Wannabe->user = array();
-                    $this->Cookie->delete('User');
                 }
-            } else {
-                $this->Cookie->delete('User');
             }
+        }
+
+        if (!$this->isLoggedIn) {
+            $controller->Wannabe->user = array();
+            CakeSession::write('User.login', null);
+            $this->Cookie->delete('User.auth');
         }
 
 		//Turn off required login for Error pages to avoid redirects away from them
@@ -106,11 +106,18 @@ class AuthComponent extends Component {
         return $this->login($username, $passwordHash);
     }
 	public function login($login, $passwordOrHash, $remember=0) {
-		$userGoingIn = $this->User->findByUsername($login);
+		App::import('Model', 'User');
+		$user = new User();
+		$userGoingIn = $user->findByUsername($login);
 		if(!$userGoingIn) {
-			$userGoingIn = $this->User->findByEmail($login);
+			$userGoingIn = $user->findByEmail($login);
 		}
 		if(!$userGoingIn) {
+			return false;
+		}
+
+		if ($user->isDisabled($userGoingIn)) {
+			$this->isDisabled = true;
 			return false;
 		}
 
