@@ -28,6 +28,7 @@ class FrontNewsManagerController extends AppController {
 		$this->set('title_for_layout', __("Add news"));
 	}
 	public function edit($id = null) {
+		$this->set('desc_for_layout', $this->FrontNews->locale === 'nob' ? __("Norwegian translation") : __("English translation"));
 		$this->FrontNews->id = $id;
 		if($this->request->is('get')) {
 			$this->request->data = $this->FrontNews->read();
@@ -59,6 +60,5 @@ class FrontNewsManagerController extends AppController {
 		// Fall back to user/system defaults
 		$locale = empty($reqLocale) ? $this->Wannabe->lang : $reqLocale;
 		$this->FrontNews->locale = $locale;
-		$this->set('desc_for_layout', $locale === 'nob' ? __("Norwegian translation") : __("English translation"));
 	}
 }
