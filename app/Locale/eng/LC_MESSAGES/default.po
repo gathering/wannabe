@@ -6041,8 +6041,8 @@ msgid "Error"
 msgstr "Error"
 
 #: View/Errors/error400.ctp:23
-msgid "The page “%s” returned an error. Maybe you did something wrong?"
-msgstr "The page “%s” returned an error. Maybe you did something wrong?"
+msgid "The page “%s” returned an error. Please try again, or contact the system administrators."
+msgstr "The page “%s” returned an error. Please try again, or contact the system administrators."
 
 #: View/Errors/error400.ctp:32
 msgid ""
@@ -8705,7 +8705,7 @@ msgstr "You must consent to storage and use of the information before you can sa
 
 #: View/Needs/index.ctp:32
 msgid "consent-walloftext"
-msgstr "You are about to disclose sensitive personal data. In accordance with the Norwegian Personal Data Act, § 19, you are hereby informed of the following:<br>The responsible data controller is the Secretary General of KANDU, who may be contacted by E-mail at kontoret@kandu.no. The Coordinator of The Gathering, Kristian Myhre, may also be reached on kristian@gathering.org.<br>The purpose of this data processing is to facilitate for your participation on The Gathering and adapt necessary facilities and services to your needs. The data may also be used in an anonymized way for statistical purposes. The data may not be used for any other purposes. The data will not be transferred to anyone outside KANDU/The Gathering.<br>The data will be made available to those who have an professional need for it, e.g. those preparing the food. The decision on who has suficcient professional need for access will be taken by the responsible data controller or whomever they grant the right to do so.<br>You are not required to disclose any of these data, disclosing is entirely voluntary.<br>You may on this page at any time see what information is registered regarding your needs. All sensitive personal data will be erased immediately following the conclusion of this year's event.<br>You may at any time demand the erasure of any or all of these data, or in any other way rescind your consent to KANDU/The Gathering processing these data."
+msgstr "You are about to disclose sensitive personal data. In accordance with the Norwegian Personal Data Act, § 19, you are hereby informed of the following:<br>The responsible data controller is the Secretary General of KANDU, who may be contacted by E-mail at kontoret@kandu.no. The Coordinator of The Gathering, may also be reached on koordinator@gathering.org.<br>The purpose of this data processing is to facilitate for your participation on The Gathering and adapt necessary facilities and services to your needs. The data may also be used in an anonymized way for statistical purposes. The data may not be used for any other purposes. The data will not be transferred to anyone outside KANDU/The Gathering.<br>The data will be made available to those who have an professional need for it, e.g. those preparing the food. The decision on who has suficcient professional need for access will be taken by the responsible data controller or whomever they grant the right to do so.<br>You are not required to disclose any of these data, disclosing is entirely voluntary.<br>You may on this page at any time see what information is registered regarding your needs. All sensitive personal data will be erased immediately following the conclusion of this year's event.<br>You may at any time demand the erasure of any or all of these data, or in any other way rescind your consent to KANDU/The Gathering processing these data."
 
 #: Controller/CrewController.php:447
 msgid "Crew you administrate"
@@ -8714,3 +8714,17 @@ msgstr "Crew you administrate"
 #: View/Crew/edit.ctp:94
 msgid "crewuser-customtitle"
 msgstr "If applicable, define a custom role or responsibility for this crew member."
+
+#: View/EnrollAdmin/index.ctp:32
+msgid "Enable automatic Slack invitations"
+msgstr "Enable automatic Slack invitations"
+
+#: app/Controller/EnrollController:
+msgid "Slack invite failed to send to user. User might already be in workspace, or user needs to be manually activated. Please contact support."
+msgstr "Slack invite failed to send to user. User might already be in workspace, or user needs to be manually activated. Please contact support."
+
+msgid "Slack invite to sent to user."
+msgstr "Slack invite to sent to user."
+
+msgid "Slack invite failed to send to user."
+msgstr "Slack invite failed to send to user."

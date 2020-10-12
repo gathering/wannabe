@@ -2040,15 +2040,13 @@ msgstr "E-postadresse"
 
 #: Controller/PrivacyController.php:37
 msgid ""
-"Allow fellow crew members to see hidden info regardless of other privacy "
-"settings"
+"Allow members of your own crew to see hidden info"
 msgstr ""
-"La andre crewmedlemmer se skjult informasjon uavhengig av andre "
-"innstillinger for personvern"
+"La medlemmer av ditt eget crew se skjult informasjon"
 
 #: Controller/PrivacyController.php:40
-msgid "Privacy settings"
-msgstr "Personverninnstillinger"
+msgid "Privacy"
+msgstr "Personvern"
 
 #: Controller/ProfileController.php:29 View/Profile/edit.ctp:8
 #: View/Profile/email.ctp:8 View/Profile/password.ctp:8
@@ -2414,6 +2412,10 @@ msgstr ""
 #: Controller/TermController.php:27
 msgid "Terms & Conditions"
 msgstr "Betingelser for medlem"
+
+#: Controller/UserController.php:18
+msgid "Back to login"
+msgstr "Tilbake til innlogging"
 
 #: Controller/UserController.php:14;54
 msgid ""
@@ -5416,6 +5418,10 @@ msgstr "Opprettet av %s"
 msgid "Filter"
 msgstr "Filter"
 
+#: View/ApplicationManager/index.ctp:42
+msgid "Submit"
+msgstr "Send inn"
+
 #: View/ApplicationManager/greeting.ctp:6
 msgid "Created greetings you have access to"
 msgstr "Opprettede hilsner du har tilgang til"
@@ -6049,8 +6055,8 @@ msgid "Error"
 msgstr "Feil"
 
 #: View/Errors/error400.ctp:23
-msgid "The page “%s” returned an error. Maybe you did something wrong?"
-msgstr "Siden «%s» returnerte en feilmelding. Kan du ha gjort noe feil?"
+msgid "The page “%s” returned an error. Please try again, or contact the system administrators."
+msgstr "Siden «%s» returnerte en feilmelding. Vennligst prøv igjen, eller kontakt systemansvarlig."
 
 #: View/Errors/error400.ctp:32
 msgid ""
@@ -7383,9 +7389,21 @@ msgstr "Lagre regel"
 msgid "Rules"
 msgstr "Regler"
 
-#: View/Privacy/index.ctp:4
-msgid "Hide…"
-msgstr "Skjul…"
+#: View/Privacy/index.ctp:3
+msgid "Settings"
+msgstr "Innstillinger"
+
+#: View/Privacy/index.ctp:6
+msgid "Hidden info"
+msgstr "Skjult info"
+
+#: View/Privacy/index.ctp:16
+msgid "Exceptions…"
+msgstr "Unntak…"
+
+#: View/Privacy/index.ctp:24
+msgid "Administrators, Chiefs and others with special access will always be allowed to access your contact information"
+msgstr "Administratorer, Chiefs og andre med spesialtilganger vil alltid ha anledning til å se din kontaktinformasjon"
 
 #: View/Profile/edit.ctp:4
 msgid "On this page you edit your profile."
@@ -8725,8 +8743,22 @@ msgstr "Crew du administrerer"
 
 #: View/Needs/index.ctp:32
 msgid "consent-walloftext"
-msgstr "Du er nå i ferd med å oppgi sensitive personopplysninger. I tråd med personopplysningsloven § 19 informeres du med dette om at: <br>Den som er ansvarlig for behandlingen av opplysningene er generalsekretær i KANDU, som kan nås på e-post kontoret@kandu.no. Koordinator for The Gathering, Kristian Myhre kan også kontaktes på kristian@gathering.org. <br>Formålet med behandlingen av disse opplysningene er å kunne tilrettelegge ditt tilbud på The Gathering og kartlegge behov for tilrettelegging. Opplysningene kan også anonymisert form brukes i statistikkhensyn. Opplysningene vil ikke bli brukt utenfor disse formålene. Opplysningene vil ikke overføres til noen utenfor KANDU/The Gathering. <br>Opplysningene vil bli gjort tilgjengelig for de som har et tjenestlig behov for det, i hovedsak de som f.eks. skal forberede mat eller lignende. Avgjørelse om hvem som har tjenestlig behov blir tatt av behandlingsansvarlig eller den som får fullmakt av denne. <br>Det er helt frivillig å oppgi disse opplysningene. <br>Du kan på denne siden til enhver tid se hvilken informasjon som er registrert om deg. Alle sensitive personopplysninger vil slettes umiddelbart etter The Gathering er gjennomført. <br>Du kan til enhver tid kreve at opplysningene blir slettet eller på annen måte trekke samtykket til at KANDU/The Gathering behandler disse opplysningene."
+msgstr "Du er nå i ferd med å oppgi sensitive personopplysninger. I tråd med personopplysningsloven § 19 informeres du med dette om at: <br>Den som er ansvarlig for behandlingen av opplysningene er generalsekretær i KANDU, som kan nås på e-post kontoret@kandu.no. Koordinator for The Gathering kan også kontaktes på koordinator@gathering.org. <br>Formålet med behandlingen av disse opplysningene er å kunne tilrettelegge ditt tilbud på The Gathering og kartlegge behov for tilrettelegging. Opplysningene kan også anonymisert form brukes i statistikkhensyn. Opplysningene vil ikke bli brukt utenfor disse formålene. Opplysningene vil ikke overføres til noen utenfor KANDU/The Gathering. <br>Opplysningene vil bli gjort tilgjengelig for de som har et tjenestlig behov for det, i hovedsak de som f.eks. skal forberede mat eller lignende. Avgjørelse om hvem som har tjenestlig behov blir tatt av behandlingsansvarlig eller den som får fullmakt av denne. <br>Det er helt frivillig å oppgi disse opplysningene. <br>Du kan på denne siden til enhver tid se hvilken informasjon som er registrert om deg. Alle sensitive personopplysninger vil slettes umiddelbart etter The Gathering er gjennomført. <br>Du kan til enhver tid kreve at opplysningene blir slettet eller på annen måte trekke samtykket til at KANDU/The Gathering behandler disse opplysningene."
 
 #: View/Crew/edit.ctp:94
 msgid "crewuser-customtitle"
 msgstr "Definer eventuelt en tilpasset tittel eller rolle for crewmedlemmet."
+
+#: View/EnrollAdmin/index.ctp:32
+msgid "Enable automatic Slack invitations"
+msgstr "Aktiver automatiske Slack invitasjoner"
+
+#: app/Controller/EnrollController:
+msgid "Slack invite failed to send to user. User might already be in workspace, or user needs to be manually activated. Please contact support."
+msgstr "Slack invitasjon feilet, brukeren er kanskje allerede i Slack, eller brukeren må bli aktivert manuelt. Vennligst ta kontakt med support."
+
+msgid "Slack invite to sent to user."
+msgstr "Slack invitasjon sendt til brukeren!"
+
+msgid "Slack invite failed to send to user."
+msgstr "Slack invitasjon feilet."

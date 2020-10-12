@@ -343,3 +343,10 @@ Cache::config('_cake_model_', array(
 	'duration' => $duration
 
 ));
+
+/**
+ * Slack automatic invite 
+ * LEGACY TOKEN
+ */
+
+Configure::write('Slack.token', '');

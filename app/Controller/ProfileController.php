@@ -161,7 +161,7 @@ class ProfileController extends AppController {
                         $this->PictureApproval->id = $approval_id['PictureApproval']['id'];
                         $this->PictureApproval->save($save);
 
-                        $this->Auth->reloadUserLogin($this->Wannabe->user['User']['id']);
+                        $this->Auth->reloadUserLogin($this->Wannabe->user['User']['id'], $this);
                         $crews = $this->getCrewsForUser($this->Wannabe->user, 0);
 
                         if(!empty($crews)) {
@@ -302,7 +302,9 @@ class ProfileController extends AppController {
             $this->set('improtocols', $this->Improtocol->find('list'));
             $this->set('phonetypes', $this->Phonetype->find('list'));
             $this->set('title_for_layout', WbSanitize::clean($user['User']['realname']));
-            $this->set('desc_for_layout', __('aka')." ".WbSanitize::clean($user['User']['nickname']));
+            if (!empty($user['User']['nickname'])) {
+                $this->set('desc_for_layout', __('aka')." ".WbSanitize::clean($user['User']['nickname']));
+            }
             $this->set('userAge', $this->calculateAge($user['User']['birth']));
             $this->set('canViewDetailedInfo', $this->Acl->hasAccessToDetailedUserInfo($this->Wannabe->user));
             $this->set('canViewPhone',   $sharesCrewAndAllowsCrew || $this->Acl->hasAccessToViewUserDetail('phone', $user));
@@ -384,7 +386,7 @@ class ProfileController extends AppController {
                         $this->User->clearMemberCache($crew);
                     }
                 }
-                $this->Auth->reloadUserLogin($user_id);
+                $this->Auth->reloadUserLogin($user_id, $this);
                 if($registration) {
                     $this->redirectEvent('/');
                 }
@@ -469,7 +471,7 @@ class ProfileController extends AppController {
                     $this->Flash->success(__("Password updated"));
                 }
                 $this->User->save($user, false);
-                $this->Auth->reloadUserLogin($user['User']['id']);
+                $this->Auth->reloadUserLogin($user['User']['id'], $this);
                 $cookie = $this->Cookie->read('Auth.user');
                 if(!is_null($cookie)) {
                     $this->Cookie->delete('Auth.user');
@@ -560,7 +562,7 @@ class ProfileController extends AppController {
                 $changeEmail = new CakeEmail('default');
                 $changeEmail->viewVars(array('validation' => $validationCode, 'wannabe' => $this->Wannabe));
                 $changeEmail->template('change-email-'.$this->Wannabe->lang, 'plain')->emailFormat('text')->subject(__("Wannabe: Change email"))->to($email)->send();
-                $this->Auth->reloadUserLogin($this->Wannabe->user['User']['id']);
+                $this->Auth->reloadUserLogin($this->Wannabe->user['User']['id'], $this);
                 $this->Flash->success(__('An email has been sent to “%s”. Click the link in the email to verify your new email address.', $email));
                 return true;
             } else {

@@ -47,13 +47,16 @@ class EmailConfig {
 *               'from' => 'wannabe@gathering.org'
 *       );
 */
-        public $default = array(
-                'transport' => 'Smtp',
-                'from' => 'wannabe@gathering.org',
-                'host' => 'localhost',
-                'port' => 25,
-                'timout' => 30
-        );
+	public $default = array(
+		'transport' => 'Debug',
+		//'transport' => 'Smtp',
+		'from' => 'wannabe@gathering.org',
+		'host' => 'localhost',
+		'port' => 25,
+		'timout' => 30,
+		'log' => true,
+		//'log' => false,
+	);
 
 	public $smtp = array(
 		'transport' => 'Smtp',

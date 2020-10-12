@@ -20,7 +20,7 @@
 if(isset($messageError)):
 ?>
 <div class="alert-message block-message error">
-	<p><strong><?php echo __('Error'); ?>: </strong> <?php printf(__('The page “%s” returned an error. Maybe you did something wrong?'),"<strong>{$url}</strong>"); ?></p>
+	<p><strong><?php echo __('Error'); ?>: </strong> <?php printf(__('The page “%s” returned an error. Please try again, or contact the system administrators.'),"<strong>{$url}</strong>"); ?></p>
 	<div class="alert-actions">
 	<a class="btn small" href="mailto:wannabe@gathering.org"><?=__("Report this")?></a>
 	</div>

@@ -65,6 +65,7 @@ class ApplicationController extends AppController {
 		$this->set('pages', $pages);
 		$this->set('page', $page);
 		$this->set('current_page', $current_page);
+		$this->set('totalpages', count($pages));
 		$this->set('crews', $this->Crew->getAllCrews(true, 0, true));
 		$this->set('open_crews', $this->Crew->getOpenCrews(true));
 		$this->set('fieldtypes', $this->ApplicationFieldType->getFieldTypes());
