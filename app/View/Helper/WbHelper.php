@@ -43,6 +43,9 @@ class WbHelper extends HtmlHelper
 	public function signFilePath($path) {
 		$path = str_replace('//', '/', '/'.$path);
 		$secret = Configure::read('UrlSignSecret');
+		if (empty($secret)) {
+			CakeLog::debug("Skipping file path signature generation, since no UrlSignSecret is set.");
+		}
 		// Each link lasts for 1 days
 		$expires = time() + (1 * 24 * 60 * 60);
 		// This is the pattern that has to match between nginx and wannabe
