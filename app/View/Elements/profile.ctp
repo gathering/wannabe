@@ -6,15 +6,15 @@ if(isset($profile['User']['id'])) {
 		<h2><?=$profile['User']['realname']?> <?=$header?'<small>'.$header.'</small>':''?></h2>
 	</div>
 	<div class="row">
-        <?php if($profile['User']['image']) { ?>
-            <div class="span2">
-                <ul class="media-grid">
-                    <li>
-                        <div><img src="/<?="{$profile['User']['image']}_100.png?".time();?>" alt="" border="0" /></div>
-                    </li>
-                </ul>
-            </div>
-        <?php } ?>
+		<?php if($profile['User']['image']) { ?>
+			<div class="span2">
+				<ul class="media-grid">
+					<li>
+						<div><img src="<?=$this->Wb->profilePictureUrl($profile, 100)?>" alt="" border="0" /></div>
+					</li>
+				</ul>
+			</div>
+		<?php } ?>
 		<div class="span6">
 			<div class="row">
 				<div class="span3">

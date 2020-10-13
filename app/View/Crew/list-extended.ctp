@@ -43,7 +43,7 @@ foreach ( $members as $crew_id => $crewmembers )
                         }
 			?>
 <div class="row">
-<div class="col-xs-2"><? if ( $member['User']['image'] ) { ?><img src="/<?=$member['User']['image']?>_50.png" alt="" border="0" /><? } ?></div>
+<div class="col-xs-2"><? if ( $member['User']['image'] ) { ?><img src="<?=$this->Wb->profilePictureUrl($member, 50)?>" alt="" border="0" /><? } ?></div>
                 <div class="col-xs-10">
                     <address><?=$this->Wb->userLink($member)?>, <?=$this->Wb->getUsertitleForCrew($member, $crew['Crew']['id'])?><br /><strong><?=__("Age")?>:</strong><? if($wannabe->lang == 'eng') { ?>&#9;<? } ?>&#9;<?=$member['User']['age']?><br /><? if($canViewDetailedInfo || (isset($member['UserPrivacy']['email']) && !$member['UserPrivacy']['email'])) { ?><strong><?=__("Email")?>:</strong>&#9;<a href="mailto:<?=$member['User']['email']?>"><?=$member['User']['email']?></a><? } ?><br /><? if($canViewDetailedInfo || (isset($member['UserPrivacy']['phone']) && !$member['UserPrivacy']['phone'])) { ?><? if (count($member['Userphone'])) { ?><? foreach( $member['Userphone'] as $phone ) { ?><strong><?=$phonetypes[$phone['phonetype_id']]?></strong>:&#9;<?=$phone['number']?><br /><? } } ?><? } ?></address>
                 </div>
