@@ -3,11 +3,13 @@ services:
   nginx:
     volumes:
       - ./:/var/www/html/wannabe
+      - ./build/wannabe-nginx.conf:/etc/nginx/templates/default.conf.template
     environment:
       - MYSQL_URL=mysql
       - MYSQL_USERNAME=wannabe
       - MYSQL_PASSWORD=wannabe
       - AUTH_COOKIE_KEY=if-you-see-me-in-prod-run-away
+      - URL_SIGN_SECRET=if-you-see-me-in-prod-run-away
 
   app:
     build:
@@ -21,6 +23,8 @@ services:
     environment:
       - APP_ENV=development
       - LOG_ENGINE=console
+      - AUTH_COOKIE_KEY=if-you-see-me-in-prod-run-away
+      - URL_SIGN_SECRET=if-you-see-me-in-prod-run-away
 
   mysql:
     image: mysql:5.7
