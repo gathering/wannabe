@@ -133,8 +133,8 @@ class AclComponent extends Component {
 
 	public function hasMembershipToEvent($user) {
 		foreach ( $user['Crew'] as $crew )
-			if ($crew['event_id'] == WB::$event->id)
-				return(true);
+			if (isset($crew['event_id']) && $crew['event_id'] == WB::$event->id)
+				return true;
 		return false;
 	}
 
