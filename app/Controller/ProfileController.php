@@ -426,7 +426,7 @@ class ProfileController extends AppController {
             }
             $this->set('user', $user);
         }
-        $this->set('sexes', array('male'=>__('male'),'female'=>__('female'),'other'=>('other'),'na'=>('prefer not to say')));
+        $this->set('sexes', array('male'=>__('male'),'female'=>__('female'),'other'=>__('other'),'na'=>__('prefer not to say')));
         $this->set('countrycodes', $this->Country->find('list'));
         $this->set('phonetypes', $this->Phonetype->find('list'));
         $this->set('improtocols', $this->Improtocol->find('list'));
