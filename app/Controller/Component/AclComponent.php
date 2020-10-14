@@ -168,6 +168,87 @@ class AclComponent extends Component {
         return true;
     }
 
+	public function filterPrivateUserDetails($user, $assumeSameEvent = false) {
+		return $this->filterPrivateUserDetailsByUser(
+			$this->controller->Wannabe->user,
+			$user,
+			$assumeSameEvent
+		);
+	}
+
+	public function filterPrivateUserDetailsByUser($currentUser, $user, $assumeSameEvent = false) {
+		$sameUser = false;
+		$sameCrew = false;
+		$sameEvent = false;
+		$hasGlobalUserDetailAccess = false;
+		$hide_field = [
+			'password' => true,
+			'resetpasswordcode' => true,
+			'verificationcode' => true,
+			'image' => true,
+		];
+		$privacy_controlled_fields = [
+			'Userphone',
+			'address',
+			'countrycode',
+			'town',
+			'postcode',
+			'email',
+			'birth',
+		];
+
+		// Set default access based on UserPrivacy settings
+		foreach ($privacy_controlled_fields as $field) {
+			$hide_field[$field] = !$this->hasAccessToViewUserDetail($field, $user);
+		}
+		
+		if ($currentUser) {
+			$sameEvent = $assumeSameEvent || $this->hasMembershipToEvent($currentUser) && $this->hasMembershipToEvent($user);
+			$hasGlobalUserDetailAccess = $this->hasAccessToDetailedUserInfo($currentUser);
+			$sameUser = $currentUser['User']['id'] === $user['User']['id'];
+			foreach ($user['Crew'] as $crew) {
+				$crew_id = is_array($crew) ? $crew['id'] : $crew;
+				if ($this->hasMembershipToCrew($currentUser, $crew_id)) {
+					$sameCrew = true;
+				}
+			}
+		}
+
+		// Yourself, special access, or same crew + same-crew-sharing
+		if ($sameUser ||
+			$hasGlobalUserDetailAccess ||
+			(
+				$sameCrew &&
+				isset($user['UserPrivacy']) &&
+				$user['UserPrivacy']['allow_crew']
+			)
+		) {
+			$hide_field['phone'] = false;
+			$hide_field['address'] = false;
+			$hide_field['countrycode'] = false;
+			$hide_field['town'] = false;
+			$hide_field['postcode'] = false;
+			$hide_field['email'] = false;
+			$hide_field['birth'] = false;
+		}
+
+		if ($sameEvent) {
+			$hide_field['image'] = false;
+		}
+
+		// Filter regular user properties
+		$user['User'] = array_filter($user['User'], function($key) use ($hide_field) {
+			return isset($hide_field[$key]) ? !$hide_field[$key] : true;
+		}, ARRAY_FILTER_USE_KEY);
+
+		// Filter "special" Userphone property
+		if (isset($hide_field['Userphone']) && $hide_field['Userphone']) {
+			$user['Userphone'] = [];
+		}
+
+		return $user;
+	}
+
 	public function hasMembershipToCrew($user, $crew_id) {
 		foreach ($user['Crew'] as $crew) {
 			if ($crew['id'] == $crew_id) {
