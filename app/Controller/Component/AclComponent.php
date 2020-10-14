@@ -161,6 +161,15 @@ class AclComponent extends Component {
 	}
 
     public function hasAccessToViewUserDetail($type, $target) {
+		$field_privacy_name = [
+			'countrycode' => 'address',
+			'town' => 'address',
+			'postcode' => 'address',
+			'Userphone' => 'phone',
+		];
+
+		$type = isset($field_privacy_name[$type]) ? $field_privacy_name[$type] : $type;
+
         if(!isset($target['UserPrivacy']))
             return true;
         if(isset($target['UserPrivacy'][$type]) && $target['UserPrivacy'][$type])
