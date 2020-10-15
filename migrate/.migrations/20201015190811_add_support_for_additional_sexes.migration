@@ -1,0 +1,16 @@
+#-*- coding:utf-8 -*-
+SQL_UP = u"""
+ALTER TABLE
+	`wb4_users`
+MODIFY COLUMN
+  `sexe` enum('undefined','male','female','other','na')
+DEFAULT 'undefined';
+"""
+
+SQL_DOWN = u"""
+ALTER TABLE
+	`wb4_users`
+MODIFY COLUMN
+  `sexe` enum('undefined','male','female')
+DEFAULT 'undefined';
+"""
