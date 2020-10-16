@@ -19,12 +19,23 @@ $ cd wannabe
 
 ### Configure .env file
 
-Copy example .env file, populate and replace all CakePHP and DB related variables.
+Copy example .env file, populate and replace all CakePHP and DB related
+variables.
 
 ```
 $ cp .env.example .env
 $ vim .env
 ```
+
+If running things manually (and dont really use `.env` file directly) you can
+modify it and use it to populate your local runtime environment instead. As an
+alternative to manually adjust all relevant config files you can;
+
+1. Insert `export` on each line before the env variable. (Ex `export A=B`)
+2. Run `source .env` to populate local env
+
+If not wanting or able to use env variables at all see list of configuration
+options to change in the individual steps below.
 
 ### Setup database
 
@@ -44,15 +55,19 @@ Install python-pip and mysql framework and run the migration
 ```
 $ sudo apt-get install python-dev libmysqlclient-dev python-pip
 $ pip install -r migrate/requirements.txt
+$ vim migrate/simple-db-migrate.conf
+$ vim migrate/migrate.sh
 $ cd migrate && sh migrate.sh && cd ..
 
 # Lastly configure wannabe to connect to that database
 $ cp app/Config/database.sample.php app/Config/database.php
+$ vim app/Config/database.php
 ```
 
-Relevant env variables:
+Relevant env variables (replace with static values if not using env)
 
 - MYSQL_URL
+- MYSQL_MIGRATION_URL (custom DB url for migration code)
 - MYSQL_USER
 - MYSQL_ROOT_PASSWORD
 - MYSQL_PASSWORD
@@ -64,12 +79,11 @@ Add basic wannabe config
 
 ```
 $ cp app/Config/core.example.php app/Config/core.php
-
-# Change the following lines:
-Configure::write('debug', 1);
+$ vim app/Config/core.php
+$ vim app/Config/bootstrap.php
 ```
 
-Relevant env variables:
+Relevant env variables (replace with static values if not using env)
 
 - SESSION_COOKIE_DOMAIN (leave blank if localhost)
 - DEBUG (1 during local development / 0 in production)
