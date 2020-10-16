@@ -47,36 +47,14 @@ The numbers in the migration name is YYYYMMDDHHMMSS of creation, which is used t
 
 Migrations are tagged with unixepoch. When migrate.sh is ran, it runs all migrations > current unixepoch.
 
-This becomes a problem when a developer has been working on a pull request for a while, and then merges the changes into develop. 
+This becomes a problem when a developer has been working on a pull request for a while, and then merges the changes into develop.
 If the migrations, which are usually one of the first things to be made for a new model, are created at a date earlier than the currently highest migration stored in prod, it will not automatically be ran in the routines for prod setting.
 
 A temporary fix for this is to make sure that all migration files are renamed to the current unixepoch after they have been merged to develop, but we should probably investigate ways to automate this process.
 
 To migrate to the latest migration, use migrate.sh with no more options. If you wish to apply more options, the shell script allows for that.
 One common cause to use additional options could be to choose a migration number to migrate to.
+
 ```bash
 $ ./migrate.sh 20130320120000 # This will fetch the migration which matches the timestamp.
-```
-
-## Bug fixing
-General small bug fixes can be done directly on the master branch. 
-(If severe, consider rolling back to an earlier tag)
-
-## Apply changes to production
-On your local machine, merge in master and tag
-
-```bash
-$ git checkout master
-$ git pull origin master
-$ git checkout prod
-$ git merge master
-$ git push origin prod
-$ git tag -a YYYY-MM-DDvXX # Example 2017-10-26v01
-$ git push --tags
-```
-Now log on to wen.gathering.org and go to /srv/vhosts/wannabe.gathering.org/wannabe
-
-```bash
-$ sudo -u wannabe-web git fetch --tags
-$ sudo -u wannabe-web git checkout YYYY-MM-DDvXX
 ```
