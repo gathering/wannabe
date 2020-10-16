@@ -1,7 +1,9 @@
 # Work flow in git, schema migrations and how to apply changes to production
+
 This page explains how your general work flow should be in git and how to apply your changes to production.
 
 ## New feature
+
 Make sure you are on the master branch before branching out.
 
 ```bash
@@ -18,6 +20,7 @@ $ git push origin <BRANCH NAME>
 You can now create a pullrequest from <BRANCH NAME> into master on github.
 
 ## Making schema migrations
+
 Migrations are handled by a python module named `simple-db-migrate`. It also requires the `python-mysqldb` package.
 
 They can be installed with pip and requirements.txt, or with easy_install.
@@ -28,9 +31,10 @@ $ pip install -r requirements.txt
 
 Navigate to wannabe/migrations directory to start using migrations.
 
-You need to change settings to  fit your database setup. You can find this in the file `.simple-db-migrate.conf`.
+You need to change settings to fit your database setup. You can do this by adjusting variables in root `.env` file.
 
 To create a new migration, use the shellscript new-migration.sh and include a description for its name.
+
 ```bash
 $ ./new-migration.sh added_some_model
 ```

@@ -29,20 +29,24 @@ are very varying - I'm sorry, we're working on it!)
 
 ## Docker
 
-Some work has begun on making it possible to develop using docker. It is
-not complete, largely because we're also moving to a newer php version and
-ideally fixing some stupid bugs, possibly moving to at least a more recent
-CakePHP, ideally CakePHP 3.
-
-Several further tweaks are needed, but this is a start.
+While docker is the intended develop and production environment, it is not
+complete (and probably never will be). Largely because we're also moving to a
+newer php version and ideally fixing some stupid bugs, possibly moving to at
+least a more recent CakePHP, ideally CakePHP 3.
 
 ### Initial configuration:
 
+Copy `.env.example` to `.env`
+
 First select between development and production setup by uncommenting the
-corresponding lines in `./env` file. Development is the current default.
+corresponding lines in `.env` file. Development is the current default.
 
 If running in dev mode configuration files should be created automatically from
 example files when starting the container the first time if they are missing.
+
+Most of these config files utilize environment variables from the `.env` file
+for common config options, and can likely often remain unchanged from sample
+files.
 
 See `build/prepate.sh` (used for both prod and dev) and
 `build/development-entrypoint.sh` (used in dev only) for manual setup steps
@@ -171,7 +175,7 @@ folder, including `./migrate` and has required python packages installed. So
 the simplest way to run migrations is from inside the container.
 
 ```
-# While the `app` container us running, do this in another terminal:
+# While the `app` container is running, do this in another terminal:
 $ docker-compose exec app /bin/bash
 $ cd migrate
 $ ./migrate.sh

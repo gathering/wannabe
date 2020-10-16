@@ -1,2 +1,7 @@
 #!/bin/bash
-db-migrate --config=.simple-db-migrate.conf --migration="$1"
+
+set -a
+[ -f ../.env ] && source ../.env
+set +a
+
+db-migrate --migration="$1"

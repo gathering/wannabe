@@ -24,7 +24,19 @@ services:
     networks:
       - wannabe_internal
     environment:
-      - LOG_ENGINE=console
+      - LOG_ENGINE
+      - DEBUG
+      - AUTH_COOKIE_KEY
+      - SECURITY_SALT
+      - SECURITY_CIPHER_SEED
+      - SESSION_COOKIE_DOMAIN
+      - SLACK_TOKEN
+      - MYSQL_URL
+      - MYSQL_MIGRATION_URL
+      - MYSQL_USER
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
 
 volumes:
   app-webroot:

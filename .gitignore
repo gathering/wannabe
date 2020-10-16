@@ -21,9 +21,14 @@ Temporary Items
 composer.phar
 
 ### CakePHP2 ###
+.env
 /app/tmp/*
 /app/Config/core.php
 /app/Config/database.php
+/app/Config/email.php
 ## @todo: Add this back after cleaning up `vendor` folder.
 ## /vendors/*
 /app/Vendor/*
+
+### Migrate ###
+/migrate/wannabe_*

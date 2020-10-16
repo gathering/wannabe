@@ -1,7 +1,11 @@
 #!/bin/bash
 
+set -a
+[ -f ../.env ] && source ../.env
+set +a
+
 if [ $# -ne 0 ]; then
-    db-migrate --config=.simple-db-migrate.conf --create $1
+    db-migrate --create $1
 else
     echo "[Error] SYNTAX: ./new-migration.sh <migration name>"
 fi
