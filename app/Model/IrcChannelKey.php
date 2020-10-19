@@ -24,7 +24,7 @@ class IrcChannelKey extends AppModel {
      *
      * @var array
      */
-    public function beforeValidate() {
+    public function beforeValidate($options = []) {
         $this->validate = array(
             'event_id' => array(
                 'notempty' => array(

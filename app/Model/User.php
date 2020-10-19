@@ -35,7 +35,7 @@ class User extends AppModel {
         )
     );
 
-	public function beforeValidate() {
+	public function beforeValidate($options = []) {
 		$this->validate = array(
 			'username' => array(
 				'username-rule-1' => array(
@@ -86,14 +86,14 @@ class User extends AppModel {
 		);
 	}
 
-	public function beforeFind() {
+	public function beforeFind($query) {
         if(isset(WB::$event->id)) {
             $this->hasAndBelongsToMany['Crew']['conditions'] = ' Crew.event_id='.(int)WB::$event->id;
         }
 		return true;
 	}
 
-	public function afterFind($res) {
+	public function afterFind($res, $primary = false) {
 		$loadExtras = $this->loadExtras;
 		foreach ( $res as & $result ) {
 			// Calculate the age for the user.
@@ -109,9 +109,6 @@ class User extends AppModel {
 			$this->loadExtras = true;
 		}
 		return $res;
-	}
-	public function afterSave() {
-
 	}
 
     public function updateLatestActivity($user_id) {
@@ -326,9 +323,9 @@ class User extends AppModel {
 	public function calculateAge($date) {
 		list($year, $month, $day) = explode('-', $date);
 
-		$year_diff = date('Y') - $year;
-		$month_diff = date('m') - $month;
-		$day_diff = date('d') - $day;
+		$year_diff = intval(date('Y')) - intval($year);
+		$month_diff = intval(date('m')) - intval($month);
+		$day_diff = intval(date('d')) - intval($day);
 
 		if ( $month_diff < 0 || (($month_diff == 0) and ($day_diff < 0)) )
 			$year_diff --;

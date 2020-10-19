@@ -8,7 +8,7 @@ class TermHandlerComponent extends Component {
 
     var $terms = array();
 
-	public function initialize(&$controller) {
+	public function initialize(Controller $controller) {
         if(!isset($controller->Wannabe->user['User']) ||
            !$controller->Wannabe->event->reference ||
            !in_array($controller->Wannabe->user['User']['registered'], ['done', 'edit']) ||
