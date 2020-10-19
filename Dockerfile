@@ -3,7 +3,7 @@ ARG PHP_VERSION
 ### Builder
 FROM composer as Builder
 ARG GIT_BRANCH
-RUN echo "Building app from ${GIT_BRANCH:-prod} branch"
+RUN echo "Building app from ${GIT_BRANCH:-prod} branch, with PHP version ${PHP_VERSION:-5}"
 
 RUN apk add git
 RUN git clone --single-branch --branch ${GIT_BRANCH:-prod} https://github.com/gathering/wannabe.git ./
@@ -18,12 +18,9 @@ RUN chmod +x build/prepare.sh && build/prepare.sh
 
 ### Production
 FROM php:${PHP_VERSION:-5}-fpm-alpine as production
-RUN apk add --no-cache libpng libpng-dev libjpeg-turbo-dev libmcrypt-dev gettext gettext-dev
-RUN docker-php-ext-configure gd \
-    --with-gd \
-    --with-jpeg-dir \
-    --with-png-dir
-RUN docker-php-ext-install pdo pdo_mysql gd exif mcrypt gettext
+RUN apk add --no-cache libpng libpng-dev libjpeg-turbo-dev gettext gettext-dev php-pear
+RUN docker-php-ext-configure gd --with-jpeg
+RUN docker-php-ext-install pdo pdo_mysql gd exif gettext
 COPY --from=builder /app/app /var/www/html/wannabe/app
 COPY --from=builder /app/lib /var/www/html/wannabe/lib
 COPY --from=builder /app/index.php /var/www/html/wannabe/index.php
@@ -43,10 +40,7 @@ RUN apt-get update && apt-get install -y \
 	libpng-dev \
 	libjpeg-dev \
 	unzip
-RUN docker-php-ext-configure gd \
-    --with-gd \
-    --with-jpeg-dir \
-    --with-png-dir
+RUN docker-php-ext-configure gd --with-jpeg
 RUN docker-php-ext-install pdo pdo_mysql gd exif
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY --from=builder /app /var/www/html/wannabe

@@ -19,6 +19,7 @@ services:
       target: production
       args:
         - GIT_BRANCH=master
+        - PHP_VERSION=7
     volumes:
       - app-webroot:/var/www/html/wannabe/app/webroot
     networks:
