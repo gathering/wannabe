@@ -4,20 +4,43 @@ This page explains how to set up Wannabe on you personal or local server for dev
 Currently only tested on in production on php5, but should work fairly well with php7.
 
 ### Install required packages
+
 ```
 $ sudo apt-get install apache2 php5 mysql-server git gettext php5-mysql php5-mcrypt php5-gd
 $ sudo a2enmod rewrite
 ```
 
 ### Clone git repo into your home folder
+
 ```
 $ cd /var/www/html && git clone git@github.com:gathering/wannabe.git
 $ cd wannabe
 ```
 
+### Configure .env file
+
+Copy example .env file, populate and replace all CakePHP and DB related
+variables.
+
+```
+$ cp .env.example .env
+$ vim .env
+```
+
+If running things manually (and dont really use `.env` file directly) you can
+modify it and use it to populate your local runtime environment instead. As an
+alternative to manually adjust all relevant config files you can;
+
+1. Insert `export` on each line before the env variable. (Ex `export A=B`)
+2. Run `source .env` to populate local env
+
+If not wanting or able to use env variables at all see list of configuration
+options to change in the individual steps below.
+
 ### Setup database
 
 First create the database and a user
+
 ```
 $ mysql -u root -p
 mysql> CREATE DATABASE wannabe;
@@ -32,35 +55,38 @@ Install python-pip and mysql framework and run the migration
 ```
 $ sudo apt-get install python-dev libmysqlclient-dev python-pip
 $ pip install -r migrate/requirements.txt
-$ cp migrate/db-config.examples.sh migrate/db-config.sh
-$ vim migrate/db-config.sh
-$ cp migrate/.simple-db-migrate.example.conf migrate/.simple-db-migrate.conf
-$ vim migrate/.simple-db-migrate.conf
+$ vim migrate/simple-db-migrate.conf
+$ vim migrate/migrate.sh
 $ cd migrate && sh migrate.sh && cd ..
- 
-# Lastly configure wannabe to connect to that database
 
+# Lastly configure wannabe to connect to that database
 $ cp app/Config/database.sample.php app/Config/database.php
 $ vim app/Config/database.php
-
-# Edit the following lines:
-'login' => 'wannabe',
-'password' => 'wannabe',
-'database' => 'wannabe',
 ```
+
+Relevant env variables (replace with static values if not using env)
+
+- MYSQL_URL
+- MYSQL_MIGRATION_URL (custom DB url for migration code)
+- MYSQL_USER
+- MYSQL_ROOT_PASSWORD
+- MYSQL_PASSWORD
+- MYSQL_DATABASE
 
 ### Development configuration
 
-Edit the configuration file
+Add basic wannabe config
 
 ```
 $ cp app/Config/core.example.php app/Config/core.php
 $ vim app/Config/core.php
-  
-# Change the following lines:
-Configure::write('debug', 1);
-session.cookie_domain' => '.domain.com' // Leave blank if localhost
+$ vim app/Config/bootstrap.php
 ```
+
+Relevant env variables (replace with static values if not using env)
+
+- SESSION_COOKIE_DOMAIN (leave blank if localhost)
+- DEBUG (1 during local development / 0 in production)
 
 ### Custom configuration options
 
@@ -73,8 +99,20 @@ containing users credentials, so be sure it's long and random.
 Sessions will still be held for about 1 week according to CakePHP session/cookie
 config, but will not automatically re-login user when it expires.
 
+#### SLACK_TOKEN
+
+Populate this with a slack token to automatically send slack invite to user
+upon enrollment.
+
+#### LOG_ENGINE
+
+Set to "console" when running in a container environment to log to stdout and
+stderr. If not set it defaults to regular file logging.
+
 ### Create cache and files upload folders
+
 These folder are required for caching and image uploads (even if cache it not in use)
+
 ```
 $ mkdir app/tmp
 $ mkdir app/tmp/sessions
@@ -87,10 +125,11 @@ $ chmod 777 app/webroot/files
 ```
 
 ### Edit apache configuration for the development site
+
 Start with editing the apache default configuration file
 
-
 **/etc/apache2/sites-enabled/000-default.conf**
+
 ```
 <VirtualHost *:80>
 ServerAdmin email@domain.org
@@ -118,8 +157,8 @@ Finally restart apache2
 
 `$ sudo service apache2 restart`
 
-
 ### Create a new event
+
 1. Make sure you have cake in path
 
 `echo 'export PATH="/var/www/html/wannabe/lib/Cake/Console:$PATH"' >> ~/.bashrc && source ~/.bashrc`
@@ -130,6 +169,7 @@ Finally restart apache2
 If `cake event` returns ": No such file or directory" try "dos2unix /var/www/html/wannabe/lib/Cake/Console/cake"
 
 #### Default login:
+
 ```
 User: dev
 Pass: gramofon

@@ -4,3 +4,4 @@
 sql/
 Dockerfile*
 app/tmp/
+.env

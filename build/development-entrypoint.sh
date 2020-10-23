@@ -7,8 +7,6 @@ chmod a+x build/prepare.sh
 build/prepare.sh
 
 echo "Creating any missing config files from example files"
-cp -n migrate/db-config.examples.sh migrate/db-config.sh
-cp -n migrate/.simple-db-migrate.example.conf migrate/.simple-db-migrate.conf
 cp -n app/Config/database.sample.php app/Config/database.php
 cp -n app/Config/core.example.php app/Config/core.php
 cp -n app/Config/email.example.php app/Config/email.php

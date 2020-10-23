@@ -32,7 +32,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 1);
+	Configure::write('debug', env('DEBUG'));
 /**
  * Configure the Error handler used to handle errors for your application.  By default
  * ErrorHandler::handleError() is used.  It will display errors using Debugger, when debug > 0
@@ -176,7 +176,7 @@
 		'name' => 'Wannabe',
         'timeout' => '6048',
         'ini' => array(
-            'session.cookie_domain' => ''
+            'session.cookie_domain' => env('SESSION_COOKIE_DOMAIN'),
         )
 	));
 
@@ -188,12 +188,12 @@
 /**
  * A random string used in security hashing methods.
  */
-	Configure::write('Security.salt', 'DYhG93b0qyJfIxfs2guøæåubWwvniR2G0FgaC9mi');
+	Configure::write('Security.salt', env('SECURITY_CIPHER_SEED'));
 
 /**
  * A random numeric string (digits only) used to encrypt/decrypt strings.
  */
-	Configure::write('Security.cipherSeed', '76859309657453549899991337137');
+	Configure::write('Security.cipherSeed', env('SECURITY_SALT'));
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).
@@ -349,4 +349,4 @@ Cache::config('_cake_model_', array(
  * LEGACY TOKEN
  */
 
-Configure::write('Slack.token', '');
+Configure::write('Slack.token', env('SLACK_TOKEN'));

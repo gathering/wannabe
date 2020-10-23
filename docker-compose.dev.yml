@@ -4,10 +4,7 @@ services:
     volumes:
       - ./:/var/www/html/wannabe
     environment:
-      - MYSQL_URL=mysql
-      - MYSQL_USERNAME=wannabe
-      - MYSQL_PASSWORD=wannabe
-      - AUTH_COOKIE_KEY=if-you-see-me-in-prod-run-away
+      - AUTH_COOKIE_KEY
 
   app:
     build:
@@ -20,7 +17,6 @@ services:
       - wannabe_internal
     environment:
       - APP_ENV=development
-      - LOG_ENGINE=console
 
   mysql:
     image: mysql:5.7
@@ -29,10 +25,10 @@ services:
        - mysql_data:/var/lib/mysql
        - ./sql/:/docker-entrypoint-initdb.d
     environment:
-      - MYSQL_USER=wannabe
-      - MYSQL_PASSWORD=wannabe
-      - MYSQL_ROOT_PASSWORD=wannabe
-      - MYSQL_DATABASE=wannabe
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
     networks:
       - wannabe_internal
 
