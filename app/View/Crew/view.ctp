@@ -18,7 +18,7 @@ if($subpageset == True) {
 				}
 		?>
 				<div class="row">
-					<div class="col-xs-2"><? if ( $member['User']['image'] ) { ?><img src="/<?=$member['User']['image']?>_50.png" alt="" border="0" /><? } ?></div>
+                    <div class="col-xs-2"><? if ( $member['User']['image'] ) { ?><img src="<?=$this->Wb->profilePictureUrl($member, 50)?>" alt="" border="0" /><? } ?></div>
 					<div class="col-xs-10">
 					<address><?=$this->Wb->userLink($member)?>, <?=$this->Wb->getUsertitleForCrew($member, $crew['Crew']['id'])?><br />
 					<strong><?=__("Age")?>:</strong>

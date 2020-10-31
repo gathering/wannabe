@@ -168,7 +168,7 @@ if ($isMyProfile || $canViewDetailedInfo || $canViewAddress) $qrdata['address'] 
 					<ul class="media-grid">
 					<?php if ( $user['User']['image'] != '' ) { ?>
 						<li class="unstyled">
-						<?php if($isMyProfile) { ?><div><a href="<?=$this->Wb->eventUrl("/Profile/Picture")?>"><?php } else { ?><div><?php } ?><img src="/<?="{$user['User']['image']}_320.png?".time();?>" alt="" border="0" /><?php if($isMyProfile) { ?></a></div><?php } else { ?></div><?php } ?>
+						<?php if($isMyProfile) { ?><div><a href="<?=$this->Wb->eventUrl("/Profile/Picture")?>"><?php } else { ?><div><?php } ?><img src="<?=$this->Wb->profilePictureUrl($user, 320)?>" alt="" border="0" /><?php if($isMyProfile) { ?></a></div><?php } else { ?></div><?php } ?>
 						</li>
 					<?php } ?>
 						<li class="unstyled"><div><?=$this->Wb->makeQrContact($qrdata)?></div></li>

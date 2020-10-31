@@ -111,3 +111,5 @@ App::import('Vendor', ['file' => 'autoload']);
 
 // Auth cookie key (change to invalidate all existing re-login/remember cookies), unset to disable functionality
 Configure::write('AuthCookieKey', env('AUTH_COOKIE_KEY'));
+
+Configure::write('UrlSignSecret', env('URL_SIGN_SECRET'));

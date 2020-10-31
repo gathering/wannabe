@@ -35,6 +35,27 @@ class WbHelper extends HtmlHelper
 		return $output ? $output : $displayname;
 	}
 
+	public function profilePictureUrl($user, $width) {
+		$path = '/'.$user['User']['image'].'_'.$width.'.png';
+		return $this->signFilePath($path);
+	}
+
+	public function signFilePath($path) {
+		$path = str_replace('//', '/', '/'.$path);
+		$secret = Configure::read('UrlSignSecret');
+		if (empty($secret)) {
+			CakeLog::debug("Skipping file path signature generation, since no UrlSignSecret is set.");
+			return $path;
+		}
+		// Each link lasts for 1 days
+		$expires = time() + (1 * 24 * 60 * 60);
+		// This is the pattern that has to match between nginx and wannabe
+		$plaintext = $expires.$path.' '.$secret;
+		// This is encoding details to get it to url in a state nginx expects
+		$md5 = rtrim(strtr(base64_encode(md5($plaintext, true)), '+/', '-_'), '=');
+		return $path."?md5=$md5&expires=$expires";
+	}
+
 	public function crewLink($crew)
 	{
 		return $this->eventLink($this->crewDisplayName($crew), '/Crew/View/'.$crew['Crew']['name']);

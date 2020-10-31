@@ -4,19 +4,19 @@
         <ul class="media-grid">
             <li>
                 <div>
-                    <img class="thumbnail" src="/<?=$wannabe->user['User']['image']?>_320.png" alt="">
+                    <img class="thumbnail" src="<?=$this->Wb->profilePictureUrl($wannabe->user, 320)?>" alt="">
                     <div class="media-comment"><?=__("%s px", "320")?></div>
                 </div>
             </li>
             <li>
                 <div>
-                    <img class="thumbnail" src="/<?=$wannabe->user['User']['image']?>_100.png" alt="">
+                    <img class="thumbnail" src="<?=$this->Wb->profilePictureUrl($wannabe->user, 100)?>" alt="">
                     <div class="media-comment"><?=__("%s px", "100")?></div>
                 </div>
             </li>
             <li>
                 <div>
-                    <img class="thumbnail" src="/<?=$wannabe->user['User']['image']?>_50.png" alt="">
+                    <img class="thumbnail" src="<?=$this->Wb->profilePictureUrl($wannabe->user, 50)?>" alt="">
                     <div class="media-comment"><?=__("%s px", "50")?></div>
                 </div>
             </li>
