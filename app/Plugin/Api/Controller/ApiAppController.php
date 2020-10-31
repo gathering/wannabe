@@ -55,6 +55,8 @@ class ApiAppController extends AppController {
         }
     }
     protected function processUserResponse($user, $crewnames, $teamnames, $userroles, $phonetypes, $improtocols) {
+        $user = $this->Acl->filterPrivateUserDetailsByUser($this->apiUser, $user);
+
         $response = array(
             'id' => $user['User']['id'],
             'username' => $user['User']['username'],
@@ -62,47 +64,30 @@ class ApiAppController extends AppController {
             'nickname' => $user['User']['nickname'],
             'age' => $user['User']['age']
         );
-        $canViewDetailedInfo = false;
-        if(isset($user['Crew'][0])) {
-            $accessToCrew = false;
-            foreach($user['Crew'] as $crew) {
-                if($this->Acl->hasMembershipToCrew($this->apiUser, $crew['id'])) {
-                    $accessToCrew = true;
-                }
-            }
-            if($accessToCrew || $this->Acl->hasAccessToDetailedUserInfo($this->apiUser)) {
-                $canViewDetailedInfo = true;
-            }
-        } else {
-            if($this->Acl->hasMembershipToCrew($this->apiUser, $user['Crew']['id']) || $this->Acl->hasAccessToDetailedUserInfo($this->apiUser)) {
-                $canViewDetailedInfo = true;
-            }
-        }
-        if((isset($user['UserPrivacy']['address']) && (!$user['UserPrivacy']['address'] || $canViewDetailedInfo)) || $user['User']['id'] == $this->ApiUser['User']['id']) {
+
+        if (!empty($user['address'])) {
             $response['address'] = $user['User']['address'];
             $response['postcode'] = h($user['User']['postcode']);
             $response['town'] = $user['User']['town'];
             $response['countrycode'] = h($user['User']['countrycode']);
         }
-        if((isset($user['UserPrivacy']['email']) && (!$user['UserPrivacy']['email'] || $canViewDetailedInfo)) || $user['User']['id'] == $this->ApiUser['User']['id']) {
+        if(!empty($user['User']['email'])) {
             $response['email'] = h($user['User']['email']);
         }
-        if((isset($user['UserPrivacy']['phone']) && (!$user['UserPrivacy']['phone'] || $canViewDetailedInfo)) || $user['User']['id'] == $this->ApiUser['User']['id']) {
-            if (count($user['Userphone'])) {
-                $response['phonenumbers'] = array();
-                $response['phonenumbers']['phonenumber'] = array();
-                foreach( $user['Userphone'] as $phone ) {
-                    $response['phonenumbers']['phonenumber'][] = array(
-                        'type' => array(
-                            'id' => $phone['phonetype_id'],
-                            'name' => $phonetypes[$phone['phonetype_id']]
-                        ),
-                        'number' => $phone['number']
-                    );
-                }
+        if(!empty($user['Userphone']) && count($user['Userphone'])) {
+            $response['phonenumbers'] = array();
+            $response['phonenumbers']['phonenumber'] = array();
+            foreach( $user['Userphone'] as $phone ) {
+                $response['phonenumbers']['phonenumber'][] = array(
+                    'type' => array(
+                        'id' => $phone['phonetype_id'],
+                        'name' => $phonetypes[$phone['phonetype_id']]
+                    ),
+                    'number' => $phone['number']
+                );
             }
         }
-        if((isset($user['UserPrivacy']['birth']) && (!$user['UserPrivacy']['birth'] || $canViewDetailedInfo)) || $user['User']['id'] == $this->ApiUser['User']['id']) {
+        if(!empty($user['User']['birth'])) {
             $response['birth'] = $user['User']['birth'];
         }
         if (count($user['Userim'])) {

@@ -286,20 +286,11 @@ class ProfileController extends AppController {
                 $this->set('box_into_header', $box_into_header);
             }
 
-            $sharesCrewAndAllowsCrew = false;
-            // If you are viewing someone elses profile and they have enabled sharing of information with their crew
-            if(!$myProfile && isset($user['UserPrivacy']) && $user['UserPrivacy']['allow_crew']) {
-                foreach ($user['Crew'] as $crew) {
-                    if ($this->Acl->hasMembershipToCrew($this->Wannabe->user, $crew['crew_id']))
-                        $sharesCrewAndAllowsCrew = true;
-                }
-            }
-
             $isDisabled = $this->User->isDisabled($user);
             $this->set('isMyProfile', $myProfile);
             $this->set('application', $this->ApplicationDocument->findDocumentNotDraft($id));
             $this->set('canAccessEnroll', $this->Acl->hasAccess('read', $this->Wannabe->user, '/'.WB::$event->reference.'/Enroll'));
-            $this->set('user', $user);
+            $this->set('user', $this->Acl->filterPrivateUserDetails($user));
             $this->set('improtocols', $this->Improtocol->find('list'));
             $this->set('phonetypes', $this->Phonetype->find('list'));
             $this->set('title_for_layout', $isDisabled ? "ID #".$user['User']['id'] : WbSanitize::clean($user['User']['realname']));
@@ -308,11 +299,6 @@ class ProfileController extends AppController {
             }
             $this->set('userAge', $this->calculateAge($user['User']['birth']));
             $this->set('isDisabled', $this->User->isDisabled($user));
-            $this->set('canViewDetailedInfo', $this->Acl->hasAccessToDetailedUserInfo($this->Wannabe->user));
-            $this->set('canViewPhone',   $sharesCrewAndAllowsCrew || $this->Acl->hasAccessToViewUserDetail('phone', $user));
-            $this->set('canViewAddress', $sharesCrewAndAllowsCrew || $this->Acl->hasAccessToViewUserDetail('address', $user));
-            $this->set('canViewEmail',   $sharesCrewAndAllowsCrew || $this->Acl->hasAccessToViewUserDetail('email',$user));
-            $this->set('canViewBirth',   $sharesCrewAndAllowsCrew || $this->Acl->hasAccessToViewUserDetail('birth',$user));
             $this->set('canSudo', $this->Acl->hasAccess('superuser', null, '/'.WB::$event->reference.'/admin/sudo'));
             $this->set('canResetPicture', $this->Acl->hasAccess('manage', null, '/'.WB::$event->reference.'/PictureApproval/resetPicture'));
         }
