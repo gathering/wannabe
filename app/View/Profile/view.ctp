@@ -4,9 +4,9 @@ $qrdata = array();
 $qrdata['id'] = $user['User']['id'];
 $qrdata['name'] = $user['User']['realname'];
 $qrdata['url'] = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-if (!empty($user['User']['email'])) $qrdata['mail'] = $user['User']['email'];
-if (!empty($user['Userphone'])) $qrdata['phone'] = $user['Userphone'][0]['number'];
-if (!empty($user['User']['address'])) $qrdata['address'] = $user['User']['address'].', '.$user['User']['postcode'].' '.$user['User']['town'];
+if ($isMyProfile || $canViewDetailedInfo || $canViewEmail) $qrdata['mail'] = $user['User']['email'];
+if (($isMyProfile || $canViewDetailedInfo || $canViewPhone) && !empty($user['Userphone'])) $qrdata['phone'] = $user['Userphone'][0]['number'];
+if ($isMyProfile || $canViewDetailedInfo || $canViewAddress) $qrdata['address'] = $user['User']['address'].', '.$user['User']['postcode'].' '.$user['User']['town'];
 ?>
 <div class="row">
 
@@ -35,7 +35,7 @@ if (!empty($user['User']['address'])) $qrdata['address'] = $user['User']['addres
 						</ul>
 					</div>
 					<div class="col-md-4">
-						<?php if(!empty($user['User']['birth'])) { ?>
+						<?php if($isMyProfile || $canViewDetailedInfo || $canViewBirth) { ?>
 							<strong><?=__("Date of birth")?></strong>
 							<ul class="unstyled profile">
 								<li><?=date(__("m-d-Y"), strtotime($user['User']['birth']))?> (<?=__("%s years",$userAge)?>)</li>
@@ -51,7 +51,7 @@ if (!empty($user['User']['address'])) $qrdata['address'] = $user['User']['addres
 				<hr />
 
 				<div class="row">
-					<?php if(!empty($user['User']['email'])) { ?>
+					<?php if($isMyProfile || $canViewDetailedInfo || $canViewEmail) { ?>
 						<div class="col-md-4">
 							<strong><?=__("Email")?></strong>
 							<ul class="unstyled profile">
@@ -59,7 +59,7 @@ if (!empty($user['User']['address'])) $qrdata['address'] = $user['User']['addres
 							</ul>
 						</div>
 					<? } ?>
-					<?php if(!empty($user['Userphone'])) { ?>
+					<?php if($isMyProfile || $canViewDetailedInfo || $canViewPhone) { ?>
 						<div class="col-md-4">
 							<strong><?=__("Phone numbers")?></strong>
 							<ul class="unstyled profile">
@@ -92,7 +92,7 @@ if (!empty($user['User']['address'])) $qrdata['address'] = $user['User']['addres
 				</div>
 				<hr />
 				<div class="row">
-					<?php if(!empty($user['User']['address'])) { ?>
+					<?php if($isMyProfile || $canViewDetailedInfo || $canViewAddress) { ?>
 						<div class="col-md-4">
 							<strong><?=__("Address")?></strong>
 							<ul class="unstyled profile">
@@ -156,7 +156,7 @@ if (!empty($user['User']['address'])) $qrdata['address'] = $user['User']['addres
 								<?php if($isMyProfile && !empty($application)) { ?>
 										<a href="<?=$this->Wb->eventUrl('/Application')?>" class="btn btn-default"><?=__("View your application")?></a>
 								<?php } ?>
-								<?php if($canResetPicture && !empty($user['User']['image']) && $user['PictureApproval']['approved']) { ?>
+								<?php if($canResetPicture && $user['User']['image'] != '' && $user['PictureApproval']['approved']) { ?>
 										<a href="<?=$this->Wb->eventUrl('/PictureApprove/resetPicture/'.$user['User']['id'])?>" class="btn btn-default"><?=__("Reset approved picture")?></a>
 								<?php } ?>
 								<?php /* <a href="<?=$this->Wb->eventUrl('/Kin/View/'.$user['User']['id'])?>" class="btn"><?=__("View next of kin")?></a> */ ?>
@@ -166,7 +166,7 @@ if (!empty($user['User']['address'])) $qrdata['address'] = $user['User']['addres
 			<div class="col-md-4">
 				<div class="col-md-12">
 					<ul class="media-grid">
-					<?php if (!empty($user['User']['image'])) { ?>
+					<?php if ( $user['User']['image'] != '' ) { ?>
 						<li class="unstyled">
 						<?php if($isMyProfile) { ?><div><a href="<?=$this->Wb->eventUrl("/Profile/Picture")?>"><?php } else { ?><div><?php } ?><img src="<?=$this->Wb->profilePictureUrl($user, 320)?>" alt="" border="0" /><?php if($isMyProfile) { ?></a></div><?php } else { ?></div><?php } ?>
 						</li>

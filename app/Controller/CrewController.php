@@ -25,10 +25,7 @@ class CrewController extends AppController {
 		$crews = $this->Crew->getCrewHierarchy(false);
 		$members = array();
 		foreach($crews as $crew) {
-			$members[$crew['Crew']['id']] = array_map(
-				function($member) { return $this->Acl->filterPrivateUserDetails($member, true); },
-				$this->User->getMembers($crew['Crew']['id'])
-			);
+			$members[$crew['Crew']['id']] = $this->User->getMembers($crew['Crew']['id']);
 		}
 
 		$template = 'default';
@@ -66,6 +63,7 @@ class CrewController extends AppController {
 		$this->set('crews', $crews);
 		$this->set('members', $members);
 		$this->set('phonetypes', $this->Phonetype->find('list'));
+		$this->set('canViewDetailedInfo', $this->Acl->hasAccessToDetailedUserInfo($this->Wannabe->user));
 		$this->render("list-{$template}");
 	}
 	/**
@@ -102,16 +100,28 @@ class CrewController extends AppController {
 		}
 
 		$this->set('title_for_layout', $crew['Crew']['name']);
-		$this->set('name', $name );
+		$this->set( 'name', $name );
 		$format = array('Wikipage' => array('content' => $crew['Crew']['content']));
 		$format = $this->Wikipage->format($format, $this);
-		$crew['Crew']['content'] = $format['Wikipage']['content'];
-		$this->set('crew', $crew );
-		$this->set('canManage', $this->Acl->hasAccessToCrew($this->Wannabe->user, $crew) );
-		$members = array_map(
-			function($member) { return $this->Acl->filterPrivateUserDetails($member, true); },
-			$this->User->getMembers($crew['Crew']['id'])
-		);
+		   	$crew['Crew']['content'] = $format['Wikipage']['content'];
+		$this->set( 'crew', $crew );
+		$this->set( 'canManage', $this->Acl->hasAccessToCrew($this->Wannabe->user, $crew) );
+		$this->set( 'canViewDetailedInfo', $this->Acl->hasMembershipToCrew($this->Wannabe->user, $crew['Crew']['id']) || $this->Acl->hasAccessToDetailedUserInfo($this->Wannabe->user));
+		$canViewAddress = array();
+		$canViewEmail = array();
+		$canViewPhone = array();
+    $canViewBirth = array();
+		$members = $this->User->getMembers($crew['Crew']['id']);
+		foreach($members as $user) {
+			$canViewAddress[$user['User']['id']] = 	(isset($user['UserPrivacy']['address']) && !$user['UserPrivacy']['address']);
+			$canViewEmail[$user['User']['id']] = 	(isset($user['UserPrivacy']['email']) && !$user['UserPrivacy']['email']);
+			$canViewPhone[$user['User']['id']] = 	(isset($user['UserPrivacy']['phone']) && !$user['UserPrivacy']['phone']);
+			$canViewBirth[$user['User']['id']] = 	(isset($user['UserPrivacy']['birth']) && !$user['UserPrivacy']['birth']);
+		}
+		$this->set('canViewAddress', $canViewAddress);
+		$this->set('canViewEmail', $canViewEmail);
+		$this->set('canViewPhone', $canViewPhone);
+		$this->set('canViewBirth', $canViewBirth);
 		$this->set('members', $members);
 		$this->set('phonetypes', $this->Phonetype->find('list'));
 		$this->set('subpageset',$subpageset);

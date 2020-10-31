@@ -23,12 +23,10 @@ if($subpageset == True) {
 					<address><?=$this->Wb->userLink($member)?>, <?=$this->Wb->getUsertitleForCrew($member, $crew['Crew']['id'])?><br />
 					<strong><?=__("Age")?>:</strong>
 					<?php if($wannabe->lang == 'eng') { echo  "&#9;"; } ?>&#9;<?=$member['User']['age']?><br />
-					<? if(!empty($member['User']['email'])) {
-						?><strong><?=__("Email")?>:</strong>&#9;<a href="mailto:<?=$member['User']['email']?>"><?=$member['User']['email']?></a>
-					<? } ?><br />
-					<? if(!empty($member['Userphone'] && count($member['Userphone']))) { ?>
-						<? foreach( $member['Userphone'] as $phone ) { ?><strong><?=$phonetypes[$phone['phonetype_id']]?></strong>:&#9;<?=$phone['number']?><br /><? } ?>
-					<? } ?>
+					<? if($member['UserPrivacy']['allow_crew'] || $canViewEmail[$member['User']['id']] || $canViewDetailedInfo) { ?><strong><?=__("Email")?>:</strong>&#9;<a href="mailto:<?=$member['User']['email']?>"><?=$member['User']['email']?></a><? } ?><br />
+
+					<? if($member['UserPrivacy']['allow_crew'] || $canViewPhone[$member['User']['id']] || $canViewDetailedInfo) { ?><? if (count($member['Userphone'])) { ?><? foreach( $member['Userphone'] as $phone ) { ?><strong><?=$phonetypes[$phone['phonetype_id']]?></strong>:&#9;<?=$phone['number']?><br /><? } } ?><? } ?>
+
 					</address>
 					</div>
 				</div>
