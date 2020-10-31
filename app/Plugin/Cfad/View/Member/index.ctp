@@ -27,7 +27,7 @@ foreach ( $members as $index => $crewdates )
                             <div class="row">
                                 <div class="span1">
                                     <?php if($member['User']['image']): ?>
-                                        <img src="/<?=$member['User']['image']?>_50.png" alt="" border="0" />
+                                        <img src="<?=$this->Wb->profilePictureUrl($member, 50)?>" alt="" border="0" />
                                     <?php endif; ?>
                                 </div>
                                 <div class="span13">

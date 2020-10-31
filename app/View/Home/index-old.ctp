@@ -22,7 +22,7 @@ $(document).keydown(function(e) {
 					<div class="span2">
 						<ul class="media-grid">
 							<li>
-								<a href="<?=$this->Wb->eventUrl('/Profile/Picture')?>"><img class="thumbnail" src="/<?="{$wannabe->user['User']['image']}_100.png?".time();?>" alt="" /></a>
+								<a href="<?=$this->Wb->eventUrl('/Profile/Picture')?>"><img class="thumbnail" src="<?=$this->Wb->profilePictureUrl($wannabe->user, 100)?>" alt="" /></a>
 							</li>
 						</ul>
 					</div>

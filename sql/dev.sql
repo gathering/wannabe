@@ -3052,7 +3052,7 @@ CREATE TABLE `wb4_users` (
   `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `deleted` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `sexe` enum('undefined','male','female') DEFAULT 'undefined',
+  `sexe` enum('undefined','male','female','other','na') DEFAULT 'undefined',
   `verified` datetime NOT NULL,
   `verificationcode` varchar(128) DEFAULT NULL,
   `nickname` varchar(128) NOT NULL,

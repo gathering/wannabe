@@ -2141,6 +2141,14 @@ msgstr "mann"
 msgid "female"
 msgstr "kvinne"
 
+#: Controller/ProfileController.php:410
+msgid "other"
+msgstr "annet"
+
+#: Controller/ProfileController.php:410
+msgid "prefer not to say"
+msgstr "foretrekker å ikke svare"
+
 #: Controller/ProfileController.php:415 View/Layouts/default.ctp:88
 #: View/Layouts/fullscreen.ctp:71 View/Profile/register.ctp:3
 msgid "Complete registration"

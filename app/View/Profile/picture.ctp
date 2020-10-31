@@ -22,19 +22,19 @@
 						<ul class="media-grid">
 							<li>
 								<div>
-									<img class="thumbnail" src="/<?=$image?>_320.png" alt="">
+									<img class="thumbnail" src="<?=$this->Wb->signFilePath($image.'_320.png')?>" alt="">
 									<div class="media-comment"><?=__("%s px", "320")?></div>
 								</div>
 							</li>
 							<li>
 								<div>
-									<img class="thumbnail" src="/<?=$image?>_100.png" alt="">
+									<img class="thumbnail" src="<?=$this->Wb->signFilePath($image.'_100.png')?>" alt="">
 									<div class="media-comment"><?=__("%s px", "100")?></div>
 								</div>
 							</li>
 							<li>
 								<div>
-									<img class="thumbnail" src="/<?=$image?>_50.png" alt="">
+									<img class="thumbnail" src="<?=$this->Wb->signFilePath($image.'_50.png')?>" alt="">
 									<div class="media-comment"><?=__("%s px", "50")?></div>
 								</div>
 							</li>
@@ -52,7 +52,7 @@
 							<li id="picture">
 								<div>
 									<div id="profile-crop-container">
-										<img id="profile-crop-image" src="/<?=$image?>_original.png" id="photo" />
+									<img id="profile-crop-image" src="<?=$this->Wb->signFilePath($image.'_original.png')?>" id="photo" />
 									</div>
 									<div class="media-comment"><?=__("Original image")?></div>
 								</div>
