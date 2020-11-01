@@ -3,7 +3,8 @@ name: Docker
 on:
   push:
     branches:
-      - php-7-upgrade
+      - master
+  pull_request:
 
 env:
   IMAGE_NAME: wannabe-app
