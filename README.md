@@ -111,14 +111,18 @@ COMPOSE_FILE=docker-compose.yml:docker-compose.prod.yml
 ```
 
 When in development mode `app` container is using a minimal `php-fpm` docker
-image which only contains a few source code and lib folders. This is built by
-cloning the `prod` branch from git, installing composer dependencies and doing
-some basic preparation steps in `build/prepare.sh`.
+image which only contains a few source code and lib folders. This is built from
+you local context, so make sure you working directory is clean, or modified as
+expected in the final image. Some basic preparation steps are run via
+`build/prepare.sh`.
 
-To build production image from another branch:
+To semi-cleanly build production image locally from another branch:
 
 ```
-docker-compose build --build-arg GIT_BRANCH=branch-name app
+git stash
+git checkout brand-name
+docker-compose build app
+git stash pop
 ```
 
 When using in a custom production environment we recommend that you use a

@@ -2,7 +2,6 @@ ARG PHP_VERSION
 
 ### Builder
 FROM composer as Builder
-ARG GIT_BRANCH
 RUN echo "Building app from local folder, with PHP version ${PHP_VERSION:-7}"
 
 COPY . .
