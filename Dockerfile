@@ -3,10 +3,9 @@ ARG PHP_VERSION
 ### Builder
 FROM composer as Builder
 ARG GIT_BRANCH
-RUN echo "Building app from ${GIT_BRANCH:-prod} branch, with PHP version ${PHP_VERSION:-7}"
+RUN echo "Building app from local folder, with PHP version ${PHP_VERSION:-7}"
 
-RUN apk add git
-RUN git clone --single-branch --branch ${GIT_BRANCH:-prod} https://github.com/gathering/wannabe.git ./
+COPY . .
 
 # Remove lock file since it's currently configured only for PHP 5
 RUN rm -f ./composer.lock
