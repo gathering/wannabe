@@ -53,7 +53,7 @@ foreach($documents as $document) {
                     </div>
                 </div>
 			</fieldset>
-			<input type="submit" value="<?=_("Update")?>" class="btn primary" />
+			<input type="submit" value="<?=__("Update")?>" class="btn primary" />
 		</form>
 	</div>
 </div>
