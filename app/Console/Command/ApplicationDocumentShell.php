@@ -28,37 +28,46 @@ class ApplicationDocumentShell extends AppShell {
 	}
 
 	public function statistics() {
-        $documents = $this->ApplicationDocument->query("SELECT COUNT(*) as count, event_id, name FROM wb4_application_documents JOIN wb4_events ON wb4_application_documents.event_id = wb4_events.id GROUP BY event_id");
+        $documents = $this->ApplicationDocument->query("
+            SELECT COUNT(*) as count, event_id, name
+            FROM wb4_application_documents
+            JOIN wb4_events ON wb4_application_documents.event_id = wb4_events.id
+            GROUP BY event_id
+        ");
 
-        $statistics = [
-            ['Event name', 'Event id', 'Applications'],
-            ...array_map(function($event_stats) {
-                return [
-                    $event_stats['wb4_events']['name'],
-                    $event_stats['wb4_application_documents']['event_id'],
-                    $event_stats[0]['count'],
-                ];
-            }, $documents),
-        ];
+        $statistics = array_map(function($event_stats) {
+            return [
+                $event_stats['wb4_events']['name'],
+                $event_stats['wb4_application_documents']['event_id'],
+                $event_stats[0]['count'],
+            ];
+        }, $documents);
+        array_unshift($statistics, ['Event name', 'Event id', 'Applications (including soft-deleted)']);
 
         $this->helper('table')->output($statistics);
 	}
 
     public function prune() {
-        $documents = $this->ApplicationDocument->query("SELECT COUNT(*) as count, event_id, name FROM wb4_application_documents JOIN wb4_events ON wb4_application_documents.event_id = wb4_events.id WHERE NOT wb4_application_documents.deleted OR wb4_application_documents.deleted != '0000-00-00 00:00:00' GROUP BY event_id");
+        $documents = $this->ApplicationDocument->query("
+            SELECT COUNT(*) as count, event_id, name
+            FROM wb4_application_documents
+            JOIN wb4_events ON wb4_application_documents.event_id = wb4_events.id
+            WHERE
+                wb4_application_documents.deleted IS NOT NULL AND
+                wb4_application_documents.deleted != '0000-00-00 00:00:00'
+            GROUP BY event_id
+        ");
 
         $this->out('Found these soft-deleted applications available for permanent deletion.');
 
-        $statistics = [
-            ['Event name', 'Event id', 'Applications'],
-            ...array_map(function($event_stats) {
-                return [
-                    $event_stats['wb4_events']['name'],
-                    $event_stats['wb4_application_documents']['event_id'],
-                    $event_stats[0]['count'],
-                ];
-            }, $documents),
-        ];
+        $statistics = array_map(function($event_stats) {
+            return [
+                $event_stats['wb4_events']['name'],
+                $event_stats['wb4_application_documents']['event_id'],
+                $event_stats[0]['count'],
+            ];
+        }, $documents);
+        array_unshift($statistics, ['Event name', 'Event id', 'Applications (soft-deleted)']);
 
         $this->helper('table')->output($statistics);
 
@@ -72,10 +81,10 @@ class ApplicationDocumentShell extends AppShell {
         $this->hr();
         $this->out('Permanently deleting soft-deleted applications');
 
-        if ($this->ApplicationDocument->deleteAll([
-            'ApplicationDocument.deleted !=' => '0000-00-00 00:00:00',
-            'ApplicationDocument.deleted !=' => null,
-        ])) {
+        if ($this->ApplicationDocument->deleteAll(["
+            ApplicationDocument.deleted IS NOT NULL AND
+            ApplicationDocument.deleted != '0000-00-00 00:00:00'
+        "])) {
             $this->out('<success>Permanent deletions done</success>');
         } else {
             $this->out('<error>Error during permanent deletion</error>');
