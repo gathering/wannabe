@@ -193,6 +193,28 @@ A disabled used is disallowed login and has personal information hidden from
 user profile page. User information will still appear in other locations. If
 removing user for data retention or privacy purposes delete user instead.
 
+### Soft-delete, and permanently delete user applications
+
+With `cake` command available in path (see installation instructions).
+
+```
+cake application_document statistics
+cake application_document delete event <event_id>
+cake application_document delete document <application_document_id>
+cake application_document prune
+```
+
+Deletion of applications is done in two steps, both to make it a little bit
+more flexible and to make it a bit safer to use. To soft-delete all
+applications for a given event (sets `deleted` field to something) use the
+`application_document delete event` command and follow the instructions.
+
+Once all relevant applications have been soft-deleted, either through this
+command or from anywhere else in Wannabe (cron job for example). Run the
+`prune` command to permanently delete all soft-deleted items. This use
+CakePHP's deletion logic which triggers relevant before/after methods and
+deletes any relevant relations. So be prepared to wait a little while.
+
 ### Modifying database seed
 
 After creating new migrations it's nice to update the initial database seeds
