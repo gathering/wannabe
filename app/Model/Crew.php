@@ -25,7 +25,7 @@ class Crew extends AppModel {
 		$this->validate = array(
 			'name' => array(
 				'special-characters' => array(
-					'rule' => '/^[a-z0-9:\-\& ]*$/i',
+					'rule' => '/^[a-zæÆøØåÅ0-9:\-\& ]*$/i',
 					'message' => __("Crew name can only contain letters, numbers and colons"),
 					'last' => false,
 				),
