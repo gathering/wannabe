@@ -232,7 +232,7 @@ class AclComponent extends Component {
 				$user['UserPrivacy']['allow_crew']
 			)
 		) {
-			$hide_field['phone'] = false;
+			$hide_field['Userphone'] = false;
 			$hide_field['address'] = false;
 			$hide_field['countrycode'] = false;
 			$hide_field['town'] = false;
