@@ -28,7 +28,7 @@
 <?php if($privacy) { ?>
 				<li>
 					<label>
-						<?=$this->Form->checkbox('ApplicationDocument.enableprivacy', array('disabled' => $readonly, 'checked' => $data['ApplicationDocument']['enableprivacy']?'checked':true))?>
+						<?=$this->Form->checkbox('ApplicationDocument.enableprivacy', array('disabled' => $readonly, 'checked' => $data['ApplicationDocument']['enableprivacy']?'checked':''))?>
 						<span><?=__('My application can only be viewed by the chiefs in my selected choices.')?></span>
 					</label>
 				</li>
