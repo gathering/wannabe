@@ -32,27 +32,17 @@ class EnrollController extends AppController {
             }
             if($waiting == count($document['ApplicationChoice'])) unset($documents[$dindex]);
 		}
-        $manageable_crews = array();
-        $crews = $this->Crew->getAllCrews(true, 0, true);
-		foreach ($crews as $crew_id => $crew_name){
-            $manageable_crews[$crew_id] = false;
-        }
-        if ($this->Acl->hasAccess('superuser', $this->Wannabe->user, '/'.$this->Wannabe->event->reference.'/Enroll')) {
-            foreach ($this->Crew->find('all', array('conditions' => array('Crew.event_id' => WB::$event->id))) as $crew2){
-                $manageable_crews[$crew2['Crew']['id']] = true;
-            }
-        } else {
-            # Get the users crews
-            foreach ($this->Wannabe->user['Crew'] as $usercrew) {
-                if (2 <= $usercrew['CrewsUser']['leader']) {
-                    $manageable_crews[$usercrew['id']] = true;
-                    $crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews order by crew_id, id) Crew, (SELECT @pv := '" . $usercrew['id'] . "') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
-                    foreach ($crews2 as $crew2) {
-                        $manageable_crews[$crew2['Crew']['id']] = true;
-                    }
-                }
-            }
-        }
+
+		$crews = $this->Crew->getAllCrews(true, 0, true);
+		$manageable_crews = $this->calculateManageableCrews($crews);
+
+		// There seem to be some redundant code for this above, so still in need of cleanup
+		$documents = array_filter(
+			$documents,
+			function($document) use ($manageable_crews, $request_denied) {
+				return $this->isViewableDocument($document, $manageable_crews);
+			}
+		);
 		$this->set('manageable_crews', $manageable_crews);
 		$this->set('enrollsetting', $settings);
 		$this->set('crews', $crews);
@@ -162,27 +152,16 @@ class EnrollController extends AppController {
 			}
 		}
 
-        $manageable_crews = array();
-        $crews = $this->Crew->getAllCrews(true, 0, true);
-        foreach ($crews as $crew_id => $crew_name){
-            $manageable_crews[$crew_id] = false;
-        }
-        if ($this->Acl->hasAccess('superuser', $this->Wannabe->user, '/'.$this->Wannabe->event->reference.'/Enroll')) {
-            foreach ($this->Crew->find('all', array('conditions' => array('Crew.event_id' => WB::$event->id))) as $crew2){
-                $manageable_crews[$crew2['Crew']['id']] = true;
-            }
-        } else {
-            # Get the users crews
-            foreach ($this->Wannabe->user['Crew'] as $usercrew) {
-                if (2 <= $usercrew['CrewsUser']['leader']) {
-                    $manageable_crews[$usercrew['id']] = true;
-                    $crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews order by crew_id, id) Crew, (SELECT @pv := '" . $usercrew['id'] . "') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
-                    foreach ($crews2 as $crew2) {
-                        $manageable_crews[$crew2['Crew']['id']] = true;
-                    }
-                }
-            }
-        }
+		$crews = $this->Crew->getAllCrews(true, 0, true);
+		$manageable_crews = $this->calculateManageableCrews($crews);
+
+		// There seem to be some redundant code for this above, so still in need of cleanup
+		$documents = array_filter(
+			$documents,
+			function($document) use ($manageable_crews, $request_denied) {
+				return $this->isViewableDocument($document, $manageable_crews, $request_denied);
+			}
+		);
 
 		$this->set('manageable_crews', $manageable_crews);
 		$this->set('enrollsetting', $settings);
@@ -281,29 +260,11 @@ class EnrollController extends AppController {
 		$this->set('tags', $this->ApplicationDocument->getTags($document['ApplicationDocument']['id']));
 		$this->set('comments', $this->ApplicationComment->getComments($document['ApplicationDocument']['id']));
 		$this->set('superuser', $this->Acl->hasAccess('superuser'));
-        $manageable_crews = array();
-        $crews = $this->Crew->getAllCrews(true, 0, true);
-        foreach ($crews as $crew_id => $crew_name){
-            $manageable_crews[$crew_id] = false;
-        }
-        if ($this->Acl->hasAccess('superuser', $this->Wannabe->user, '/'.$this->Wannabe->event->reference.'/Enroll')) {
-            foreach ($this->Crew->find('all', array('conditions' => array('Crew.event_id' => WB::$event->id))) as $crew2){
-                $manageable_crews[$crew2['Crew']['id']] = true;
-            }
-        } else {
-            # Get the users crews
-            foreach ($this->Wannabe->user['Crew'] as $usercrew) {
-                if (2 <= $usercrew['CrewsUser']['leader']) {
-                    $manageable_crews[$usercrew['id']] = true;
-                    $crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews ORDER BY crew_id, id) Crew, (SELECT @pv := '" . $usercrew['id'] . "') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
-                    foreach ($crews2 as $crew2) {
-                        $manageable_crews[$crew2['Crew']['id']] = true;
-                    }
-                }
-            }
-        }
-		$this->set('manageable_crews', $manageable_crews);
 
+		$crews = $this->Crew->getAllCrews(true, 0, true);
+		$manageable_crews = $this->calculateManageableCrews($crews);
+
+		$this->set('manageable_crews', $manageable_crews);
 		$this->set('crews', $crews);
 		$this->set('phonetypes', $this->Phonetype->find('list'));
 		$this->set('improtocols', $this->Improtocol->find('list'));
@@ -676,6 +637,75 @@ class EnrollController extends AppController {
 
 			$this->render('manage-confirm');
 		}
+	}
+
+	// This sounds like something we could probably use other places, maybe calculate once some other place (and keep until user hash changes)?
+	private function calculateManageableCrews($crews = []) {
+		$manageable_crews = array();
+		foreach ($crews as $crew_id => $crew_name){
+			$manageable_crews[$crew_id] = false;
+		}
+		if ($this->Acl->hasAccess('superuser', $this->Wannabe->user, '/'.$this->Wannabe->event->reference.'/Enroll')) {
+			foreach ($this->Crew->find('all', array('conditions' => array('Crew.event_id' => WB::$event->id))) as $crew2){
+				$manageable_crews[$crew2['Crew']['id']] = true;
+			}
+		} else {
+			# Get the users crews
+			foreach ($this->Wannabe->user['Crew'] as $usercrew) {
+				if (2 <= $usercrew['CrewsUser']['leader']) {
+					$manageable_crews[$usercrew['id']] = true;
+					$crews2 = $this->Crew->query("SELECT id, crew_id, name FROM (SELECT id, crew_id, name FROM wb4_crews order by crew_id, id) Crew, (SELECT @pv := '" . $usercrew['id'] . "') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY name");
+					foreach ($crews2 as $crew2) {
+						$manageable_crews[$crew2['Crew']['id']] = true;
+					}
+				}
+			}
+		}
+		return $manageable_crews;
+	}
+
+	// Determine if an application document should be viewable, given various arguments (earlier done in view itself)
+	// If adjusted to be a little less EnrollController specific this should probably be moved to Model
+	private function isViewableDocument($document, $manageable_crews = [], $showDenied = false) {
+		$pendingApplication = false;
+		foreach ($document['ApplicationChoice'] as $choice) {
+			if ($showDenied) {
+				if ($choice['accepted']) {
+					return false;
+					//continue 2;
+				} else if ($choice['denied']) {
+					$pendingApplication = true;
+				}
+			} else if ($choice['crew_id'] != 0 && !$choice['accepted'] && !$choice['denied'] && !$choice['disabled']) {
+				$pendingApplication = true;
+			}
+		}
+
+		// Don't show applications that isn't actually pending anymore
+		if (!$pendingApplication) {
+			return false;
+		}
+
+		$validCrews = 0;
+		$hasPrivacyAccess = false;
+		foreach ($document['ApplicationChoice'] as $choice) {
+			if ($choice['crew_id'] > 0) {
+				$validCrews++;
+			}
+			foreach ($manageable_crews as $index => $manage) {
+				if ($choice['crew_id'] == $index && $manage) {
+					$hasPrivacyAccess = true;
+				}
+			}
+		}
+
+		// Application has any valid crews?
+		if (!$validCrews) {
+			return false;
+		}
+
+		// If document has privacy option enabled decide based on $hasPrivacyAccess
+		return $document['ApplicationDocument']['enableprivacy'] ? $hasPrivacyAccess : true;
 	}
 
 	private function unbindModels() {

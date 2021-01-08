@@ -53,7 +53,7 @@ foreach($documents as $document) {
                     </div>
                 </div>
 			</fieldset>
-			<input type="submit" value="<?=_("Update")?>" class="btn primary" />
+			<input type="submit" value="<?=__("Update")?>" class="btn primary" />
 		</form>
 	</div>
 </div>
@@ -71,63 +71,32 @@ foreach($documents as $document) {
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach ($documents as $document) {
-					$havepending = false;
-					foreach($document['ApplicationChoice'] as $choice){
-                       
-                       if(isset($_REQUEST['denied'])) {
-                            if($choice['accepted']) {
-                                continue 2;
-                            }
-                            else if ($choice['denied']) {
-                                $havepending = true;
-                            }
-                       }
-                       else if($choice['crew_id'] != 0 && !$choice['accepted'] && !$choice['denied'] && !$choice['disabled']) {
-							$havepending = true;
-						}
-					}
-					if(!$havepending)
-						continue;
-					$i = 0;
-					$canview = false;
-					foreach ($document['ApplicationChoice'] as $choice) {
-						if ($choice['crew_id'] > 0)
-							$i++;
-						foreach ($manageable_crews as $index => $manage) {
-							if($choice['crew_id'] == $index && $manage)
-								$canview = true;
-						}
-					}
-					if(!$canview && $document['ApplicationDocument']['enableprivacy'])
-						continue;
-					if ($i > 0) { ?>
-						<tr>
-							<td><?=$this->Html->link($document['User']['realname'].(!empty($document['User']['nickname']) ? ' aka ' . $document['User']['nickname'] : null), $this->Wb->eventUrl('/Enroll/view/'.$document['User']['id']))?></td>
-							<td><?=$document['User']['age']?></td>
-							<td>
-								<?php foreach($document['ApplicationChoice'] as $choice) { 
-                                   
-                                    if(isset($_REQUEST['denied']) && $_REQUEST['denied'] && $choice['denied'] && $choice['crew_id'] == $_REQUEST['crew_id']) {
-										echo $this->Html->link($crews[$choice['crew_id']], $this->Wb->eventUrl('/Enroll/filter?crew_id='.$choice['crew_id']), array('class'=>'red'));
-                                    }
+				<?php foreach ($documents as $document) { ?>
+				<tr>
+					<td><?=$this->Html->link($document['User']['realname'].(!empty($document['User']['nickname']) ? ' aka ' . $document['User']['nickname'] : null), $this->Wb->eventUrl('/Enroll/view/'.$document['User']['id']))?></td>
+					<td><?=$document['User']['age']?></td>
+					<td>
+						<?php foreach($document['ApplicationChoice'] as $choice) { 
+						   
+							if(isset($_REQUEST['denied']) && $_REQUEST['denied'] && $choice['denied'] && $choice['crew_id'] == $_REQUEST['crew_id']) {
+								echo $this->Html->link($crews[$choice['crew_id']], $this->Wb->eventUrl('/Enroll/filter?crew_id='.$choice['crew_id']), array('class'=>'red'));
+							}
 
-									if ($choice['crew_id'] != 0 && !$choice['accepted'] && !$choice['denied'] && !$choice['disabled']) {
-										$acceptable = $choice['acceptable']; 
-										$class = 'red';
-										if($manageable_crews[$choice['crew_id']]) $class = 'yellow';
-										if($acceptable && $enrollsetting['EnrollSetting']['enrollactive']) $class = 'green';
-										if($acceptable && $choice['waiting'] && $enrollsetting['EnrollSetting']['enrollactive']) $class = 'blue';
-										?>
-										<?=$this->Html->link($crews[$choice['crew_id']], $this->Wb->eventUrl('/Enroll/filter?crew_id='.$choice['crew_id']), array('class'=>$class))?>
-									<?php } ?>
-								<?php } ?>
-							</td>
-                            <?php /*<td title="<?=strftime(__("%Y%m%d"), strtotime($document['ApplicationDocument']['updated']))?>"><?=strftime(__("%b %e %G, %H:%M"), strtotime($document['ApplicationDocument']['updated']))?></td> */ ?>
-                            <td><?=date("M j, Y G:i", strtotime($document['ApplicationDocument']['updated']))?></td>
-							<td><?=$document['ApplicationDocument']['priority']?></td>
-						</tr>
-					<?php } ?>
+							if ($choice['crew_id'] != 0 && !$choice['accepted'] && !$choice['denied'] && !$choice['disabled']) {
+								$acceptable = $choice['acceptable']; 
+								$class = 'red';
+								if($manageable_crews[$choice['crew_id']]) $class = 'yellow';
+								if($acceptable && $enrollsetting['EnrollSetting']['enrollactive']) $class = 'green';
+								if($acceptable && $choice['waiting'] && $enrollsetting['EnrollSetting']['enrollactive']) $class = 'blue';
+								?>
+								<?=$this->Html->link($crews[$choice['crew_id']], $this->Wb->eventUrl('/Enroll/filter?crew_id='.$choice['crew_id']), array('class'=>$class))?>
+							<?php } ?>
+						<?php } ?>
+					</td>
+					<?php /*<td title="<?=strftime(__("%Y%m%d"), strtotime($document['ApplicationDocument']['updated']))?>"><?=strftime(__("%b %e %G, %H:%M"), strtotime($document['ApplicationDocument']['updated']))?></td> */ ?>
+					<td><?=date("M j, Y G:i", strtotime($document['ApplicationDocument']['updated']))?></td>
+					<td><?=$document['ApplicationDocument']['priority']?></td>
+				</tr>
 				<?php } ?>
 			</tbody>
 		</table>
