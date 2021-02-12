@@ -7,7 +7,7 @@ class MenuComponent extends Component {
 
 	var $controller;
 
-	public function initialize(&$controller) {
+	public function initialize(Controller $controller) {
 		if(!isset($controller->Wannabe->user['User']['id'])) {
 			return;
 		}

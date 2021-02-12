@@ -1,4 +1,10 @@
 <?php
+
+require APP . 'Vendor/autoload.php';
+
+spl_autoload_unregister(array('App', 'load'));
+spl_autoload_register(array('App', 'load'), true, true);
+
 /**
  * This file is loaded automatically by the app/webroot/index.php file after core.php
  *
@@ -105,9 +111,6 @@ App::import('Lib', 'WannabeExceptionRenderer');
 
 //Load the Wannabe Class
 App::import('Lib', 'Wannabe');
-
-//Load Composer
-App::import('Vendor', ['file' => 'autoload']);
 
 // Auth cookie key (change to invalidate all existing re-login/remember cookies), unset to disable functionality
 Configure::write('AuthCookieKey', env('AUTH_COOKIE_KEY'));

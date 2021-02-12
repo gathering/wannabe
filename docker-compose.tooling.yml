@@ -8,8 +8,6 @@ services:
     build:
       context: ./
       target: development
-      args:
-        - GIT_BRANCH=master
     entrypoint: "tooling-entrypoint"
     command: "bash"
     # volumes:

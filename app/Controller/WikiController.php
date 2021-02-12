@@ -18,7 +18,7 @@ class WikiController extends AppController {
 	public function index() {
 		preg_match('/\/(\w+)\/(\w+)\/(.*)/', $this->here, $matches);
 		array_splice($matches, 0, 3);
-		$args = split('[/]', $matches[0]);
+		$args = explode('/', $matches[0]);
 		$num_args = sizeof($args);
 		// Make sure the title is camelized.
 		if ( $num_args > 0 && ($camelizedtitle = Inflector::camelize($args[0])) != $args[0] ) {

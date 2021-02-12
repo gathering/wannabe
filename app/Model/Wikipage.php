@@ -36,7 +36,7 @@ class Wikipage extends AppModel {
 			'order' => ''
 		)
 	);
-	public function save($data) {
+	public function save($data = [], $validate = true, $fieldList = []) {
 		$title = addslashes($data['Wikipage']['title']);
 		$user_id = (int)$data['Wikipage']['user_id'];
 		$comment = addslashes($data['Wikipage']['comment']);

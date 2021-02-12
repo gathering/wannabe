@@ -28,7 +28,7 @@ class EnrollSetting extends AppModel {
 		)
 	);
 
-	public function afterSave($created) {
+	public function afterSave($created, $options = []) {
         if(!$created)
             $this->clearEnrollCache();
 	}

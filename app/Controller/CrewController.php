@@ -505,7 +505,7 @@ class CrewController extends AppController {
 	public function description($name=null) {
 		preg_match('/\/(\w+)\/(\w+)\/(\w+)\/(.*)/', $this->here, $matches);
 		array_splice($matches, 0, 4);
-		if(!empty($matches)) list($name) = split('[/]', $matches[0]);
+		if(!empty($matches)) list($name) = explode('/', $matches[0]);
 
 		if ($name !== null) {
 			$crews = & $this->Crew->find('all', array(

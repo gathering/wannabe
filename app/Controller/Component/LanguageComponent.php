@@ -15,7 +15,7 @@ class LanguageComponent extends Component {
         'eng' => 'en'
     );
 
-	public function initialize(&$controller) {
+	public function initialize(Controller $controller) {
         if(isset($controller->request->query['hl']) && $this->valid($controller->request->query['hl'])) {
             $this->lang = $controller->request->query['hl'];
         } else if(isset($controller->Wannabe->user['User'])) {

@@ -14,7 +14,7 @@ class AclComponent extends Component {
 	 * Init ACL function, makes sure that we got some data in cache, or else it will put
 	 * ACL data there.
 	 */
-	public function initialize(&$controller) {
+	public function initialize(Controller $controller) {
 
 		$this->Aclobject = ClassRegistry::init('Aclobject');
 		$this->controller = $controller;
