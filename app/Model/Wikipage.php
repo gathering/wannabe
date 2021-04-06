@@ -1,6 +1,7 @@
 <?php
 
 use Michelf\Markdown;
+use ezyang\HTMLPurifier as PurifierLib;
 
 /**
  * Wikipage Model
@@ -65,6 +66,39 @@ class Wikipage extends AppModel {
 		$data['Wikipage']['content'] = preg_replace_callback('|(\{\{include:)(.*?)(\}\})|', array($this, 'formatIncludes'), $data['Wikipage']['content']);
 
 		$data['Wikipage']['content'] = Markdown::defaultTransform($data['Wikipage']['content']);
+
+		// This part is 50/50 useful and PoC. Should be an OK enough starting point for now
+		$config = HTMLPurifier_Config::createDefault();
+		$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
+		$config->set('HTML.SafeIframe', true);
+		$config->set('URI.SafeIframeRegexp', '%^(http://|https://|//)%');
+		$def = $config->getHTMLDefinition(true);
+		$audio = $def->addElement(
+			'audio',
+			'Block',
+			'Flow',
+			'Common',
+			array(
+				'loop*' => 'Bool',
+				'controls' => 'Bool',
+			)
+		);
+		$audio->excludes = array('audio' => true);
+		$source = $def->addElement(
+			'source',
+			'Block',
+			'Empty',
+			'Common',
+			array(
+				'src*' => 'Text',
+				'type' => 'Text',
+			)
+		);
+		$source->excludes = array('source' => true);
+
+		$purifier = new HTMLPurifier($config);
+		$data['Wikipage']['content'] = $purifier->purify($data['Wikipage']['content']);
+
 		return $data;
 	}
 
