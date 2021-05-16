@@ -98,7 +98,7 @@ class Crew extends AppModel {
 		if($hidden) {
 			$hiddentext = '-hidden';
 		}
-		$crews = Cache::read(WB::$event->reference.'-crews-'.$type.$hiddentext);
+		$crews = Cache::read(WB::$event->reference.'-crews-'.$type.$hiddentext, 'crew');
 		if($crews === false) {
 			$conditions = array('event_id' => WB::$event->id);
 			if(!$hidden) {
@@ -115,7 +115,7 @@ class Crew extends AppModel {
 				'order' => 'name',
 				'recursive' => -1
 			));
-			Cache::write(WB::$event->reference.'-crews-'.$type.$hiddentext, $crews);
+			Cache::write(WB::$event->reference.'-crews-'.$type.$hiddentext, $crews, 'crew');
 		}
 		return($crews);
 	}
@@ -144,7 +144,7 @@ class Crew extends AppModel {
 		if($select) {
 			$type = 'list';
 		}
-		$crews = Cache::read(WB::$event->reference.'-crew-hierarchy-'.$type.$hiddenCachePrefix);
+		$crews = Cache::read(WB::$event->reference.'-crew-hierarchy-'.$type.$hiddenCachePrefix, 'crew');
 		if($crews === false) {
 			$crews = array();
 			if($excludeHidden) {
@@ -174,7 +174,7 @@ class Crew extends AppModel {
 					}
 				}
 			}
-			Cache::write(WB::$event->reference.'-crew-hierarchy-'.$type.$hiddenCachePrefix, $crews);
+			Cache::write(WB::$event->reference.'-crew-hierarchy-'.$type.$hiddenCachePrefix, $crews, 'crew');
 		}
 		return $crews;
 	}
@@ -189,7 +189,7 @@ class Crew extends AppModel {
 		if($select) {
 			$type = 'list';
 		}
-		$crews = Cache::read(WB::$event->reference.'-crew-childs-'.$parent_id.$hiddenCachePrefix);
+		$crews = Cache::read(WB::$event->reference.'-crew-childs-'.$parent_id.$hiddenCachePrefix, 'crew');
 		if($crews === false) {
 			$this->unbindModel(array(
 				'hasMany' => array(
@@ -204,7 +204,7 @@ class Crew extends AppModel {
 			} else {
 				$crews = $this->query("SELECT * FROM (SELECT * FROM wb4_crews order by crew_id, id) Crew, (SELECT @pv := '".$parent_id."') initialisation WHERE find_in_set(crew_id, @pv) > 0 AND @pv := concat(@pv, ',', id) ORDER BY sorted_weight, name");
 			}
-			Cache::write(WB::$event->reference.'-crew-childs-'.$parent_id.$hiddenCachePrefix, $crews);
+			Cache::write(WB::$event->reference.'-crew-childs-'.$parent_id.$hiddenCachePrefix, $crews, 'crew');
 		}
 		return $crews;
 	}
@@ -420,17 +420,17 @@ class Crew extends AppModel {
 		));
 		if ($crew) {
 			$crew_id = $crew['Crew']['crew_id']?$crew['Crew']['crew_id']:$crew_id;
-			Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id);
-			Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id.'hidden');
+			Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id, 'crew');
+			Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id.'hidden', 'crew');
 		}
-		Cache::delete(WB::$event->reference.'-crew-hierarchy-listhidden');
-		Cache::delete(WB::$event->reference.'-crew-hierarchy-list');
-		Cache::delete(WB::$event->reference.'-crew-hierarchy-allhidden');
-		Cache::delete(WB::$event->reference.'-crew-hierarchy-all');
-		Cache::delete(WB::$event->reference.'-crews-list');
-		Cache::delete(WB::$event->reference.'-crews-list-hidden');
-		Cache::delete(WB::$event->reference.'-crews-all');
-		Cache::delete(WB::$event->reference.'-crews-all-hidden');
+		Cache::delete(WB::$event->reference.'-crew-hierarchy-listhidden', 'crew');
+		Cache::delete(WB::$event->reference.'-crew-hierarchy-list', 'crew');
+		Cache::delete(WB::$event->reference.'-crew-hierarchy-allhidden', 'crew');
+		Cache::delete(WB::$event->reference.'-crew-hierarchy-all', 'crew');
+		Cache::delete(WB::$event->reference.'-crews-list', 'crew');
+		Cache::delete(WB::$event->reference.'-crews-list-hidden', 'crew');
+		Cache::delete(WB::$event->reference.'-crews-all', 'crew');
+		Cache::delete(WB::$event->reference.'-crews-all-hidden', 'crew');
 	}
 	public function clearCrewListCache($crew_id) {
 		$crew = $this->find('first', array(
@@ -442,8 +442,8 @@ class Crew extends AppModel {
 			return;
 		}
 		$crew_id = $crew['Crew']['crew_id']?$crew['Crew']['crew_id']:$crew_id;
-		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id);
-		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id.'hidden');
+		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id, 'crew');
+		Cache::delete(WB::$event->reference.'-crew-childs-'.$crew_id.'hidden', 'crew');
 	}
 
     public function addChildCrews($res) {

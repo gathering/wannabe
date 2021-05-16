@@ -25,10 +25,17 @@
 
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array(
-        'engine' => 'File',
-        'duration'=> '+1 hours',
-        'path' => CACHE,
-	'prefix' => 'cake_'
+    'engine' => 'File',
+    'duration'=> '+1 hours',
+    'path' => CACHE,
+    'prefix' => 'cake_'
+));
+
+Cache::config('crew', array(
+    'engine' => 'File',
+    'duration'=> '+1 week',
+    'path' => CACHE,
+    'prefix' => 'cake_long_'
 ));
 
 // Enable the Dispatcher filters for plugin assets, and
